@@ -24,8 +24,8 @@ before_install:
   | tar zxf - -C $HOME; fi
 - export PATH=$M2_HOME/bin:$PATH
 install:
-- docker run -it --rm -v "$(pwd)":/opt/maven -w /opt/maven maven:3.5.0-jdk-8-alpine mvn clean install -DskipTests=true -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -B -V -U
+- docker run -it --rm -v "$(pwd)":/opt/maven -w /opt/maven maven:3.5.0-jdk-8-alpine -v $HOME/.m2/repository:/root/.m2/repository/ mvn clean install -DskipTests=true -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -B -V -U
 script:
-- docker run -it --rm -v "$(pwd)":/opt/maven -w /opt/maven maven:3.5.0-jdk-8-alpine mvn test -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -V
+- docker run -it --rm -v "$(pwd)":/opt/maven -w /opt/maven maven:3.5.0-jdk-8-alpine -v $HOME/.m2/repository:/root/.m2/repository/ mvn test -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -V
 after_success:
-- docker run -it --rm -v "$(pwd)":/opt/maven -w /opt/maven maven:3.5.0-jdk-8-alpine mvn jacoco:prepare-agent package sonar:sonar -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -V
+- docker run -it --rm -v "$(pwd)":/opt/maven -w /opt/maven maven:3.5.0-jdk-8-alpine -v $HOME/.m2/repository:/root/.m2/repository/ mvn jacoco:prepare-agent package sonar:sonar -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -V
