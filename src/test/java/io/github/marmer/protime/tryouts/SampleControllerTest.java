@@ -44,7 +44,7 @@ public class SampleControllerTest {
 		// Preparation
 
 		// Execution
-		ResultActions request = mvc.perform(get("sample"));
+		ResultActions request = mvc.perform(get("/sample"));
 
 		// Assertion
 		request.andExpect(status().isOk()).andExpect(content().string(is(equalTo("It works without a teapot"))));
