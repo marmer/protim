@@ -15,7 +15,7 @@ cache:
   - "$HOME/apache-maven-${MAVEN_VERSION}"
   - "$HOME/.sonar/cache"
 before_cache:
-- rm -rfv $HOME/.m2/repository/io/github/marmer
+- rm -rfv $HOME/.m2/repository/io/github/marmer/protime
 before_install:
 - export M2_HOME=$HOME/apache-maven-${MAVEN_VERSION}
 - if [ ! -d $M2_HOME/bin ]; then curl https://archive.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz
