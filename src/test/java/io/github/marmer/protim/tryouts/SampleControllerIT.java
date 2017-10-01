@@ -7,28 +7,36 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.Before;
+import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.junit.MockitoJUnit;
-import org.mockito.junit.MockitoRule;
-import org.mockito.quality.Strictness;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.junit4.rules.SpringClassRule;
+import org.springframework.test.context.junit4.rules.SpringMethodRule;
+import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
-public class SampleControllerTest {
-	@Rule
-	public final MockitoRule mockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
+@SpringBootTest
+@WebAppConfiguration
+public class SampleControllerIT {
+
+	@Autowired
+	private WebApplicationContext context;
 
 	private MockMvc mockMvc;
 
-	@InjectMocks
-	private SampleController sampleController;
+	@ClassRule
+	public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
+	@Rule
+	public final SpringMethodRule springMethodRule = new SpringMethodRule();
 
 	@Before
 	public void setup() {
-		mockMvc = MockMvcBuilders.standaloneSetup(sampleController).build();
+		mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
 	}
 
 	@Test
