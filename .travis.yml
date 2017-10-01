@@ -22,9 +22,9 @@ before_cache:
 - rm -rfv $HOME/.m2/repository/io/github/marmer/protim
 before_install:
 - sudo rm /usr/local/bin/docker-compose
-- curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-- chmod +x docker-compose
-- sudo mv docker-compose /usr/local/bin
+- if [ ! -f /usr/local/bin/docker-compose ]; then curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+- if [ ! -f /usr/local/bin/docker-compose ]; then  chmod +x docker-compose
+- if [ ! -f /usr/local/bin/docker-compose ]; then  sudo mv docker-compose /usr/local/bin
 - export M2_HOME=$HOME/apache-maven-${MAVEN_VERSION}
 - if [ ! -d $M2_HOME/bin ]; then curl https://archive.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz
   | tar zxf - -C $HOME; fi
