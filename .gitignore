@@ -45,3 +45,4 @@ nbbuild/
 dist/
 nbdist/
 .nb-gradle/
+/.README.md.html
