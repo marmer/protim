@@ -8,5 +8,5 @@
 [![Security Rating](https://sonarcloud.io/api/badges/measure?key=io.github.marmer.testutils:protim&metric=security_rating)](https://sonarcloud.io/dashboard/index/io.github.marmer.testutils:protim) 
 [![Code Smells](https://sonarcloud.io/api/badges/measure?key=io.github.marmer.testutils:protim&metric=code_smells)](https://sonarcloud.io/dashboard/index/io.github.marmer.testutils:protim)
 
-# protime
+# protim
 A tool to manage your production time

@@ -1,4 +1,4 @@
-package io.github.marmer.protime.tryouts;
+package io.github.marmer.protim.tryouts;
 
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;

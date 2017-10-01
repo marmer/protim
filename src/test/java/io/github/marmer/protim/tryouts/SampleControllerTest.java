@@ -1,4 +1,4 @@
-package io.github.marmer.protime.tryouts;
+package io.github.marmer.protim.tryouts;
 
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.Matchers.is;

@@ -1,12 +1,12 @@
-package io.github.marmer.protime;
+package io.github.marmer.protim;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class ProtimeApplication {
+public class ProtimApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(ProtimeApplication.class, args);
+		SpringApplication.run(ProtimApplication.class, args);
 	}
 }
