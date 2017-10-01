@@ -1,10 +1,8 @@
 language: java
 jdk: oraclejdk8
-sudo: required
-env:
-  - DOCKER_COMPOSE_VERSION=1.16.1
+sudo: false
 services:
-  - docker
+- postgresql
 addons:
   apt:
     packages:
@@ -17,21 +15,16 @@ cache:
   directories:
   - "$HOME/.m2/repository"
   - "$HOME/apache-maven-${MAVEN_VERSION}"
-  - /usr/local/bin/docker-compose
 before_cache:
 - rm -rfv $HOME/.m2/repository/io/github/marmer/protim
 before_install:
-- sudo rm /usr/local/bin/docker-compose
-- curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-- chmod +x docker-compose
-- sudo mv docker-compose /usr/local/bin
 - export M2_HOME=$HOME/apache-maven-${MAVEN_VERSION}
 - if [ ! -d $M2_HOME/bin ]; then curl https://archive.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz
   | tar zxf - -C $HOME; fi
 - export PATH=$M2_HOME/bin:$PATH
+before_script:
+- psql -c 'create database travis_ci_test;' -U protime
 install:
 - mvn clean install -DskipTests=true -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -B -V -U
 script:
-- docker-compose -f docker-compose-travis.yml up --force-recreate --abort-on-container-exit
-after_success:
 - mvn clean jacoco:prepare-agent package org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -V -U
