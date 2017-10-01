@@ -9,9 +9,8 @@ services:
       - ${HOME}/.m2/repository:/root/.m2/repository/
     working_dir: /opt/maven
     environment:
-      - SONAR_CLOUD_TOKEN
       - HOME
-    command: mvn clean jacoco:prepare-agent package org.sonarsource.scanner.maven:sonar-maven-plugin:3.2:sonar -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -V -U
+    command: mvn clean test -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -V -U
     links:
      - db
     
