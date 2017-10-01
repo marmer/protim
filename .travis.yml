@@ -32,10 +32,10 @@ before_install:
 - export PATH=$M2_HOME/bin:$PATH
 install:
 - mvn clean install -DskipTests=true -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -B -V -U
-before_script:
-- docker-compose -f docker-compose-postgres.yml up
+#before_script:
+#- docker-compose -f docker-compose-postgres.yml up
 script:
-#- docker-compose up --force-recreate --abort-on-container-exit
-- mvn clean jacoco:prepare-agent package sonar:sonar -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -V
-after_script:
-- docker-compose -f docker-compose-postgres.yml down
+- docker-compose up --force-recreate --abort-on-container-exit
+#- mvn clean jacoco:prepare-agent package sonar:sonar -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -V
+#after_script:
+#- docker-compose -f docker-compose-postgres.yml down
