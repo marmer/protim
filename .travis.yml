@@ -23,7 +23,7 @@ before_install:
   | tar zxf - -C $HOME; fi
 - export PATH=$M2_HOME/bin:$PATH
 before_script:
-- psql -c 'create database travis_ci_test;' -U protime
+- psql -c 'create database protim;' -U protime
 install:
 - mvn clean install -DskipTests=true -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -B -V -U
 script:
