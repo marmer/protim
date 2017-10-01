@@ -1,0 +1,13 @@
+version: '3.3'
+
+#docker run -it --rm -v $(cygpath -w $(PWD)):/opt/maven -w /opt/maven maven:3.5.0-jdk-8 /bin/bash
+#docker run -it --rm -v $(PWD):/opt/maven -w /opt/maven maven:3.5.0-jdk-8 /bin/bash
+
+services:
+  maven:
+    image: maven:3.5.0-jdk-8
+    container_name: maven
+    volumes:
+      - .:/opt/maven
+    working_dir: /opt/maven
+    command: mvn clean install
