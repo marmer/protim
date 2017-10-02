@@ -1,7 +1,9 @@
 package io.github.marmer.protim.tryouts;
 
 import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -29,6 +31,9 @@ public class SampleControllerIT {
 
 	private MockMvc mockMvc;
 
+	@Autowired
+	private SampleModelRepository sampleModelRepository;
+
 	@ClassRule
 	public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
 	@Rule
@@ -37,6 +42,8 @@ public class SampleControllerIT {
 	@Before
 	public void setup() {
 		mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
+		sampleModelRepository.deleteAll();
+		sampleModelRepository.flush();
 	}
 
 	@Test
@@ -48,6 +55,10 @@ public class SampleControllerIT {
 
 		// Assertion
 		request.andExpect(status().isOk()).andExpect(content().string(is(equalTo("It works without a teapot"))));
+
+		assertThat(sampleModelRepository.findAll(), hasSize(1));
+		mockMvc.perform(get("/sample"));
+		assertThat(sampleModelRepository.findAll(), hasSize(2));
 	}
 
 }
