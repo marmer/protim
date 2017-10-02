@@ -14,6 +14,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.rules.SpringClassRule;
 import org.springframework.test.context.junit4.rules.SpringMethodRule;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -24,6 +25,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @SpringBootTest
 @WebAppConfiguration
+@ContextConfiguration
 public class SampleControllerIT {
 
 	@Autowired
