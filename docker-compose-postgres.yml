@@ -1,5 +1,17 @@
-test:
-  adapter: postgresql
-  database: protim
-  username: protim
-  password: protim
+version: '3.3'
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: protim
+      POSTGRES_PASSWORD: protim
+      POSTGRES_DB: protim
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+      - data-volume:/var/lib/postgresql/data/pgdata
+    ports:
+      - 5432:5432
+      
+volumes:
+  data-volume:
