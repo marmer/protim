@@ -1,0 +1,32 @@
+= Protim API
+by marmer;
+:doctype: book
+:icons: font
+:source-highlighter: highlightjs
+:toc: left
+:toclevels: 4
+:sectlinks:
+
+== Sample Interface
+
+Just a sample interface to make sure the base setup works
+
+=== Request
+
+include::{snippets}/test-mock-mvc-integration/httpie-request.adoc[]
+
+=== Curl Example
+
+include::{snippets}/test-mock-mvc-integration/curl-request.adoc[]
+
+=== Request
+
+include::{snippets}/test-mock-mvc-integration/http-request.adoc[]
+
+=== Response
+
+include::{snippets}/test-mock-mvc-integration/http-response.adoc[]
+
+
+
+
