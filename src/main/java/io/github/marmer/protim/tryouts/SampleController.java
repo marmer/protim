@@ -22,4 +22,19 @@ public class SampleController {
 		return "It works without a teapot";
 	}
 
+	@GetMapping(path = "json", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+	public SampleModel someGetJson() {
+		Random random = new Random();
+		SampleModel entity = SampleModel.builder().niceProperty("Random " + random.nextInt()).build();
+		sampleModelRepository.save(entity);
+		return entity;
+	}
+
+	@GetMapping(path = "xml", produces = MediaType.APPLICATION_XML_VALUE)
+	public SampleModel someGetXml() {
+		Random random = new Random();
+		SampleModel entity = SampleModel.builder().niceProperty("Random " + random.nextInt()).build();
+		sampleModelRepository.save(entity);
+		return entity;
+	}
 }
