@@ -23,7 +23,7 @@ before_install:
   | tar zxf - -C $HOME; fi
 - export PATH=$M2_HOME/bin:$PATH
 before_script:
-- cp config/database.travis.yml config/database.yml
+  - cp config/database.yml.travis config/database.yml
 install:
 - mvn clean install -DskipTests=true -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -B -V -U
 script:
