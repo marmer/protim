@@ -1,5 +1,0 @@
-test:
-  adapter: postgresql
-  database: protim
-  username: protim
-  password: protim
