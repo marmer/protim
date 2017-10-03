@@ -9,6 +9,9 @@ function loadSample() {
 	xhttp.open("GET", "/rest/sample/json", true);
 	xhttp.send();
 }
+
+// TODO Refresh Javascript skills
+// TODO In React einlesen https://reactjs.org/tutorial/tutorial.html
 /**
  * Logs the user out an
  * @returns
