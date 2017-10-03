@@ -9,6 +9,6 @@ function loadSample() {
 			document.getElementById("label").innerHTML = json.niceProperty;
 		}
 	};
-	xhttp.open("GET", "/sample/json", true);
+	xhttp.open("GET", "/rest/sample/json", true);
 	xhttp.send();
 }

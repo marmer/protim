@@ -1,4 +1,4 @@
-package io.github.marmer.protim.tryouts;
+package io.github.marmer.protim.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

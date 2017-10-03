@@ -71,7 +71,7 @@ public class SampleControllerIT {
 		request.andExpect(status().isOk()).andExpect(content().string(is(equalTo("It works without a teapot"))));
 
 		assertThat(sampleModelRepository.findAll(), hasSize(1));
-		mockMvc.perform(get("/rest/sample"));
+		mockMvc.perform(get("/sample"));
 		assertThat(sampleModelRepository.findAll(), hasSize(2));
 		document.handle(request.andReturn());
 	}
