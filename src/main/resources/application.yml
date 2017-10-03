@@ -15,4 +15,4 @@ security:
     password: protim
   basic:
     path:
-    - /sample/** 
+    - /rest/** 
