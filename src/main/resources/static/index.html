@@ -4,6 +4,27 @@
 <title>Protim - by marmer</title>
 </head>
 <body>
-	<p>Some sample content</p>
+<p>Some sample content</p>
+<div id="demo">
+<h1>The XMLHttpRequest Object</h1>
+<button type="button" onclick="loadDoc()">Change Content</button>
+</div>
+
+<script>
+function loadDoc() {
+  var xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+      document.getElementById("demo").innerHTML =
+      alert(this.response);
+      var json = JSON.parse(this.response);
+      alert(json.niceProperty);
+    }
+  };
+  xhttp.open("GET", "/sample/json", true);
+  xhttp.send();
+}
+</script>
+
 </body>
 </html>
