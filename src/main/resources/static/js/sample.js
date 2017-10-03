@@ -10,17 +10,17 @@ function loadSample() {
 	xhttp.send();
 }
 
-// TODO Refresh Javascript skills
-// TODO In React einlesen https://reactjs.org/tutorial/tutorial.html
 /**
  * Logs the user out an
+ * 
  * @returns
  */
 function logout() {
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "/", true);
 	xhr.withCredentials = true;
-	xhr.setRequestHeader("Authorization", 'Basic ' + btoa('notExistingUser:notExistingPassword'));
+	xhr.setRequestHeader("Authorization", 'Basic '
+			+ btoa('notExistingUser:notExistingPassword'));
 	xhr.onload = function() {
 		console.log(xhr.responseText);
 	};

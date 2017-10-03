@@ -16,6 +16,15 @@ public class ProtimApplication {
 
 	}
 
+	// TODO Refresh Javascript skills
+	// TODO In React einlesen https://reactjs.org/tutorial/tutorial.html
+	// TODO Automatic creation of docker images (and Pushing to docker registry)
+	// TODO UI Tests (Javascript as well as and the whole site)
+	// TODO encrypt rest communication (ssl)
+	// TODO tests for security
+	// TODO store passwords hashed with salts
+	// TODO User-Management (creation and management)
+
 	@Bean
 	CommandLineRunner init(final UseraccountRepository accountRepository) {
 
@@ -24,7 +33,7 @@ public class ProtimApplication {
 			@Override
 			public void run(String... arg0) throws Exception {
 				String username = "protim";
-				//TODO this should not happen
+				// TODO this should not happen
 				if (accountRepository.findByUsername(username) == null)
 					accountRepository.save(Useraccount.builder().username(username).password("protimpw").build());
 			}

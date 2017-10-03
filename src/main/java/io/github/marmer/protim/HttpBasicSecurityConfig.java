@@ -29,5 +29,17 @@ public class HttpBasicSecurityConfig extends WebSecurityConfigurerAdapter {
 				.usersByUsernameQuery("select username,password, enabled from users where username=?")
 				.authoritiesByUsernameQuery("select username, role from user_roles where username=?");
 
+		// .passwordEncoder(new ShaPasswordEncoder(256));
+
+		// DaoAuthenticationProvider authenticationProvider = new
+		// DaoAuthenticationProvider();
+		// ReflectionSaltSource rss = new ReflectionSaltSource();
+		// rss.setUserPropertyToUse("salt");
+		// DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
+		// provider.setSaltSource(rss);
+		// provider.setUserDetailsService(authService);
+		// provider.setPasswordEncoder(new MyPasswordEncoder());
+		// auth.authenticationProvider(provider);
+
 	}
 }
