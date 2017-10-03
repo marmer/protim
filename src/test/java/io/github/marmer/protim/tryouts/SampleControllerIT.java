@@ -31,7 +31,7 @@ import org.springframework.web.context.WebApplicationContext;
 
 @SpringBootTest
 @WebAppConfiguration
-public class SampleControllerIT{
+public class SampleControllerIT {
 
 	@Autowired
 	private WebApplicationContext context;
@@ -65,13 +65,13 @@ public class SampleControllerIT{
 		// Preparation
 
 		// Execution
-		ResultActions request = mockMvc.perform(get("/sample"));
+		ResultActions request = mockMvc.perform(get("/rest/sample"));
 
 		// Assertion
 		request.andExpect(status().isOk()).andExpect(content().string(is(equalTo("It works without a teapot"))));
 
 		assertThat(sampleModelRepository.findAll(), hasSize(1));
-		mockMvc.perform(get("/sample"));
+		mockMvc.perform(get("/rest/sample"));
 		assertThat(sampleModelRepository.findAll(), hasSize(2));
 		document.handle(request.andReturn());
 	}

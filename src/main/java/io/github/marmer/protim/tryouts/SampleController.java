@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("sample")
+@RequestMapping("rest/sample")
 public class SampleController {
 	@Autowired
 	private SampleModelRepository sampleModelRepository;

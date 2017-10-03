@@ -8,3 +8,11 @@ spring:
       use-new-id-generator-mappings: true
       ddl-auto: validate
     show-sql: true
+security:
+  require-ssl: false
+  user:
+    name: protim
+    password: protim
+  basic:
+    path:
+    - /sample/** 
