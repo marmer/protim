@@ -9,12 +9,15 @@ function loadSample() {
 	xhttp.open("GET", "/rest/sample/json", true);
 	xhttp.send();
 }
-
+/**
+ * Logs the user out an
+ * @returns
+ */
 function logout() {
 	var xhr = new XMLHttpRequest();
 	xhr.open("GET", "/", true);
 	xhr.withCredentials = true;
-	xhr.setRequestHeader("Authorization", 'Basic ' + btoa('myuser:mypswd'));
+	xhr.setRequestHeader("Authorization", 'Basic ' + btoa('notExistingUser:notExistingPassword'));
 	xhr.onload = function() {
 		console.log(xhr.responseText);
 	};
