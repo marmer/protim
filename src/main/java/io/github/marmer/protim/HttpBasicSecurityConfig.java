@@ -17,7 +17,9 @@ public class HttpBasicSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/rest/**").hasRole("ADMIN").and().httpBasic();
+		http.authorizeRequests().antMatchers("/rest/**").hasRole("ADMIN").and().httpBasic().and().logout()
+				.logoutUrl("/logout").logoutSuccessUrl("/").invalidateHttpSession(true).deleteCookies("protim")
+				.permitAll();
 
 	}
 
