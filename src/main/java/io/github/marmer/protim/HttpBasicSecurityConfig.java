@@ -40,6 +40,9 @@ public class HttpBasicSecurityConfig extends WebSecurityConfigurerAdapter {
 		// TODO turn csrf security on again and get out how to use id with a rest client
 		// TODO turn csrf security on again and get out how to use id with angular
 		// new HttpSessionCsrfTokenRepository();
+
+		// TODO switch from basic auth to Digest Access Authentication with a secure
+		// enough hash algorithm (maybe sha256?)
 		http.csrf().disable()
 				/* .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and() */.authorizeRequests()
 				.antMatchers("/rest/**").hasRole("ADMIN").and().httpBasic().and().logout().logoutUrl("/logout")
