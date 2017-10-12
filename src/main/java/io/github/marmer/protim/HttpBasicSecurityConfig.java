@@ -37,9 +37,13 @@ public class HttpBasicSecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(final HttpSecurity http) throws Exception {
-		http.csrf().disable().authorizeRequests().antMatchers("/rest/**").hasRole("ADMIN").and().httpBasic().and()
-				.logout().logoutUrl("/logout").logoutSuccessUrl("/").invalidateHttpSession(true).deleteCookies("protim")
-				.permitAll();
+		// TODO turn csrf security on again and get out how to use id with a rest client
+		// TODO turn csrf security on again and get out how to use id with angular
+		// new HttpSessionCsrfTokenRepository();
+		http.csrf().disable()
+				/* .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()).and() */.authorizeRequests()
+				.antMatchers("/rest/**").hasRole("ADMIN").and().httpBasic().and().logout().logoutUrl("/logout")
+				.logoutSuccessUrl("/").invalidateHttpSession(true).deleteCookies("protim").permitAll();
 
 	}
 }
