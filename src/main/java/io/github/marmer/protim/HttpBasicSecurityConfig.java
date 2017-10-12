@@ -16,15 +16,7 @@ public class HttpBasicSecurityConfig extends WebSecurityConfigurerAdapter {
 	private DataSource dataSource;
 
 	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/rest/**").hasRole("ADMIN").and().httpBasic().and().logout()
-				.logoutUrl("/logout").logoutSuccessUrl("/").invalidateHttpSession(true).deleteCookies("protim")
-				.permitAll();
-
-	}
-
-	@Override
-	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+	protected void configure(final AuthenticationManagerBuilder auth) throws Exception {
 		auth.jdbcAuthentication().dataSource(dataSource)
 				.usersByUsernameQuery("select username,password, enabled from users where username=?")
 				.authoritiesByUsernameQuery("select username, role from user_roles where username=?");
@@ -40,6 +32,14 @@ public class HttpBasicSecurityConfig extends WebSecurityConfigurerAdapter {
 		// provider.setUserDetailsService(authService);
 		// provider.setPasswordEncoder(new MyPasswordEncoder());
 		// auth.authenticationProvider(provider);
+
+	}
+
+	@Override
+	protected void configure(final HttpSecurity http) throws Exception {
+		http.csrf().disable().authorizeRequests().antMatchers("/rest/**").hasRole("ADMIN").and().httpBasic().and()
+				.logout().logoutUrl("/logout").logoutSuccessUrl("/").invalidateHttpSession(true).deleteCookies("protim")
+				.permitAll();
 
 	}
 }

@@ -11,7 +11,7 @@ import io.github.marmer.protim.repositories.UseraccountRepository;
 @SpringBootApplication
 public class ProtimApplication {
 
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		SpringApplication.run(ProtimApplication.class, args);
 
 	}
@@ -31,11 +31,12 @@ public class ProtimApplication {
 		return new CommandLineRunner() {
 
 			@Override
-			public void run(String... arg0) throws Exception {
-				String username = "protim";
+			public void run(final String... arg0) throws Exception {
+				final String username = "protim";
 				// TODO this should not happen
-				if (accountRepository.findByUsername(username) == null)
+				if (accountRepository.findByUsername(username) == null) {
 					accountRepository.save(Useraccount.builder().username(username).password("protimpw").build());
+				}
 			}
 
 		};
