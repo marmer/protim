@@ -1,18 +1,5 @@
 package io.github.marmer.protim.tryouts;
 
-import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
-import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessRequest;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.preprocessResponse;
-import static org.springframework.restdocs.operation.preprocess.Preprocessors.prettyPrint;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -29,26 +16,32 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static org.hamcrest.CoreMatchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 @SpringBootTest
 @WebAppConfiguration
 public class SampleControllerIT {
-
-	@Autowired
-	private WebApplicationContext context;
-
-	private MockMvc mockMvc;
-
-	@Autowired
-	private SampleModelRepository sampleModelRepository;
 
 	@ClassRule
 	public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
 	@Rule
 	public final SpringMethodRule springMethodRule = new SpringMethodRule();
-
 	@Rule
 	public JUnitRestDocumentation restDocumentation = new JUnitRestDocumentation("target/generated-snippets");
-
+	@Autowired
+	private WebApplicationContext context;
+	private MockMvc mockMvc;
+	@Autowired
+	private SampleModelRepository sampleModelRepository;
 	private RestDocumentationResultHandler document;
 
 	@Before
@@ -65,7 +58,7 @@ public class SampleControllerIT {
 		// Preparation
 
 		// Execution
-		ResultActions request = mockMvc.perform(get("/rest/sample"));
+		final ResultActions request = mockMvc.perform(get("/rest/sample"));
 
 		// Assertion
 		request.andExpect(status().isOk()).andExpect(content().string(is(equalTo("It works without a teapot"))));

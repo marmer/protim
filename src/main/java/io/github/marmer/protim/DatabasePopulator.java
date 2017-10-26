@@ -1,15 +1,13 @@
 package io.github.marmer.protim;
 
-import java.util.Arrays;
-import java.util.Date;
-
-import javax.annotation.PostConstruct;
-
+import io.github.marmer.protim.model.Todo;
+import io.github.marmer.protim.repositories.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import io.github.marmer.protim.model.Todo;
-import io.github.marmer.protim.repositories.TodoRepository;
+import javax.annotation.PostConstruct;
+import java.util.Arrays;
+import java.util.Date;
 
 @Component
 public class DatabasePopulator {

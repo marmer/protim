@@ -1,8 +1,7 @@
 package io.github.marmer.protim.repositories;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import io.github.marmer.protim.model.Useraccount;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * The Interface UseraccountRepository.
@@ -14,8 +13,7 @@ public interface UseraccountRepository extends JpaRepository<Useraccount, Long> 
 	/**
 	 * Find by username.
 	 *
-	 * @param username
-	 *            the username
+	 * @param username the username
 	 * @return the useraccount
 	 */
 	Useraccount findByUsername(String username);
