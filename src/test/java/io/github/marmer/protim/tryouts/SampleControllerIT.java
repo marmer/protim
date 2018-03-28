@@ -16,8 +16,9 @@ import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import static io.github.marmer.protim.model.SampleModelMatcher.isSampleModel;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.Matchers.hasSize;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
@@ -58,14 +59,15 @@ public class SampleControllerIT {
 		// Preparation
 
 		// Execution
-		final ResultActions request = mockMvc.perform(get("/rest/sample"));
+		final String url = "/rest/sample";
+		final ResultActions request = mockMvc.perform(get(url));
 
 		// Assertion
 		request.andExpect(status().isOk()).andExpect(content().string(is(equalTo("It works without a teapot"))));
 
-		assertThat(sampleModelRepository.findAll(), hasSize(1));
-		mockMvc.perform(get("/sample"));
-		assertThat(sampleModelRepository.findAll(), hasSize(2));
+		assertThat(sampleModelRepository.findAll(), contains(isSampleModel()));
+		mockMvc.perform(get(url));
+		assertThat(sampleModelRepository.findAll(), contains(isSampleModel(), isSampleModel()));
 		document.handle(request.andReturn());
 	}
 

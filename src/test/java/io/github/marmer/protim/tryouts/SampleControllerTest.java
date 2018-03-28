@@ -19,30 +19,30 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class SampleControllerTest {
-	@Rule
-	public final MockitoRule mockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
+    @Rule
+    public final MockitoRule mockitoRule = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
 
-	private MockMvc mockMvc;
+    private MockMvc mockMvc;
 
-	@InjectMocks
-	private SampleController sampleController;
-	@Mock
-	private SampleModelRepository sampleModelRepository;
+    @InjectMocks
+    private SampleController sampleController;
+    @Mock
+    private SampleModelRepository sampleModelRepository;
 
-	@Before
-	public void setup() {
-		mockMvc = MockMvcBuilders.standaloneSetup(sampleController).build();
-	}
+    @Before
+    public void setup() {
+        mockMvc = MockMvcBuilders.standaloneSetup(sampleController).build();
+    }
 
-	@Test
-	public void testMockMvcIntegration() throws Exception {
-		// Preparation
+    @Test
+    public void testMockMvcIntegration() throws Exception {
+        // Preparation
 
-		// Execution
-		final ResultActions request = mockMvc.perform(get("/rest/sample"));
+        // Execution
+        final ResultActions request = mockMvc.perform(get("/rest/sample"));
 
-		// Assertion
-		request.andExpect(status().isOk()).andExpect(content().string(is(equalTo("It works without a teapot"))));
-	}
+        // Assertion
+        request.andExpect(status().isOk()).andExpect(content().string(is(equalTo("It works without a teapot"))));
+    }
 
 }

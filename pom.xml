@@ -35,10 +35,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency>
+		<!--<dependency>-->
+		<!--<groupId>org.springframework.boot</groupId>-->
+		<!--<artifactId>spring-boot-starter-security</artifactId>-->
+		<!--</dependency>-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -76,11 +76,11 @@
 			<artifactId>spring-restdocs-mockmvc</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-test</artifactId>
-			<scope>test</scope>
-		</dependency>
+		<!--<dependency>-->
+		<!--<groupId>org.springframework.security</groupId>-->
+		<!--<artifactId>spring-security-test</artifactId>-->
+		<!--<scope>test</scope>-->
+		<!--</dependency>-->
 		<dependency>
 			<groupId>org.hamcrest</groupId>
 			<artifactId>java-hamcrest</artifactId>
@@ -127,7 +127,7 @@
 				<version>${version.hamcrest-matcher-generator}</version>
 				<configuration>
 					<matcherSources>
-						<matcherSource>io.github.marmer.protim</matcherSource>
+						<matcherSource>io.github.marmer.protim.model</matcherSource>
 					</matcherSources>
 					<ignoreClassesWithoutProperties>true</ignoreClassesWithoutProperties>
 					<outputDir>target/generated-test-sources</outputDir>
@@ -249,6 +249,37 @@
 					</filesets>
 				</configuration>
 			</plugin>
+			<!--<plugin>-->
+			<!--<groupId>com.dkanejs.maven.plugins</groupId>-->
+			<!--<artifactId>docker-compose-maven-plugin</artifactId>-->
+			<!--<version>1.0.3</version>-->
+			<!--<configuration>-->
+			<!--<composeFile>${project.basedir}/docker-compose-postgres.yml</composeFile>-->
+
+			<!--</configuration>-->
+			<!--<executions>-->
+			<!--<execution>-->
+			<!--<id>up</id>-->
+			<!--<phase>pre-integration-test</phase>-->
+			<!--<goals>-->
+			<!--<goal>up</goal>-->
+			<!--</goals>-->
+			<!--<configuration>-->
+			<!--<detachedMode>true</detachedMode>-->
+			<!--</configuration>-->
+			<!--</execution>-->
+			<!--<execution>-->
+			<!--<id>down</id>-->
+			<!--<phase>post-integration-test</phase>-->
+			<!--<goals>-->
+			<!--<goal>down</goal>-->
+			<!--</goals>-->
+			<!--<configuration>-->
+			<!--<removeVolumes>true</removeVolumes>-->
+			<!--</configuration>-->
+			<!--</execution>-->
+			<!--</executions>-->
+			<!--</plugin>-->
 		</plugins>
 	</build>
 </project>
