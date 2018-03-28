@@ -193,6 +193,10 @@
 				<configuration>
 					<installDirectory>${java.io.tmpdir}/nodebin</installDirectory>
 					<workingDirectory>${project.basedir}/src/main/js</workingDirectory>
+					<environmentVariables>
+						<NODE_ENV>development</NODE_ENV>
+						<BABEL_ENV>development</BABEL_ENV>
+					</environmentVariables>
 				</configuration>
 				<executions>
 					<execution>
