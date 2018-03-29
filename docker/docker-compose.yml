@@ -2,7 +2,7 @@ version: '3.3'
 services:
   db:
     image: postgres
-    restart: always
+    #restart: always
     environment:
       POSTGRES_USER: protim
       POSTGRES_PASSWORD: protim
@@ -11,7 +11,7 @@ services:
     volumes:
       - data-volume:/var/lib/postgresql/data/pgdata
     ports:
-      - 5432:5432
+      - 5433:5432
       
 volumes:
   data-volume:

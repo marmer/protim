@@ -232,7 +232,7 @@
 				<configuration>
 					<filesets>
 						<fileset>
-							<directory>${project.basedir}/src/main/js/src/main/resources/static</directory>
+							<directory>${project.basedir}/src/main/resources/static/js</directory>
 							<includes>
 								<include>bundle.js*</include>
 							</includes>
@@ -254,7 +254,7 @@
 			<!--<artifactId>docker-compose-maven-plugin</artifactId>-->
 			<!--<version>1.0.3</version>-->
 			<!--<configuration>-->
-			<!--<composeFile>${project.basedir}/docker-compose-postgres.yml</composeFile>-->
+			<!--<composeFile>${project.basedir}/docker/docker-compose.yml</composeFile>-->
 
 			<!--</configuration>-->
 			<!--<executions>-->

@@ -31,7 +31,7 @@
 const path = require('path');
 
 module.exports = {
-    entry: './src/App.tsx',
+    entry: './src/index.tsx',
     devtool: 'inline-source-map',
     cache: true,
     module: {
@@ -65,6 +65,6 @@ module.exports = {
     },
     output: {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, 'src', 'main', 'resources', 'static')
+        path: path.resolve(__dirname, '..', 'resources', 'static', 'js')
     }
 };
