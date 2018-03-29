@@ -54,7 +54,7 @@ module.exports = {
                 ]
             },
             {
-                test: /\.css?$/,
+                test: /\.css$/,
                 use: 'css-loader',
                 exclude: /node_modules/
             },
