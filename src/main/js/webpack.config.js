@@ -1,33 +1,3 @@
-// var path = require('path');
-//
-// module.exports = {
-//     entry: './src/App.tsx',
-//     devtool: 'sourcemaps',
-//     cache: true,
-//     output: {
-//         path: path.resolve(__dirname, 'src', 'main', 'resources', 'static'),
-//         filename: 'bundle.js'
-//     },
-//     resolve: {
-//         extensions: [
-//             '',
-//             '.tsx',
-//             '.ts',
-//             '.js',
-//             '.tsx'
-//         ]
-//     },
-//     module: {
-//         rules: [
-//             {
-//                 test: path.join(__dirname, '.'),
-//                 exclude: /(node_modules)/,
-//                 use: 'ts-loader'
-//             }
-//         ]
-//     }
-// };
-
 const path = require('path');
 
 module.exports = {
