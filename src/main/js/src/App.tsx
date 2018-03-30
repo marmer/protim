@@ -1,5 +1,6 @@
 import * as React from 'react';
 import './App.css';
+import {BookingDayView} from './BookingDayView';
 
 class App extends React.Component {
     render() {
@@ -15,10 +16,10 @@ class App extends React.Component {
                         This should be pretty green if bootstrap loads. Otherwhise something went wrong ^^
                     </div>
                 </p>
+                <BookingDayView/>
             </div>
         );
     }
 }
-
 
 export default App;

@@ -44,4 +44,4 @@ nbdist/
 node_modules/
 yarn.lock
 package-lock.json
-/src/main/js/public/bundle.js
+/src/main/resources/static/js/bundle.js
