@@ -12,7 +12,7 @@ class App extends React.Component {
                 <p className="App-intro">
                     To get started, edit <code>src/App.tsx</code> and save to reload.
                     <div className="alert alert-primary" role="alert">
-                        This should be pretty green if bootstrap loads. Otherwhise something went wrong ^^
+                        This should be pretty colored if bootstrap loads. Otherwhise something went wrong ^^
                     </div>
                 </p>
                 <BookingDayView/>
