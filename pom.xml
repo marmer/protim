@@ -205,6 +205,7 @@
                     <environmentVariables>
                         <NODE_ENV>development</NODE_ENV>
                         <BABEL_ENV>development</BABEL_ENV>
+                        <CI>true</CI>
                     </environmentVariables>
                 </configuration>
                 <executions>
@@ -225,6 +226,16 @@
                         </goals>
                         <configuration>
                             <arguments>install</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>npm test</id>
+                        <goals>
+                            <goal>npm</goal>
+                        </goals>
+                        <phase>test</phase>
+                        <configuration>
+                            <arguments>test</arguments>
                         </configuration>
                     </execution>
                     <execution>
