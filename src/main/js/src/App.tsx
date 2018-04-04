@@ -15,7 +15,7 @@ class App extends React.Component {
                         This should be pretty colored if bootstrap loads. Otherwhise something went wrong ^^
                     </div>
                 </p>
-                <BookingDayView/>
+                <BookingDayView date="1979-10-12"/>
             </div>
         );
     }
