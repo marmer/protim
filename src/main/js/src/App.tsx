@@ -1,5 +1,4 @@
 import * as React from 'react';
-import './App.css';
 import {BookingDayView} from './BookingDayView';
 
 class App extends React.Component {
