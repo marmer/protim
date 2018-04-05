@@ -252,7 +252,7 @@
                 <configuration>
                     <filesets>
                         <fileset>
-                            <directory>${project.basedir}/src/main/js/static</directory>
+                            <directory>${project.basedir}/src/main/js/public</directory>
                             <includes>
                                 <include>bundle.js</include>
                             </includes>
