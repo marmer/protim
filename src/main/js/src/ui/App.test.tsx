@@ -1,4 +1,4 @@
-/// <reference path="../node_modules/jest-enzyme/lib/index.d.ts" />
+/// <reference path="../../node_modules/jest-enzyme/lib/index.d.ts" />
 
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
