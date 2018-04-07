@@ -11,10 +11,10 @@ class App extends React.Component {
                 </header>
                 <p className="App-intro">
                     To get started, edit <code>src/App.tsx</code> and save to reload.
-                    <div className="alert alert-primary" role="alert">
-                        This should be pretty colored if bootstrap loads. Otherwhise something went wrong ^^
-                    </div>
                 </p>
+                <div className="alert alert-primary" role="alert">
+                    This should be pretty colored if bootstrap loads. Otherwhise something went wrong ^^
+                </div>
                 <TimeManagementView date="1979-10-12"/>
             </div>
         );

@@ -16,11 +16,11 @@ describe(`<${App.name} />`, () => {
         tree = shallow(<App/>);
     });
 
-    it('View with current day is displayed', () => {
+    it('should display a TimeManagementView', () => {
         expect(tree.find('TimeManagementView')).toExist();
     });
 
-    it('An important day was set for mankind', () => {
+    it('should initialize the timemanagement with the current day', () => {
         expect(tree.find('TimeManagementView').prop('date')).toEqual('1979-10-12');
     });
 

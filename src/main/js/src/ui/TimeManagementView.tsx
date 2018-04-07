@@ -1,14 +1,14 @@
 import * as React from 'react';
-import {BookingDay} from './BookingDay';
+import {TimeManagement} from './TimeManagement';
 
-export interface DayViewProps {
+export interface TimeManagementViewProps {
     date: String;
 }
 
-export class TimeManagementView extends React.Component<DayViewProps, BookingDay> {
-    constructor(props: DayViewProps) {
+export class TimeManagementView extends React.Component<TimeManagementViewProps, TimeManagement> {
+    constructor(props: TimeManagementViewProps) {
         super(props);
-        this.state = new BookingDay(props.date);
+        this.state = new TimeManagement(props.date);
     }
 
     render(): React.ReactNode {

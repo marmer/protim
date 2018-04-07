@@ -1,4 +1,4 @@
-export class BookingDay {
+export class TimeManagement {
     bookingDayEntry: String;
 
     constructor(bookingDayEntry: String) {
