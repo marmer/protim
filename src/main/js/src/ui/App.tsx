@@ -15,7 +15,7 @@ class App extends React.Component {
                 <div className="alert alert-primary" role="alert">
                     This should be pretty colored if bootstrap loads. Otherwhise something went wrong ^^
                 </div>
-                <TimeManagementView date="1979-10-12"/>
+                <TimeManagementView/>
             </div>
         );
     }
