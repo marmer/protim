@@ -20,10 +20,6 @@ describe(`<${App.name} />`, () => {
         expect(tree.find('TimeManagementView')).toExist();
     });
 
-    it('should initialize the timemanagement with the current day', () => {
-        expect(tree.find('TimeManagementView').prop('date')).toEqual('1979-10-12');
-    });
-
     // it('snapshot', () => {
     //     expect(tree).toMatchSnapshot();
     // });

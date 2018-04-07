@@ -1,19 +1,29 @@
 import * as React from 'react';
-import {TimeManagement} from './TimeManagement';
+import {TimeManagement} from "../model/TimeManagement";
+import {BookingDayView} from "./BookingDayView";
 
 export interface TimeManagementViewProps {
-    date: String;
 }
 
 export class TimeManagementView extends React.Component<TimeManagementViewProps, TimeManagement> {
     constructor(props: TimeManagementViewProps) {
         super(props);
-        this.state = new TimeManagement(props.date);
     }
 
     render(): React.ReactNode {
         return (
-            <div>DayView with an entry: {this.state.bookingDayEntry}</div>
+            <BookingDayView date={this.todayAsIsoString()}/>
         );
+    }
+
+    today(): Date {
+        const now = new Date();
+        now.setHours(0, 0, 0, 0);
+        return now;
+    }
+
+    todayAsIsoString(): String {
+        const todayDate = this.today();
+        return todayDate.getFullYear() + "-" + todayDate.getMonth() + "-" + todayDate.getDay();
     }
 }

@@ -73,13 +73,13 @@
       "check-whitespace"
     ],
     "quotemark": [
-      true,
+      false,
       "single",
       "jsx-double"
     ],
     "radix": true,
     "semicolon": [
-      true,
+      false,
       "always"
     ],
     "switch-default": true,
