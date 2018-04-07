@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {BookingDayView} from './BookingDayView';
+import {TimeManagementView} from './TimeManagementView';
 
 class App extends React.Component {
     render() {
@@ -15,7 +15,7 @@ class App extends React.Component {
                         This should be pretty colored if bootstrap loads. Otherwhise something went wrong ^^
                     </div>
                 </p>
-                <BookingDayView date="1979-10-12"/>
+                <TimeManagementView date="1979-10-12"/>
             </div>
         );
     }

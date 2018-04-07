@@ -5,7 +5,7 @@ export interface DayViewProps {
     date: String;
 }
 
-export class BookingDayView extends React.Component<DayViewProps, BookingDay> {
+export class TimeManagementView extends React.Component<DayViewProps, BookingDay> {
     constructor(props: DayViewProps) {
         super(props);
         this.state = new BookingDay(props.date);
