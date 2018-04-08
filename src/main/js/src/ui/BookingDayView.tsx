@@ -13,7 +13,9 @@ export class BookingDayView extends React.Component<BookingDayViewProps, Booking
     render(): React.ReactNode {
         // TODO this component BookingDayView needs some sense
         return (
-            <div/>
+            <div>
+                <p>Date: {this.props.date}</p>
+            </div>
         );
     }
 }

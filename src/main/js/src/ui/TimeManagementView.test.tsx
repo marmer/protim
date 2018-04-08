@@ -4,32 +4,23 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import {shallow, ShallowWrapper} from 'enzyme';
 import {TimeManagementView} from './TimeManagementView';
-import {Iso8601Service} from "../services/Iso8601Service";
+import {Iso8601Service} from '../service/Iso8601Service';
+import mock = jest.mock;
+import fn = jest.fn;
 
 it('renders without crashing', () => {
     const div = document.createElement('div');
     ReactDOM.render(<TimeManagementView/>, div);
 });
 
-function today(): Date {
-    const now = new Date();
-    now.setHours(0, 0, 0, 0);
-    return now;
-}
-
-function todayAsIsoString(): String {
-    const todayDate = today();
-    return todayDate.getFullYear() + "-" + todayDate.getMonth() + "-" + todayDate.getDay();
-}
-
-describe(`<${TimeManagementView.name} />`, () => {
+describe(`<${TimeManagementView.name} />`, () => { 
     let tree: ShallowWrapper;
+    const todayAsIsoDate = '1985-01-02';
 
-    let iso8601ServiceMock = jest.mock(Iso8601Service.name);
-    iso8601ServiceMock.mock(Iso8601Service.today.name, () => {
-        return "1985-01-02"
+    mock('../service/' + Iso8601Service.name);
+    Iso8601Service.today = fn(() => {
+        return todayAsIsoDate;
     });
-    // TODO: MarMer 07.04.2018 Get out how to mock the function "today" correctly!
 
     beforeAll(() => {
         tree = shallow(<TimeManagementView/>);
@@ -42,7 +33,7 @@ describe(`<${TimeManagementView.name} />`, () => {
     it('should display the booking view for the current date by default', () => {
         expect(tree.find('BookingDayView')
             .prop('date'))
-            .toEqual(todayAsIsoString());
+            .toEqual(todayAsIsoDate);
     });
 
 });

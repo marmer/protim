@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {TimeManagement} from "../model/TimeManagement";
-import {BookingDayView} from "./BookingDayView";
-import {Iso8601Service} from "../services/Iso8601Service";
+import {TimeManagement} from '../model/TimeManagement';
+import {BookingDayView} from './BookingDayView';
+import {Iso8601Service} from '../service/Iso8601Service';
 
 export interface TimeManagementViewProps {
 }
