@@ -5,15 +5,15 @@ import * as ReactDOM from 'react-dom';
 import {shallow, ShallowWrapper} from 'enzyme';
 import {TimeManagementView} from './TimeManagementView';
 import {Iso8601Service} from '../service/Iso8601Service';
-import mock = jest.mock;
 import fn = jest.fn;
+import mock = jest.mock;
 
 it('renders without crashing', () => {
     const div = document.createElement('div');
     ReactDOM.render(<TimeManagementView/>, div);
 });
 
-describe(`<${TimeManagementView.name} />`, () => { 
+describe(`<${TimeManagementView.name} />`, () => {
     let tree: ShallowWrapper;
     const todayAsIsoDate = '1985-01-02';
 
