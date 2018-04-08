@@ -9,4 +9,4 @@
 [![Code Smells](https://sonarcloud.io/api/badges/measure?key=io.github.marmer.protim%3Aprotim&metric=code_smells)](https://sonarcloud.io/dashboard/index/io.github.marmer.protim%3Aprotim)
 
 # protim
-A tool to manage your production time
+The beginning of a tool to manage your production time
