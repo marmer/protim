@@ -6,7 +6,6 @@ import {shallow, ShallowWrapper} from 'enzyme';
 import {TimeManagementView} from './TimeManagementView';
 import {Iso8601Service} from '../service/Iso8601Service';
 import fn = jest.fn;
-import mock = jest.mock;
 
 it('renders without crashing', () => {
     const div = document.createElement('div');
@@ -16,13 +15,13 @@ it('renders without crashing', () => {
 describe(`<${TimeManagementView.name} />`, () => {
     let tree: ShallowWrapper;
     const todayAsIsoDate = '1985-01-02';
-
-    mock('../service/' + Iso8601Service.name);
-    Iso8601Service.today = fn(() => {
-        return todayAsIsoDate;
-    });
+    let isoTodayMock: jest.Mock;
 
     beforeAll(() => {
+        isoTodayMock = fn(() => {
+            return todayAsIsoDate;
+        });
+        Iso8601Service.today = isoTodayMock;
         tree = shallow(<TimeManagementView/>);
     });
 
