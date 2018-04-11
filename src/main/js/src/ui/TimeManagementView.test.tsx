@@ -6,6 +6,7 @@ import {shallow, ShallowWrapper} from 'enzyme';
 import {TimeManagementView} from './TimeManagementView';
 import {SystemTimeService} from '../service/SystemTimeService';
 import {BookingDayView} from "./BookingDayView";
+import {DateTimeService} from "../service/DateTimeService";
 import fn = jest.fn;
 
 it('renders without crashing', () => {
@@ -15,12 +16,16 @@ it('renders without crashing', () => {
 
 describe(`<${TimeManagementView.name} />`, () => {
     let tree: ShallowWrapper;
-    let today: Date;
+    let today: Date = new Date();
+    let nextDay: Date = new Date();
+    let lastDay: Date = new Date();
     let nowMock: jest.Mock;
 
     beforeAll(() => {
-        today = new Date();
         today.setFullYear(1985, 1, 2);
+        nextDay.setFullYear(1985, 1, 1);
+        lastDay.setFullYear(1985, 1, 3);
+
         nowMock = fn(() => {
             return today;
         });
@@ -31,7 +36,7 @@ describe(`<${TimeManagementView.name} />`, () => {
     describe(BookingDayView.name, () => {
         let bookingDayView: ShallowWrapper;
         beforeEach(() => {
-            bookingDayView = tree.find('BookingDayView');
+            bookingDayView = findBookingDayView();
         });
 
         it('should exist', () => {
@@ -44,6 +49,10 @@ describe(`<${TimeManagementView.name} />`, () => {
 
     });
 
+    function findBookingDayView() {
+        return tree.find('BookingDayView');
+    }
+
     describe("button to move a day forward in time", () => {
         let dayForwardButton: ShallowWrapper;
         beforeEach(() => {
@@ -54,10 +63,25 @@ describe(`<${TimeManagementView.name} />`, () => {
             expect(dayForwardButton).toExist();
         });
 
-        it("should contain a button to go the day after", () => {
-            // const mock = jest.fn((args1, args2) => args1 === "a" ? "a" : "b")
-
+        it("should show an appropriate text", () => {
             expect(dayForwardButton).toHaveText(">");
+        });
+
+        it("should go to the next day on click", () => {
+            // preparation
+            DateTimeService.dayAfter = fn((day) => {
+                if (day === today) {
+                    return nextDay;
+                }
+                return null;
+            });
+
+            // execution
+            dayForwardButton.simulate("click");
+
+            // assertion
+            let bookingDayView = findBookingDayView();
+            expect(bookingDayView.prop("day")).toEqual(nextDay);
         });
 
     });
@@ -72,8 +96,7 @@ describe(`<${TimeManagementView.name} />`, () => {
             expect(dayBackButton).toExist();
         });
 
-        it("should contain a button to go the day before", () => {
-
+        it("should show an appropriate text", () => {
             expect(dayBackButton).toHaveText("<");
         });
     });

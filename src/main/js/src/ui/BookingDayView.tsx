@@ -12,11 +12,9 @@ export class BookingDayView extends React.Component<BookingDayViewProps, Booking
 
     render(): React.ReactNode {
         // TODO this component BookingDayView needs some sense
-        let date = this.props.day;
-        const dateString = date.getDay() + "." + date.getMonth() + "." + date.getFullYear();
         return (
             <div>
-                <p>Date: {dateString}</p>
+                <p>Date: {this.props.day.toISOString()}</p>
             </div>
         );
     }
