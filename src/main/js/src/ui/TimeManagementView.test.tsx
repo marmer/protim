@@ -7,6 +7,7 @@ import {TimeManagementView} from './TimeManagementView';
 import {SystemTimeService} from '../service/SystemTimeService';
 import {BookingDayView} from "./BookingDayView";
 import {DateTimeService} from "../service/DateTimeService";
+import * as Mockito from 'ts-mockito'
 import fn = jest.fn;
 
 it('renders without crashing', () => {
@@ -69,6 +70,9 @@ describe(`<${TimeManagementView.name} />`, () => {
 
         it("should go to the next day on click", () => {
             // preparation
+
+            Mockito.when(DateTimeService.dayAfter)
+            ######
             DateTimeService.dayAfter = fn((day) => {
                 if (day === today) {
                     return nextDay;
