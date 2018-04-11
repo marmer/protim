@@ -5,6 +5,7 @@ import * as ReactDOM from 'react-dom';
 import {shallow, ShallowWrapper} from 'enzyme';
 import {TimeManagementView} from './TimeManagementView';
 import {SystemTimeService} from '../service/SystemTimeService';
+import {BookingDayView} from "./BookingDayView";
 import fn = jest.fn;
 
 it('renders without crashing', () => {
@@ -27,24 +28,54 @@ describe(`<${TimeManagementView.name} />`, () => {
         tree = shallow(<TimeManagementView/>);
     });
 
-    it('should display a view to book working hours', () => {
-        expect(tree.find('BookingDayView')).toExist();
+    describe(BookingDayView.name, () => {
+        let bookingDayView: ShallowWrapper;
+        beforeEach(() => {
+            bookingDayView = tree.find('BookingDayView');
+        });
+
+        it('should exist', () => {
+            expect(bookingDayView).toExist();
+        });
+
+        it('should be for today', () => {
+            expect(bookingDayView.prop('day')).toEqual(today);
+        });
+
     });
 
-    it('should display the booking view for the current date by default', () => {
-        expect(tree.find('BookingDayView')
-            .prop('day'))
-            .toEqual(today);
+    describe("day forward button", () => {
+        let dayForwardButton: ShallowWrapper;
+        beforeEach(() => {
+            dayForwardButton = tree.find("button.button-next-day");
+        });
+
+        it("should exist", () => {
+            expect(dayForwardButton).toExist();
+        });
+
+        it("should contain a button to go the day after", () => {
+
+            // const mock = jest.fn((args1, args2) => args1 === "a" ? "a" : "b")
+
+            expect(dayForwardButton).toHaveText(">");
+        });
+
     });
 
-    it("schould contain a button to go the day after", () => {
+    describe("day back button", () => {
+        let dayBackButton: ShallowWrapper;
+        beforeEach(() => {
+            dayBackButton = tree.find("button.button-last-day");
+        });
 
-        // const mock = jest.fn((args1, args2) => args1 === "a" ? "a" : "b")
-        expect(tree.find("button.button-next-day")).toHaveText(">");
+        it("should exist", () => {
+            expect(dayBackButton).toExist();
+        });
+
+        it("should contain a button to go the day before", () => {
+
+            expect(dayBackButton).toHaveText("<");
+        });
     });
-
-    it("schould contain a button to go the day before", () => {
-        expect(tree.find("button.button-last-day")).toHaveText("<");
-    });
-
 });
