@@ -4,7 +4,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import {shallow, ShallowWrapper} from 'enzyme';
 import {TimeManagementView} from './TimeManagementView';
-import {DateTimeService} from '../service/DateTimeService';
+import {SystemTimeService} from '../service/SystemTimeService';
 import fn = jest.fn;
 
 it('renders without crashing', () => {
@@ -21,10 +21,9 @@ describe(`<${TimeManagementView.name} />`, () => {
         today = new Date();
         today.setFullYear(1985, 1, 2);
         nowMock = fn(() => {
-
             return today;
         });
-        DateTimeService.now = nowMock;
+        SystemTimeService.now = nowMock;
         tree = shallow(<TimeManagementView/>);
     });
 

@@ -5,7 +5,7 @@
  * @author marmer
  * @since 11.04.2018
  */
-export class DateTimeService {
+export class SystemTimeService {
     public static now(): Date {
         return new Date();
     }

@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {TimeManagement} from '../model/TimeManagement';
 import {BookingDayView} from './BookingDayView';
-import {DateTimeService} from "../service/DateTimeService";
+import {SystemTimeService} from "../service/SystemTimeService";
 
 export interface TimeManagementViewProps {
 }
@@ -18,7 +18,7 @@ export class TimeManagementView extends React.Component<TimeManagementViewProps,
                     <button id="lastDay">{"<"}</button>
                     <button id="nextDay">{">"}</button>
                 </div>
-                <BookingDayView day={DateTimeService.now()}/>
+                <BookingDayView day={SystemTimeService.now()}/>
             </div>
         );
     }
