@@ -4,7 +4,7 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import {shallow, ShallowWrapper} from 'enzyme';
 import {TimeManagementView} from './TimeManagementView';
-import {Iso8601Service} from '../service/Iso8601Service';
+import {DateTimeService} from '../service/DateTimeService';
 import fn = jest.fn;
 
 it('renders without crashing', () => {
@@ -14,14 +14,17 @@ it('renders without crashing', () => {
 
 describe(`<${TimeManagementView.name} />`, () => {
     let tree: ShallowWrapper;
-    const todayAsIsoDate = '1985-01-02';
-    let isoTodayMock: jest.Mock;
+    let today: Date;
+    let nowMock: jest.Mock;
 
     beforeAll(() => {
-        isoTodayMock = fn(() => {
-            return todayAsIsoDate;
+        today = new Date();
+        today.setFullYear(1985, 1, 2);
+        nowMock = fn(() => {
+
+            return today;
         });
-        Iso8601Service.today = isoTodayMock;
+        DateTimeService.now = nowMock;
         tree = shallow(<TimeManagementView/>);
     });
 
@@ -31,8 +34,16 @@ describe(`<${TimeManagementView.name} />`, () => {
 
     it('should display the booking view for the current date by default', () => {
         expect(tree.find('BookingDayView')
-            .prop('date'))
-            .toEqual(todayAsIsoDate);
+            .prop('day'))
+            .toEqual(today);
+    });
+
+    it("schould contain a button to go the day after", () => {
+        expect(tree.find("button#nextDay")).toHaveText(">");
+    });
+
+    it("schould contain a button to go the day before", () => {
+        expect(tree.find("button#lastDay")).toHaveText("<");
     });
 
 });
