@@ -38,11 +38,13 @@ describe(`<${TimeManagementView.name} />`, () => {
     });
 
     it("schould contain a button to go the day after", () => {
-        expect(tree.find("button#nextDay")).toHaveText(">");
+
+        // const mock = jest.fn((args1, args2) => args1 === "a" ? "a" : "b")
+        expect(tree.find("button.button-next-day")).toHaveText(">");
     });
 
     it("schould contain a button to go the day before", () => {
-        expect(tree.find("button#lastDay")).toHaveText("<");
+        expect(tree.find("button.button-last-day")).toHaveText("<");
     });
 
 });

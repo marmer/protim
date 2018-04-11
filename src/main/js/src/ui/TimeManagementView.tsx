@@ -15,8 +15,8 @@ export class TimeManagementView extends React.Component<TimeManagementViewProps,
         return (
             <div>
                 <div>
-                    <button id="lastDay">{"<"}</button>
-                    <button id="nextDay">{">"}</button>
+                    <button className="button button-last-day">{"<"}</button>
+                    <button className="button button-next-day">{">"}</button>
                 </div>
                 <BookingDayView day={SystemTimeService.now()}/>
             </div>
