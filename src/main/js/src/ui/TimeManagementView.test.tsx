@@ -44,7 +44,7 @@ describe(`<${TimeManagementView.name} />`, () => {
 
     });
 
-    describe("day forward button", () => {
+    describe("button to move a day forward in time", () => {
         let dayForwardButton: ShallowWrapper;
         beforeEach(() => {
             dayForwardButton = tree.find("button.button-next-day");
@@ -55,7 +55,6 @@ describe(`<${TimeManagementView.name} />`, () => {
         });
 
         it("should contain a button to go the day after", () => {
-
             // const mock = jest.fn((args1, args2) => args1 === "a" ? "a" : "b")
 
             expect(dayForwardButton).toHaveText(">");
@@ -63,7 +62,7 @@ describe(`<${TimeManagementView.name} />`, () => {
 
     });
 
-    describe("day back button", () => {
+    describe("button to move a day back in time", () => {
         let dayBackButton: ShallowWrapper;
         beforeEach(() => {
             dayBackButton = tree.find("button.button-last-day");
