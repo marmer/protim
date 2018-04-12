@@ -22,7 +22,7 @@ export class TimeManagementView extends React.Component<TimeManagementViewProps,
         return (
             <div>
                 <div>
-                    <button className="button button-last-day">{"<"}</button>
+                    <button className="button button-last-day" onClick={() => this.switchToLastDay()}>{"<"}</button>
                     <button className="button button-next-day" onClick={() => this.switchToNextDay()}>{">"}</button>
                 </div>
                 <BookingDayView day={this.state.bookingDay}/>
@@ -33,6 +33,12 @@ export class TimeManagementView extends React.Component<TimeManagementViewProps,
     private switchToNextDay(): void {
         this.setState({
             bookingDay: DateTimeService.dayAfter(this.state.bookingDay)
+        });
+    }
+
+    private switchToLastDay(): void {
+        this.setState({
+            bookingDay: DateTimeService.dayBefore(this.state.bookingDay)
         });
     }
 }

@@ -21,7 +21,7 @@ describe(`<${TimeManagementView.name} />`, () => {
     let lastDay: Date = new Date();
     let nowMock: jest.Mock;
 
-    beforeAll(() => {
+    beforeEach(() => {
         today.setFullYear(1985, 1, 2);
         nextDay.setFullYear(1985, 1, 1);
         lastDay.setFullYear(1985, 1, 3);
@@ -95,6 +95,21 @@ describe(`<${TimeManagementView.name} />`, () => {
 
         it("should show an appropriate text", () => {
             expect(dayBackButton).toHaveText("<");
+        });
+
+        it("should go to the last day on click", () => {
+            // preparation
+            DateTimeService.dayBefore = fn((day) => {
+                return day === today ? lastDay : null;
+            });
+
+            // execution
+            dayBackButton.simulate("click");
+
+            // assertion
+            let bookingDayView = findBookingDayView();
+            console.debug(bookingDayView.prop("day"))
+            expect(bookingDayView.prop("day")).toEqual(lastDay);
         });
     });
 });
