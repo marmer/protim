@@ -13,8 +13,27 @@ export class BookingDayView extends React.Component<BookingDayViewProps, Booking
     render(): React.ReactNode {
         // TODO this component BookingDayView needs some sense
         return (
-            <div>
+            <div className="container">
                 <p>Date: {this.props.day.toISOString()}</p>
+                <div className="row">
+                    <div className="col">
+                        1 of 2
+                    </div>
+                    <div className="col">
+                        2 of 2
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="col">
+                        1 of 3
+                    </div>
+                    <div className="col">
+                        2 of 3
+                    </div>
+                    <div className="col">
+                        3 of 3
+                    </div>
+                </div>
             </div>
         );
     }
