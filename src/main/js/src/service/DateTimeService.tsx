@@ -6,16 +6,14 @@
  */
 export class DateTimeService {
     public static dayAfter(date: Date): Date {
-        // TODO: MarMer 11.04.2018 implement me!
-
-        let date1 = new Date(date);
-        date1.setMonth(date1.getMonth() - 1); // total nonsense of course
-        return date1;
+        let newDate: Date = new Date(date);
+        newDate.setDate(date.getDate() + 1);
+        return newDate;
     }
 
     public static dayBefore(date: Date): Date {
         let newDate = new Date(date);
-        newDate.setMonth(date.getMonth() - 1);
+        newDate.setDate(date.getDate() - 1);
 
         return newDate;
     }
