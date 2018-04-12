@@ -14,10 +14,9 @@ export class DateTimeService {
     }
 
     public static dayBefore(date: Date): Date {
-        // TODO: MarMer 11.04.2018 implement me!
+        let newDate = new Date(date);
+        newDate.setMonth(date.getMonth() - 1);
 
-        let date1 = new Date(date);
-        date1.setMonth(date1.getMonth() + 7); // total nonsense of course
-        return date1;
+        return newDate;
     }
 }

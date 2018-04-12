@@ -108,7 +108,6 @@ describe(`<${TimeManagementView.name} />`, () => {
 
             // assertion
             let bookingDayView = findBookingDayView();
-            console.debug(bookingDayView.prop("day"))
             expect(bookingDayView.prop("day")).toEqual(lastDay);
         });
     });
