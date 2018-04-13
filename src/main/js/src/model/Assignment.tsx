@@ -1,6 +1,9 @@
 import {System} from "./System";
 
+/**
+ * Maybe some kind of Ticket system.
+ */
 export class Assignment {
-    systemId: String;
+    systemId: string;
     system: System;
 }

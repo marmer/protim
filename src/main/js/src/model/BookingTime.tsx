@@ -1,4 +1,4 @@
 export class BookingTime {
     startTime: Date;
-    lengthInMs: Number;
+    lengthInMs: number;
 }

@@ -15,40 +15,35 @@ export class BookingDayView extends React.Component<BookingDayViewProps, Booking
     }
 
     render(): React.ReactNode {
-        // TODO this component BookingDayView needs some sense
         return (
             <div className="container">
-                <p>Date: {this.props.day.toISOString()}</p>
-                <div className="row">
-                    <div className="col">
-                        1 of 2
-                    </div>
-                    <div className="col">
-                        2 of 2
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col">
-                        1 of 3
-                    </div>
-                    <div className="col">
-                        2 of 3
-                    </div>
-                    <div className="col">
-                        3 of 3
-                    </div>
-                </div>
-                <div className="form-group">
-                    <label htmlFor="exampleFormControlSelect1">Example select</label>
-                    <select className="form-control" id="exampleFormControlSelect1">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                <div className="row form-group align-items-center">
+                    {/*start time*/}
+                    <input
+                        type="time"
+                        className="col-1 form-control starttime"
+                        placeholder="1d 2h 25m"
+                    />
+                    {/*duration*/}
+                    <input
+                        type="time"
+                        className="col-1 form-control"
+                        placeholder="1d 2h 25m"
+                    />
+                    {/*description*/}
+                    <input type="text" className="col form-control" placeholder="What has been done"/>
+                    {/*notes*/}
+                    <input type="text" className="col form-control" placeholder="personal notes"/>
+                    {/*assignment ticket system*/}
+                    <select className="col-2 form-control">
+                        <option>None</option>
+                        <option>Jira</option>
                     </select>
+                    {/*is booked button*/}
+                    <button type="col-1 button" className="btn">X</button>
                 </div>
             </div>
         );
+        // TODO this component BookingDayView needs some sense
     }
 }
