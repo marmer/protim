@@ -1,8 +1,6 @@
 /**
  * Service handle dates easily.
  *
- * @author marmer
- * @since  11.04.2018
  */
 export class DateTimeService {
     public static dayAfter(date: Date): Date {

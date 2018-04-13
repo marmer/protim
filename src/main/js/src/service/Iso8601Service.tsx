@@ -1,8 +1,5 @@
 /**
  * Service to handle ISO 8601 formats.
- *
- * @author marmer
- * @since  07.04.2018
  */
 export class Iso8601Service {
     /**
