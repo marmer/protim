@@ -15,6 +15,9 @@
       true,
       "check-space"
     ],
+    "jsx-alignment": [
+      true
+    ],
     "curly": true,
     "eofline": false,
     "forin": true,

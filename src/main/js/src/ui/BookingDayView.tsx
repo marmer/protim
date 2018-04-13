@@ -2,11 +2,11 @@ import * as React from 'react';
 import {BookingDay} from '../model/BookingDay';
 
 export interface BookingDayViewState {
-    bookingDay: BookingDay
+    bookingDay: BookingDay;
 }
 
 export interface BookingDayViewProps {
-    day: Date
+    day: Date;
 }
 
 export class BookingDayView extends React.Component<BookingDayViewProps, BookingDayViewState> {
@@ -37,6 +37,16 @@ export class BookingDayView extends React.Component<BookingDayViewProps, Booking
                     <div className="col">
                         3 of 3
                     </div>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="exampleFormControlSelect1">Example select</label>
+                    <select className="form-control" id="exampleFormControlSelect1">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
                 </div>
             </div>
         );
