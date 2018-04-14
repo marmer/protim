@@ -79,6 +79,82 @@ export class BookingDayView extends React.Component<BookingDayViewProps, Booking
                     <button type="button" className="btn input-group-append">X</button>
                 </div>
 
+                <h1>Option 3 - form with labels</h1>
+                <form className="">
+                    <div className="form-group row">
+                        <label htmlFor="bla">Email address</label>
+                        {/*start time*/}
+                        <input
+                            id="bla"
+                            type="time"
+                            className="starttime"
+                            placeholder="1d 2h 25m"
+                        />
+                    </div>
+                    <div className="form-group row">
+                        {/*duration*/}
+                        <input
+                            type="time"
+                            className=""
+                        />
+                    </div>
+                    <div className="form-group row">
+
+                        {/*description*/}
+                        <textarea className="" placeholder="What has been done"/>
+                    </div>
+                    <div className="form-group row">
+                        {/*notes*/}
+                        <textarea className="" placeholder="personal notes"/>
+                    </div>
+                    <div className="form-group row">
+                        {/*assignment ticket system*/}
+                        <select className="">
+                            <option>None</option>
+                            <option>Jira</option>
+                        </select>
+                    </div>
+                    <div className="form-group row"> {/*is booked button*/}
+                        <button type="button" className="btn">X</button>
+                    </div>
+                </form>
+
+                <form>
+                    <div className="form-group row">
+                        <label
+                            className="col-sm-2 col-form-label"
+                        >
+                            Email
+                        </label>
+                        <div className="col-sm-10">
+                            <input
+                                type="text"
+                                readOnly={true}
+                                className="form-control-plaintext"
+                                id="staticEmail"
+                                value="email@example.com"
+                            />
+                        </div>
+
+                    </div>
+                    <div className="form-group row">
+                        <label
+                            className="col-sm-2 col-form-label"
+                        >
+                            Password
+                        </label>
+                        <div className="col-sm-10">
+                            <input
+                                type="password"
+                                className="form-control"
+                                id="inputPassword"
+                                placeholder="Password"
+                            />
+                        </div>
+                    </div>
+                </form>
+
+                <h1>Option 4 - Responsive Table</h1>
             </div>
         );
         // TODO this component BookingDayView needs some sense
