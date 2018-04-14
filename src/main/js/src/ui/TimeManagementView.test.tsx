@@ -5,8 +5,8 @@ import * as ReactDOM from 'react-dom';
 import {shallow, ShallowWrapper} from 'enzyme';
 import {TimeManagementView} from './TimeManagementView';
 import {SystemTimeService} from '../service/SystemTimeService';
-import {BookingDayView} from "./BookingDayView";
-import {DateTimeService} from "../service/DateTimeService";
+import {BookingDayView} from './BookingDayView';
+import {DateTimeService} from '../service/DateTimeService';
 import fn = jest.fn;
 
 it('renders without crashing', () => {
@@ -19,17 +19,17 @@ describe(`<${TimeManagementView.name} />`, () => {
     let today: Date = new Date();
     let nextDay: Date = new Date();
     let lastDay: Date = new Date();
-    let nowMock: jest.Mock;
+    let todayMock: jest.Mock;
 
     beforeEach(() => {
         today.setFullYear(1985, 1, 2);
         nextDay.setFullYear(1985, 1, 1);
         lastDay.setFullYear(1985, 1, 3);
 
-        nowMock = fn(() => {
+        todayMock = fn(() => {
             return today;
         });
-        SystemTimeService.now = nowMock;
+        SystemTimeService.today = todayMock;
         tree = shallow(<TimeManagementView/>);
     });
 

@@ -6,4 +6,9 @@ export class SystemTimeService {
     public static now(): Date {
         return new Date();
     }
+
+    public static today() {
+        const now = SystemTimeService.now();
+        return new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    }
 }

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {BookingDay} from '../model/BookingDay';
+import * as moment from 'moment';
 
 export interface BookingDayViewState {
     bookingDay: BookingDay;
@@ -17,6 +18,12 @@ export class BookingDayView extends React.Component<BookingDayViewProps, Booking
     render(): React.ReactNode {
         return (
             <div className="container">
+                <input
+                    type="date"
+                    name="bookingDay"
+                    value={moment(this.props.day).format('YYYY-MM-DD')}
+                    disabled={true}
+                />
                 <div className="row form-group align-items-center">
                     {/*start time*/}
                     <input
