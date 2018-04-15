@@ -79,81 +79,145 @@ export class BookingDayView extends React.Component<BookingDayViewProps, Booking
                     <button type="button" className="btn input-group-append">X</button>
                 </div>
 
-                <h1>Option 3 - form with labels</h1>
-                <form className="">
+                <h1>Option 3 - form with labels in card group</h1>
+                <div className="card-group">
+                    <div className="card w-50">
+                        <form className="card-body">
                     <div className="form-group row">
-                        <label htmlFor="bla">Email address</label>
-                        {/*start time*/}
+                        <label
+                            className="col-sm-4
+                             col-form-label"
+                        >
+                            StartTime
+                        </label>
                         <input
-                            id="bla"
                             type="time"
-                            className="starttime"
+                            className="col-sm"
                             placeholder="1d 2h 25m"
                         />
                     </div>
                     <div className="form-group row">
-                        {/*duration*/}
+                        <label
+                            className="col-sm-4
+                             col-form-label"
+                        >
+                            Duration
+                        </label>
                         <input
                             type="time"
-                            className=""
+                            className="col"
                         />
                     </div>
                     <div className="form-group row">
-
-                        {/*description*/}
-                        <textarea className="" placeholder="What has been done"/>
+                        <label
+                            className="col-sm-4
+                             col-form-label"
+                        >
+                            Description
+                        </label>
+                        <textarea className="col" placeholder="What has been done"/>
                     </div>
                     <div className="form-group row">
-                        {/*notes*/}
-                        <textarea className="" placeholder="personal notes"/>
+                        <label
+                            className="col-sm-4
+                             col-form-label"
+                        >
+                            Notes
+                        </label>
+                        <textarea className="col-sm" placeholder="personal notes"/>
                     </div>
                     <div className="form-group row">
-                        {/*assignment ticket system*/}
-                        <select className="">
+                        <label
+                            className="col-sm-4
+                             col-form-label"
+                        >
+                            Assignment/Ticket system
+                        </label>
+                        <select className="col-sm">
                             <option>None</option>
                             <option>Jira</option>
                         </select>
                     </div>
                     <div className="form-group row"> {/*is booked button*/}
-                        <button type="button" className="btn">X</button>
+                        <label
+                            className="col-sm-4
+                             col-form-label"
+                        >
+                            Booked
+                        </label>
+                        <button type="button" className="btn col-sm">X</button>
                     </div>
                 </form>
-
-                <form>
-                    <div className="form-group row">
-                        <label
-                            className="col-sm-2 col-form-label"
-                        >
-                            Email
-                        </label>
-                        <div className="col-sm-10">
-                            <input
-                                type="text"
-                                readOnly={true}
-                                className="form-control-plaintext"
-                                id="staticEmail"
-                                value="email@example.com"
-                            />
-                        </div>
-
                     </div>
-                    <div className="form-group row">
-                        <label
-                            className="col-sm-2 col-form-label"
-                        >
-                            Password
-                        </label>
-                        <div className="col-sm-10">
-                            <input
-                                type="password"
-                                className="form-control"
-                                id="inputPassword"
-                                placeholder="Password"
-                            />
-                        </div>
+                    <div className="card w-50">
+                        <form className="card-body">
+                            <div className="form-group row">
+                                <label
+                                    className="col-sm-4
+                             col-form-label"
+                                >
+                                    StartTime
+                                </label>
+                                <input
+                                    type="time"
+                                    className="col-sm"
+                                    placeholder="1d 2h 25m"
+                                />
+                            </div>
+                            <div className="form-group row">
+                                <label
+                                    className="col-sm-4
+                             col-form-label"
+                                >
+                                    Duration
+                                </label>
+                                <input
+                                    type="time"
+                                    className="col"
+                                />
+                            </div>
+                            <div className="form-group row">
+                                <label
+                                    className="col-sm-4
+                             col-form-label"
+                                >
+                                    Description
+                                </label>
+                                <textarea className="col" placeholder="What has been done"/>
+                            </div>
+                            <div className="form-group row">
+                                <label
+                                    className="col-sm-4
+                             col-form-label"
+                                >
+                                    Notes
+                                </label>
+                                <textarea className="col-sm" placeholder="personal notes"/>
+                            </div>
+                            <div className="form-group row">
+                                <label
+                                    className="col-sm-4
+                             col-form-label"
+                                >
+                                    Assignment/Ticket system
+                                </label>
+                                <select className="col-sm">
+                                    <option>None</option>
+                                    <option>Jira</option>
+                                </select>
+                            </div>
+                            <div className="form-group row"> {/*is booked button*/}
+                                <label
+                                    className="col-sm-4
+                             col-form-label"
+                                >
+                                    Booked
+                                </label>
+                                <button type="button" className="btn col-sm">X</button>
+                            </div>
+                        </form>
                     </div>
-                </form>
-
+                </div>
                 <h1>Option 4 - Responsive Table</h1>
             </div>
         );
