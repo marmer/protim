@@ -1,7 +1,8 @@
 import * as React from 'react';
 import {BookingDayView} from './BookingDayView';
-import {SystemTimeService} from "../service/SystemTimeService";
-import {DateTimeService} from "../service/DateTimeService";
+import {SystemTimeService} from '../service/SystemTimeService';
+import {DateTimeService} from '../service/DateTimeService';
+import * as moment from 'moment';
 
 export class TimeManagement {
     public bookingDay: Date;
@@ -14,16 +15,35 @@ export class TimeManagementView extends React.Component<TimeManagementViewProps,
     constructor(props: TimeManagementViewProps) {
         super(props);
         this.state = {
-            bookingDay: SystemTimeService.now()
+            bookingDay: SystemTimeService.today()
         };
     }
 
     render(): React.ReactNode {
+
         return (
-            <div>
-                <div>
-                    <button className="button button-last-day" onClick={() => this.switchToLastDay()}>{"<"}</button>
-                    <button className="button button-next-day" onClick={() => this.switchToNextDay()}>{">"}</button>
+            <div className="container">
+                <div className="row">
+                    <button
+                        className="button button-last-day col-sm"
+                        onClick={() => this.switchToLastDay()}
+                    >
+                        {'<'}
+                    </button>
+                    <input
+                        type="date"
+                        name="bookingDay"
+                        value={moment(this.state.bookingDay).format('YYYY-MM-DD')}
+                        onChange={(event) => {
+                            this.switchToDay(event.target.valueAsDate);
+                        }}
+                    />
+                    <button
+                        className="button button-next-day col-sm"
+                        onClick={() => this.switchToNextDay()}
+                    >
+                        {'>'}
+                    </button>
                 </div>
                 <BookingDayView day={this.state.bookingDay}/>
             </div>
@@ -41,4 +61,11 @@ export class TimeManagementView extends React.Component<TimeManagementViewProps,
             bookingDay: DateTimeService.dayBefore(this.state.bookingDay)
         });
     }
+
+    private switchToDay(date: Date) {
+        this.setState({
+            bookingDay: DateTimeService.dayBefore(date)
+        });
+    }
+
 }

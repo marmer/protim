@@ -1,6 +1,6 @@
 import {Booking} from "./Booking";
 
 export class BookingDay {
-    day: String;
+    day: string;
     bookings: Booking[];
 }

@@ -2,8 +2,10 @@ import {Assignment} from "./Assignment";
 import {BookingTime} from "./BookingTime";
 
 export class Booking {
+    id: number;
     time: BookingTime;
-    description: String;
-    comments: String;
+    description: string;
+    comments: string;
     assignment: Assignment;
+    booked: boolean;
 }
