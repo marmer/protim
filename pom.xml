@@ -195,57 +195,58 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
             </plugin>
-            <plugin>
-                <groupId>com.github.eirslett</groupId>
-                <artifactId>frontend-maven-plugin</artifactId>
-                <version>1.2</version>
-                <configuration>
-                    <installDirectory>${java.io.tmpdir}/nodebin</installDirectory>
-                    <workingDirectory>${project.basedir}/src/main/js</workingDirectory>
-                    <environmentVariables>
-                        <NODE_ENV>development</NODE_ENV>
-                        <BABEL_ENV>development</BABEL_ENV>
-                        <CI>true</CI>
-                    </environmentVariables>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>install node and npm</id>
-                        <goals>
-                            <goal>install-node-and-npm</goal>
-                        </goals>
-                        <configuration>
-                            <nodeVersion>v8.10.0</nodeVersion>
-                            <npmVersion>5.6.0</npmVersion>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>npm install</id>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                        <configuration>
-                            <arguments>install</arguments>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>npm test</id>
-                        <goals>
-                            <goal>npm</goal>
-                        </goals>
-                        <phase>test</phase>
-                        <configuration>
-                            <arguments>test</arguments>
-                        </configuration>
-                    </execution>
-                    <execution>
-                        <id>webpack build</id>
-                        <goals>
-                            <goal>webpack</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
+            <!--This part is waiting to get active again as soon as the react development starts again... and yes, I know it's bad style ;) -->
+            <!--<plugin>-->
+            <!--<groupId>com.github.eirslett</groupId>-->
+            <!--<artifactId>frontend-maven-plugin</artifactId>-->
+            <!--<version>1.2</version>-->
+            <!--<configuration>-->
+            <!--<installDirectory>${java.io.tmpdir}/nodebin</installDirectory>-->
+            <!--<workingDirectory>${project.basedir}/src/main/js</workingDirectory>-->
+            <!--<environmentVariables>-->
+            <!--<NODE_ENV>development</NODE_ENV>-->
+            <!--<BABEL_ENV>development</BABEL_ENV>-->
+            <!--<CI>true</CI>-->
+            <!--</environmentVariables>-->
+            <!--</configuration>-->
+            <!--<executions>-->
+            <!--<execution>-->
+            <!--<id>install node and npm</id>-->
+            <!--<goals>-->
+            <!--<goal>install-node-and-npm</goal>-->
+            <!--</goals>-->
+            <!--<configuration>-->
+            <!--<nodeVersion>v8.10.0</nodeVersion>-->
+            <!--<npmVersion>5.6.0</npmVersion>-->
+            <!--</configuration>-->
+            <!--</execution>-->
+            <!--<execution>-->
+            <!--<id>npm install</id>-->
+            <!--<goals>-->
+            <!--<goal>npm</goal>-->
+            <!--</goals>-->
+            <!--<configuration>-->
+            <!--<arguments>install</arguments>-->
+            <!--</configuration>-->
+            <!--</execution>-->
+            <!--<execution>-->
+            <!--<id>npm test</id>-->
+            <!--<goals>-->
+            <!--<goal>npm</goal>-->
+            <!--</goals>-->
+            <!--<phase>test</phase>-->
+            <!--<configuration>-->
+            <!--<arguments>test</arguments>-->
+            <!--</configuration>-->
+            <!--</execution>-->
+            <!--<execution>-->
+            <!--<id>webpack build</id>-->
+            <!--<goals>-->
+            <!--<goal>webpack</goal>-->
+            <!--</goals>-->
+            <!--</execution>-->
+            <!--</executions>-->
+            <!--</plugin>-->
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>3.0.0</version>
@@ -269,37 +270,6 @@
                     </filesets>
                 </configuration>
             </plugin>
-            <!--<plugin>-->
-            <!--<groupId>com.dkanejs.maven.plugins</groupId>-->
-            <!--<artifactId>docker-compose-maven-plugin</artifactId>-->
-            <!--<version>1.0.3</version>-->
-            <!--<configuration>-->
-            <!--<composeFile>${project.basedir}/docker/docker-compose.yml</composeFile>-->
-
-            <!--</configuration>-->
-            <!--<executions>-->
-            <!--<execution>-->
-            <!--<id>up</id>-->
-            <!--<phase>pre-integration-test</phase>-->
-            <!--<goals>-->
-            <!--<goal>up</goal>-->
-            <!--</goals>-->
-            <!--<configuration>-->
-            <!--<detachedMode>true</detachedMode>-->
-            <!--</configuration>-->
-            <!--</execution>-->
-            <!--<execution>-->
-            <!--<id>down</id>-->
-            <!--<phase>post-integration-test</phase>-->
-            <!--<goals>-->
-            <!--<goal>down</goal>-->
-            <!--</goals>-->
-            <!--<configuration>-->
-            <!--<removeVolumes>true</removeVolumes>-->
-            <!--</configuration>-->
-            <!--</execution>-->
-            <!--</executions>-->
-            <!--</plugin>-->
         </plugins>
     </build>
 </project>
