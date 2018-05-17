@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html
-        xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/xhtml">
+        xmlns="http://www.w3.org/1999/xhtml">
 <head>
     <title>Home</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css"
@@ -36,37 +36,38 @@
             </thead>
             <tbody>
             <tr>
-                <th:block>
-                    <td>
-                        09:30
-                    </td>
-                    <td>
-                        01:15
-                    </td>
-                    <td>
-                        Progress at my top secret part.
-                    </td>
-                    <td>
-                        don't tell the boss
-                    </td>
-                    <td>
-                        JITA-123
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-primary" title="edit">
-                            <i class="fas fa-pencil-alt"></i>
-                        </button>
-                        <button type="button" class="btn btn-primary" title="synced">
-                            <i class="fas fa-lock"></i>
-                        </button>
-                        <button type="button" class="btn btn-primary" title="sync">
-                            <i class="fas fa-sync-alt"></i>
-                        </button>
-                        <button type="button" class="btn btn-danger" title="remove">
-                            <i class="fas fa-trash-alt"></i>
-                        </button>
-                    </td>
-                </th:block>
+                <td>
+                    <input type="time" placeholder="e.g. 09:25">
+                </td>
+                <td>
+                    <input type="time" placeholder="e.g. 01:15">
+                </td>
+                <td>
+                    <textarea rows="1" placeholder="What has been done"></textarea>
+                </td>
+                <td>
+                    <textarea rows="1" placeholder="personal notes"></textarea>
+                </td>
+                <td>
+                    <textarea rows="1" type="text" placeholder="TICKET-123"></textarea>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary">
+                        <i class="fas fa-plus-square"></i>
+                    </button>
+                    <button type="button" class="btn btn-primary" title="edit">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <button type="button" class="btn btn-primary" title="synced">
+                        <i class="fas fa-lock"></i>
+                    </button>
+                    <button type="button" class="btn btn-primary" title="sync">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger" title="remove">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </td>
             </tr>
             <tr>
                 <td>
@@ -88,12 +89,92 @@
                     <button type="button" class="btn btn-primary">
                         <i class="fas fa-plus-square"></i>
                     </button>
-
+                    <button type="button" class="btn btn-primary" title="edit">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <button type="button" class="btn btn-primary" title="synced">
+                        <i class="fas fa-lock"></i>
+                    </button>
+                    <button type="button" class="btn btn-primary" title="sync">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger" title="remove">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="time" placeholder="e.g. 09:25">
+                </td>
+                <td>
+                    <input type="time" placeholder="e.g. 01:15">
+                </td>
+                <td>
+                    <textarea rows="1" placeholder="What has been done"></textarea>
+                </td>
+                <td>
+                    <textarea rows="1" placeholder="personal notes"></textarea>
+                </td>
+                <td>
+                    <textarea rows="1" type="text" placeholder="TICKET-123"></textarea>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary">
+                        <i class="fas fa-plus-square"></i>
+                    </button>
+                    <button type="button" class="btn btn-primary" title="edit">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <button type="button" class="btn btn-primary" title="synced">
+                        <i class="fas fa-lock"></i>
+                    </button>
+                    <button type="button" class="btn btn-primary" title="sync">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger" title="remove">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <input type="time" placeholder="e.g. 09:25">
+                </td>
+                <td>
+                    <input type="time" placeholder="e.g. 01:15">
+                </td>
+                <td>
+                    <textarea rows="1" placeholder="What has been done"></textarea>
+                </td>
+                <td>
+                    <textarea rows="1" placeholder="personal notes"></textarea>
+                </td>
+                <td>
+                    <textarea rows="1" type="text" placeholder="TICKET-123"></textarea>
+                </td>
+                <td>
+                    <button type="button" class="btn btn-primary">
+                        <i class="fas fa-plus-square"></i>
+                    </button>
+                    <button type="button" class="btn btn-primary" title="edit">
+                        <i class="fas fa-pencil-alt"></i>
+                    </button>
+                    <button type="button" class="btn btn-primary" title="synced">
+                        <i class="fas fa-lock"></i>
+                    </button>
+                    <button type="button" class="btn btn-primary" title="sync">
+                        <i class="fas fa-sync-alt"></i>
+                    </button>
+                    <button type="button" class="btn btn-danger" title="remove">
+                        <i class="fas fa-trash-alt"></i>
+                    </button>
                 </td>
             </tr>
             </tbody>
         </table>
     </div>
+    <button type="button" class="btn btn-primary ">Save</button>
 </div>
 <div>
 </div>
