@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {BookingDay} from '../model/BookingDay';
+import {BookingEntryView} from './BookingEntryView';
 
 export interface BookingDayViewState {
     bookingDay: BookingDay;
@@ -21,6 +22,7 @@ export class BookingDayView extends React.Component<BookingDayViewProps, Booking
                     <table className="table table-sm">
                         <thead>
                         <tr>
+                            {/*// TODO: marmer 21.05.2018 Lets get the heters from the entry view.*/}
                             <th scope="col">StartTime</th>
                             <th scope="col">Duration</th>
                             <th scope="col">Description</th>
@@ -30,40 +32,7 @@ export class BookingDayView extends React.Component<BookingDayViewProps, Booking
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>
-                                <input type="time" placeholder="e.g. 09:25"/>
-                            </td>
-                            <td>
-                                <input type="time" placeholder="e.g. 01:15"/>
-                            </td>
-                            <td>
-                                <textarea rows={1} placeholder="What has been done"/>
-                            </td>
-                            <td>
-                                <textarea rows={1} placeholder="personal notes"/>
-                            </td>
-                            <td>
-                                <textarea rows={1} placeholder="TICKET-123"/>
-                            </td>
-                            <td>
-                                <div className="btn-group">
-                                    <button type="button" className="btn btn-primary" title="synced">
-                                        <i className="fas fa-lock"/>
-                                    </button>
-
-                                    <button type="button" className="btn btn-primary" title="synced">
-                                        <i className="fas fa-lock-open"/>
-                                    </button>
-                                    <button type="button" className="btn btn-primary" title="sync">
-                                        <i className="fas fa-sync-alt"/>
-                                    </button>
-                                    <button type="button" className="btn btn-danger" title="remove">
-                                        <i className="fas fa-trash-alt"/>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
+                        <BookingEntryView/>
                         </tbody>
                     </table>
                     </div>
