@@ -1,16 +1,14 @@
-package io.github.marmer.protim.controller;
+package io.github.marmer.protim.api.controller;
 
-import io.github.marmer.protim.model.dbo.BookingDayDBO;
-import io.github.marmer.protim.repositories.BookingDayRepository;
-import io.github.marmer.protim.test.DbCleanupService;
-import org.junit.Before;
+import io.github.marmer.protim.persistence.dbo.BookingDayDBO;
+import io.github.marmer.protim.persistence.repositories.BookingDayRepository;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.context.junit4.rules.SpringClassRule;
 import org.springframework.test.context.junit4.rules.SpringMethodRule;
 import org.springframework.test.web.servlet.MockMvc;
@@ -18,13 +16,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import static java.util.Collections.singletonList;
 import static org.hamcrest.Matchers.equalTo;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
-@SpringBootTest
-@AutoConfigureMockMvc
-public class BookingDayDBOControllerIT {
+@WebMvcTest
+public class BookingDayControllerTest {
     @ClassRule
     public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
     @Rule
@@ -36,27 +35,18 @@ public class BookingDayDBOControllerIT {
     @InjectMocks
     private BookingDayController classUnderTest;
 
-    @Autowired
+    @MockBean
     private BookingDayRepository bookingDayRepository;
 
-    @Autowired
-    private DbCleanupService dbCleanupService;
-
-    @Before
-    public void setUp() {
-        dbCleanupService.clearAll();
-    }
-
     @Test
-    public void testGetDay_DayExists_ShouldShowDay()
+    public void testGetDay_DayEsists_ShouldShowDay()
             throws Exception {
         // Preparation
-        final BookingDayDBO entity = new BookingDayDBO().setDay(new GregorianCalendar(1985, Calendar.JANUARY, 2));
-        bookingDayRepository.save(entity);
+        when(bookingDayRepository.findAll()).thenReturn(singletonList(new BookingDayDBO().setDay(new GregorianCalendar(2012, Calendar.DECEMBER, 21))));
 
         // Execution
         mockMvc.perform(get("api/day"))
-                .andExpect(jsonPath("$.day", equalTo("1985-01-02")));
+                .andExpect(jsonPath("$.day", equalTo("2012-12-21")));
     }
 
 }

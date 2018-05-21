@@ -1,4 +1,4 @@
-package io.github.marmer.protim.model.dbo;
+package io.github.marmer.protim.persistence.dbo;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;

@@ -1,7 +1,7 @@
-package io.github.marmer.protim.controller;
+package io.github.marmer.protim.api.controller;
 
-import io.github.marmer.protim.model.dbo.BookingDayDBO;
-import io.github.marmer.protim.repositories.BookingDayRepository;
+import io.github.marmer.protim.persistence.dbo.BookingDayDBO;
+import io.github.marmer.protim.persistence.repositories.BookingDayRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
