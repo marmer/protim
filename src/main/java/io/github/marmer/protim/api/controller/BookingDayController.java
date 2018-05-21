@@ -6,6 +6,7 @@ import io.github.marmer.protim.service.crud.BookingDayService;
 import io.github.marmer.protim.service.model.BookingDay;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,7 +27,7 @@ public class BookingDayController {
     private final Converter<BookingDay, BookingDayDTO> toBookingDayDTOConverter;
 
     @GetMapping("/{day}")
-    public BookingDayDTO getDay(@PathVariable("day") final String day) {
+    public ResponseEntity<BookingDayDTO> getDay(@PathVariable("day") final String day) {
 
 
         final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -41,6 +42,8 @@ public class BookingDayController {
         cal.setTime(date);
 
         final Optional<BookingDay> bookingDay = bookingDayService.getBookingDay(cal);
-        return toBookingDayDTOConverter.convert(bookingDay.get()).get();
+        return bookingDay
+                .map(bookingDay1 -> ResponseEntity.ok(toBookingDayDTOConverter.convert(bookingDay1)))
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

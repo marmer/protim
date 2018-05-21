@@ -18,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import static java.util.Optional.empty;
 import static java.util.Optional.ofNullable;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.when;
@@ -50,7 +51,7 @@ public class BookingDayControllerTest {
         final GregorianCalendar date = new GregorianCalendar(2012, Calendar.DECEMBER, 21);
         final BookingDay bookingDay = BookingDay.builder().day(date).build();
         when(bookingDayService.getBookingDay(date)).thenReturn(ofNullable(bookingDay));
-        when(bookingDayToBookingDayDTOConverter.convert(bookingDay)).thenReturn(ofNullable(new BookingDayDTO().setDay("1122-33-44")));
+        when(bookingDayToBookingDayDTOConverter.convert(bookingDay)).thenReturn(new BookingDayDTO().setDay("1122-33-44"));
 
         // Execution
         mockMvc.perform(get("/api/day/2012-12-21"))
@@ -58,7 +59,18 @@ public class BookingDayControllerTest {
                 .andExpect(jsonPath("$.day", equalTo("1122-33-44")));
     }
 
-    // TODO: marmer 21.05.2018 does not exist.
+    @Test
+    public void testGetDay_DayDowsNotExist_ShouldServeStatusNotFound()
+            throws Exception {
+        // Preparation
+        final GregorianCalendar date = new GregorianCalendar(2012, Calendar.DECEMBER, 21);
+        final BookingDay bookingDay = BookingDay.builder().day(date).build();
+        when(bookingDayService.getBookingDay(date)).thenReturn(empty());
+
+        // Execution
+        mockMvc.perform(get("/api/day/2012-12-21"))
+                .andExpect(status().isNotFound());
+    }
+
     // TODO: marmer 21.05.2018 date is not valid
-    // TODO: marmer 21.05.2018 no conversion result
 }
