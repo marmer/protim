@@ -1,6 +1,5 @@
 package io.github.marmer.protim.persistence.dbo;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -16,7 +15,6 @@ public class BookingDayDBO {
     @Column
     private Long id;
     @Temporal(TemporalType.DATE)
-    @Column
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+01:00")
+    @Column(unique = true, nullable = false)
     private Calendar day;
 }

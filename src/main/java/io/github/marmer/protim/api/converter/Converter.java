@@ -1,0 +1,19 @@
+package io.github.marmer.protim.api.converter;
+
+import java.util.Optional;
+
+/**
+ * Converter class to convert objects from one type to another.
+ *
+ * @param <S> Source type
+ * @param <D> Destination type
+ */
+public interface Converter<S, D> {
+    /**
+     * Converts the an object from the given type into another.
+     *
+     * @param source Source entity.
+     * @return The converted result.
+     */
+    Optional<D> convert(S source);
+}

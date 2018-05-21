@@ -21,6 +21,7 @@ import java.util.GregorianCalendar;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -48,14 +49,21 @@ public class BookingDayControllerIT {
     }
 
     @Test
-    public void testGetDay_DayExists_ShouldShowDay()
+    public void testGetDay_MultipleDaysExist_ShouldShowDay()
             throws Exception {
         // Preparation
-        final BookingDayDBO entity = new BookingDayDBO().setDay(new GregorianCalendar(1985, Calendar.JANUARY, 2));
-        bookingDayRepository.save(entity);
+        bookingDayRepository.save(
+                new BookingDayDBO()
+                        .setDay(
+                                new GregorianCalendar(1985, Calendar.JANUARY, 2)));
+        bookingDayRepository.save(
+                new BookingDayDBO()
+                        .setDay(
+                                new GregorianCalendar(1985, Calendar.JANUARY, 3)));
 
         // Execution
-        mockMvc.perform(get("api/day"))
+        mockMvc.perform(get("/api/day/1985-01-02"))
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.day", equalTo("1985-01-02")));
     }
 

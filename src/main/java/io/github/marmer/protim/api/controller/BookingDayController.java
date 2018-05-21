@@ -1,22 +1,46 @@
 package io.github.marmer.protim.api.controller;
 
-import io.github.marmer.protim.persistence.dbo.BookingDayDBO;
-import io.github.marmer.protim.persistence.repositories.BookingDayRepository;
+import io.github.marmer.protim.api.converter.Converter;
+import io.github.marmer.protim.api.dto.BookingDayDTO;
+import io.github.marmer.protim.service.crud.BookingDayService;
+import io.github.marmer.protim.service.model.BookingDay;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Optional;
 
-@RestController("api/day")
+@RestController
+@RequestMapping("/api/day")
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class BookingDayController {
-    private final BookingDayRepository bookingDayRepository;
 
-    @GetMapping
-    public BookingDayDBO getDay() {
-        final List<BookingDayDBO> all = bookingDayRepository.findAll();
-        return all.get(0);
+    private final BookingDayService bookingDayService;
+    private final Converter<BookingDay, BookingDayDTO> toBookingDayDTOConverter;
+
+    @GetMapping("/{day}")
+    public BookingDayDTO getDay(@PathVariable("day") final String day) {
+
+
+        final SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        final Date date;
+        try {
+            date = sdf.parse(day);
+        } catch (final ParseException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+        final Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+
+        final Optional<BookingDay> bookingDay = bookingDayService.getBookingDay(cal);
+        return toBookingDayDTOConverter.convert(bookingDay.get()).get();
     }
 }
