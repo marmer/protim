@@ -53,7 +53,6 @@ public class BookingDayDBOControllerIT {
         // Preparation
         final BookingDayDBO entity = new BookingDayDBO().setDay(new GregorianCalendar(1985, Calendar.JANUARY, 2));
         bookingDayRepository.save(entity);
-        bookingDayRepository.flush();
 
         // Execution
         mockMvc.perform(get("api/day"))
