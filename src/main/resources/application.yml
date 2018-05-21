@@ -7,7 +7,7 @@ spring:
     hibernate:
       use-new-id-generator-mappings: true
       ddl-auto: validate
-    show-sql: true
+    show-sql: false
 #security:
 #  require-ssl: false
 #  user:

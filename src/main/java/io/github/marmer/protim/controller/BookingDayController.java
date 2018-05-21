@@ -1,18 +1,22 @@
 package io.github.marmer.protim.controller;
 
-import io.github.marmer.protim.model.BookingDay;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import io.github.marmer.protim.model.dbo.BookingDayDBO;
+import io.github.marmer.protim.repositories.BookingDayRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
-@RequestMapping("booking")
+import java.util.List;
+
+@RestController("api/day")
+@RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class BookingDayController {
-    @RequestMapping("day")
-    public String listSomeBookingDays(final Model model) {
-        final BookingDay bookingDay = new BookingDay().setId(42L);
-        model.addAttribute("day", bookingDay);
-        model.addAttribute("someString", "someStringValue");
-        return "hello";
+    private final BookingDayRepository bookingDayRepository;
+
+    @GetMapping
+    public BookingDayDBO getDay() {
+        final List<BookingDayDBO> all = bookingDayRepository.findAll();
+        return all.get(0);
     }
 }
