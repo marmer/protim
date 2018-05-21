@@ -60,7 +60,7 @@ public class BookingDayControllerTest {
     }
 
     @Test
-    public void testGetDay_DayDowsNotExist_ShouldServeStatusNotFound()
+    public void testGetDay_DayDoesNotExist_ShouldServeStatusNotFound()
             throws Exception {
         // Preparation
         final GregorianCalendar date = new GregorianCalendar(2012, Calendar.DECEMBER, 21);
@@ -72,5 +72,11 @@ public class BookingDayControllerTest {
                 .andExpect(status().isNotFound());
     }
 
-    // TODO: marmer 21.05.2018 date is not valid
+    @Test
+    public void testGetDay_InvalidDateFormatChosen_ShouldServeStatusNotFound()
+            throws Exception {
+        // Execution
+        mockMvc.perform(get("/api/day/iReallyAmNoDate"))
+                .andExpect(status().isNotFound());
+    }
 }

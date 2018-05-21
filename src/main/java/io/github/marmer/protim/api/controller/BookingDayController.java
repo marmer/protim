@@ -35,8 +35,7 @@ public class BookingDayController {
         try {
             date = sdf.parse(day);
         } catch (final ParseException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
+            return ResponseEntity.notFound().build();
         }
         final Calendar cal = Calendar.getInstance();
         cal.setTime(date);
