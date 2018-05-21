@@ -47,19 +47,21 @@ export class BookingDayView extends React.Component<BookingDayViewProps, Booking
                                 <textarea rows={1} placeholder="TICKET-123"/>
                             </td>
                             <td>
-                                <button type="button" className="btn btn-primary" title="synced">
-                                    <i className="fas fa-lock"/>
-                                </button>
+                                <div className="btn-group">
+                                    <button type="button" className="btn btn-primary" title="synced">
+                                        <i className="fas fa-lock"/>
+                                    </button>
 
-                                <button type="button" className="btn btn-primary" title="synced">
-                                    <i className="fas fa-lock-open"/>
-                                </button>
-                                <button type="button" className="btn btn-primary" title="sync">
-                                    <i className="fas fa-sync-alt"/>
-                                </button>
-                                <button type="button" className="btn btn-danger" title="remove">
-                                    <i className="fas fa-trash-alt"/>
-                                </button>
+                                    <button type="button" className="btn btn-primary" title="synced">
+                                        <i className="fas fa-lock-open"/>
+                                    </button>
+                                    <button type="button" className="btn btn-primary" title="sync">
+                                        <i className="fas fa-sync-alt"/>
+                                    </button>
+                                    <button type="button" className="btn btn-danger" title="remove">
+                                        <i className="fas fa-trash-alt"/>
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                         </tbody>
