@@ -2,7 +2,7 @@ package io.github.marmer.protim.service.crud;
 
 import io.github.marmer.protim.persistence.dbo.BookingDayDBO;
 import io.github.marmer.protim.persistence.repositories.BookingDayRepository;
-import io.github.marmer.protim.service.converter.BookingDayDBOToBookingDayDBOConverter;
+import io.github.marmer.protim.service.converter.BookingDayDBOToBookingDayConverter;
 import io.github.marmer.protim.service.model.BookingDay;
 import org.junit.Rule;
 import org.junit.Test;
@@ -28,7 +28,7 @@ public class BookingDayServiceImplTest {
     @Mock
     private BookingDayRepository bookingDayRepository;
     @Mock
-    private BookingDayDBOToBookingDayDBOConverter bookingDayDBOToBookingDayDBOConverter;
+    private BookingDayDBOToBookingDayConverter bookingDayDBOToBookingDayConverter;
 
     @Test
     public void testGetBookingDay_BookingDayExists_ShouldDeliverBusinessModelVersion()
@@ -38,7 +38,7 @@ public class BookingDayServiceImplTest {
         final BookingDayDBO dbo = newBookingDayDBO();
         when(bookingDayRepository.findByDay(date)).thenReturn(dbo);
         final BookingDay bookingDay = newBookingDay();
-        when(bookingDayDBOToBookingDayDBOConverter.convert(dbo)).thenReturn(bookingDay);
+        when(bookingDayDBOToBookingDayConverter.convert(dbo)).thenReturn(bookingDay);
 
         // Execution
         final Optional<BookingDay> result = classUnderTest.getBookingDay(date);
