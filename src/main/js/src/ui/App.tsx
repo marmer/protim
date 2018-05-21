@@ -5,10 +5,9 @@ class App extends React.Component {
     render() {
         return (
             <div className="App">
-                <header className="App-header">
-                    <img src="./logo.svg" className="App-logo" alt="logo"/>
-                    <h1 className="App-title">Welcome to Protim</h1>
-                </header>
+                <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+                    <a className="navbar-brand" href="#">Protim</a>
+                </nav>
                 <TimeManagementView/>
             </div>
         );

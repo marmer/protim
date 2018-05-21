@@ -8,6 +8,7 @@ export class TimeManagement {
     public bookingDay: Date;
 
 }
+
 export interface TimeManagementViewProps {
 }
 
@@ -22,13 +23,10 @@ export class TimeManagementView extends React.Component<TimeManagementViewProps,
     render(): React.ReactNode {
 
         return (
-            <div className="container">
-                <div className="row">
-                    <button
-                        className="button button-last-day col-sm"
-                        onClick={() => this.switchToLastDay()}
-                    >
-                        {'<'}
+            <div className="card">
+                <div className="card-header text-center">
+                    <button title="last" type="button" className="btn btn-link button-last-day">
+                        <i className="fas fa-arrow-left" onClick={() => this.switchToLastDay()}/>
                     </button>
                     <input
                         type="date"
@@ -38,11 +36,8 @@ export class TimeManagementView extends React.Component<TimeManagementViewProps,
                             this.switchToDay(event.target.valueAsDate);
                         }}
                     />
-                    <button
-                        className="button button-next-day col-sm"
-                        onClick={() => this.switchToNextDay()}
-                    >
-                        {'>'}
+                    <button title="last" type="button" className="btn btn-link button-next-day">
+                        <i className="fas fa-arrow-right" onClick={() => this.switchToNextDay()}/>
                     </button>
                 </div>
                 <BookingDayView day={this.state.bookingDay}/>
