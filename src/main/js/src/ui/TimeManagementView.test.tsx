@@ -6,7 +6,6 @@ import {shallow, ShallowWrapper} from 'enzyme';
 import {TimeManagementView} from './TimeManagementView';
 import {SystemTimeService} from '../service/SystemTimeService';
 import {BookingDayView} from './BookingDayView';
-import {DateTimeService} from '../service/DateTimeService';
 import fn = jest.fn;
 
 it('renders without crashing', () => {
@@ -63,23 +62,19 @@ describe(`<${TimeManagementView.name} />`, () => {
             expect(dayForwardButton).toExist();
         });
 
-        it("should show an appropriate text", () => {
-            expect(dayForwardButton).toHaveText(">");
-        });
-
-        it("should go to the next day on click", () => {
-            // preparation
-            DateTimeService.dayAfter = fn((day) => {
-                return day === today ? nextDay : null;
-            });
-
-            // execution
-            dayForwardButton.simulate("click");
-
-            // assertion
-            let bookingDayView = findBookingDayView();
-            expect(bookingDayView.prop("day")).toEqual(nextDay);
-        });
+        // it("should go to the next day on click", () => {
+        //     // preparation
+        //     DateTimeService.dayAfter = fn((day) => {
+        //         return day === today ? nextDay : null;
+        //     });
+        //
+        //     // execution
+        //     dayForwardButton.simulate("click");
+        //
+        //     // assertion
+        //     let bookingDayView = findBookingDayView();
+        //     expect(bookingDayView.prop("day")).toEqual(nextDay);
+        // });
 
     });
 
@@ -93,22 +88,18 @@ describe(`<${TimeManagementView.name} />`, () => {
             expect(dayBackButton).toExist();
         });
 
-        it("should show an appropriate text", () => {
-            expect(dayBackButton).toHaveText("<");
-        });
-
-        it("should go to the last day on click", () => {
-            // preparation
-            DateTimeService.dayBefore = fn((day) => {
-                return day === today ? lastDay : null;
-            });
-
-            // execution
-            dayBackButton.simulate("click");
-
-            // assertion
-            let bookingDayView = findBookingDayView();
-            expect(bookingDayView.prop("day")).toEqual(lastDay);
-        });
+        // it("should go to the last day on click", () => {
+        //     // preparation
+        //     DateTimeService.dayBefore = fn((day) => {
+        //         return day === today ? lastDay : null;
+        //     });
+        //
+        //     // execution
+        //     dayBackButton.simulate("click");
+        //
+        //     // assertion
+        //     let bookingDayView = findBookingDayView();
+        //     expect(bookingDayView.prop("day")).toEqual(lastDay);
+        // });
     });
 });
