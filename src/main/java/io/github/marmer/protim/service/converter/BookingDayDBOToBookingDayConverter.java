@@ -9,6 +9,11 @@ import org.springframework.stereotype.Service;
 public class BookingDayDBOToBookingDayConverter implements Converter<BookingDayDBO, BookingDay> {
     @Override
     public BookingDay convert(final BookingDayDBO source) {
-        return null;
+        return source == null ?
+                null :
+                BookingDay.builder()
+                        .day(source.getDay())
+                        .id(source.getId())
+                        .build();
     }
 }
