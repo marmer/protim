@@ -15,8 +15,8 @@ import org.springframework.test.context.junit4.rules.SpringClassRule;
 import org.springframework.test.context.junit4.rules.SpringMethodRule;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
+import java.time.Month;
 
 import static java.util.Optional.empty;
 import static java.util.Optional.ofNullable;
@@ -48,22 +48,22 @@ public class BookingDayControllerTest {
     public void testGetDay_DayEsists_ShouldShowDay()
             throws Exception {
         // Preparation
-        final GregorianCalendar date = new GregorianCalendar(2012, Calendar.DECEMBER, 21);
+        final LocalDate date = LocalDate.of(2012, Month.DECEMBER, 21);
         final BookingDay bookingDay = BookingDay.builder().day(date).build();
         when(bookingDayService.getBookingDay(date)).thenReturn(ofNullable(bookingDay));
-        when(bookingDayToBookingDayDTOConverter.convert(bookingDay)).thenReturn(new BookingDayDTO().setDay("1122-33-44"));
+        when(bookingDayToBookingDayDTOConverter.convert(bookingDay)).thenReturn(new BookingDayDTO().setDay(LocalDate.of(2002, 3, 4)));
 
         // Execution
         mockMvc.perform(get("/api/day/2012-12-21"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.day", equalTo("1122-33-44")));
+                .andExpect(jsonPath("$.day", equalTo("2002-03-04")));
     }
 
     @Test
     public void testGetDay_DayDoesNotExist_ShouldServeStatusNotFound()
             throws Exception {
         // Preparation
-        final GregorianCalendar date = new GregorianCalendar(2012, Calendar.DECEMBER, 21);
+        final LocalDate date = LocalDate.of(2012, Month.DECEMBER, 21);
         final BookingDay bookingDay = BookingDay.builder().day(date).build();
         when(bookingDayService.getBookingDay(date)).thenReturn(empty());
 

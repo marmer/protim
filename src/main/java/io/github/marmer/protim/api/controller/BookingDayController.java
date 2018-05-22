@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.Optional;
 
 @RestController
@@ -25,7 +25,7 @@ public class BookingDayController {
     private final Converter<BookingDay, BookingDayDTO> toBookingDayDTOConverter;
 
     @GetMapping("/{day:\\d{4}-\\d{2}-\\d{2}}")
-    public ResponseEntity<BookingDayDTO> getDay(@PathVariable("day") @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE) final Calendar day) {
+    public ResponseEntity<BookingDayDTO> getDay(@PathVariable("day") @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE) final LocalDate day) {
         final Optional<BookingDay> bookingDay = bookingDayService.getBookingDay(day);
         return bookingDay
                 .map(bookingDay1 -> ResponseEntity.ok(toBookingDayDTOConverter.convert(bookingDay1)))

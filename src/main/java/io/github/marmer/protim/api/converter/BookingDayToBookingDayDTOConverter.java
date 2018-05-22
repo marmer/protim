@@ -9,6 +9,6 @@ public class BookingDayToBookingDayDTOConverter implements Converter<BookingDay,
 
     @Override
     public BookingDayDTO convert(final BookingDay source) {
-        return new BookingDayDTO().setDay("8765-43-21");
+        return new BookingDayDTO().setDay(source.getDay());
     }
 }

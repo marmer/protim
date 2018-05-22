@@ -5,6 +5,8 @@ import io.github.marmer.protim.persistence.dbo.BookingDayDBO;
 import io.github.marmer.protim.service.model.BookingDay;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 public class BookingDayDBOToBookingDayConverter implements Converter<BookingDayDBO, BookingDay> {
     @Override
@@ -12,7 +14,7 @@ public class BookingDayDBOToBookingDayConverter implements Converter<BookingDayD
         return source == null ?
                 null :
                 BookingDay.builder()
-                        .day(source.getDay())
+                        .day(LocalDate.from(source.getDay().toInstant()))
                         .id(source.getId())
                         .build();
     }

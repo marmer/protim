@@ -2,7 +2,7 @@ package io.github.marmer.protim.service.crud;
 
 import io.github.marmer.protim.service.model.BookingDay;
 
-import java.util.Calendar;
+import java.time.LocalDate;
 import java.util.Optional;
 
 /**
@@ -15,5 +15,5 @@ public interface BookingDayService {
      * @param date Date of the booking day.
      * @return The related {@link BookingDay}
      */
-    Optional<BookingDay> getBookingDay(Calendar date);
+    Optional<BookingDay> getBookingDay(LocalDate date);
 }

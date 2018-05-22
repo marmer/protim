@@ -12,6 +12,8 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
 
+import java.time.LocalDate;
+import java.time.Month;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Optional;
@@ -34,9 +36,9 @@ public class BookingDayServiceImplTest {
     public void testGetBookingDay_BookingDayExists_ShouldDeliverBusinessModelVersion()
             throws Exception {
         // Preparation
-        final Calendar date = Calendar.getInstance();
+        final LocalDate date = LocalDate.of(2020, 3, 4);
         final BookingDayDBO dbo = newBookingDayDBO();
-        when(bookingDayRepository.findByDay(date)).thenReturn(dbo);
+        when(bookingDayRepository.findByDay(new GregorianCalendar(2020, 02, 4))).thenReturn(dbo);
         final BookingDay bookingDay = newBookingDay();
         when(bookingDayDBOToBookingDayConverter.convert(dbo)).thenReturn(bookingDay);
 
@@ -49,7 +51,7 @@ public class BookingDayServiceImplTest {
 
     private BookingDay newBookingDay() {
         return BookingDay.builder()
-                .day(new GregorianCalendar(1985, Calendar.JANUARY, 3))
+                .day(LocalDate.of(1985, Month.JANUARY, 3))
                 .build();
     }
 

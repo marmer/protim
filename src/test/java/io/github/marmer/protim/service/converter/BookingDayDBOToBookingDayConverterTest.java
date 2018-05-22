@@ -9,6 +9,7 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
 
+import java.time.LocalDate;
 import java.util.GregorianCalendar;
 
 import static io.github.marmer.protim.service.model.BookingDayMatcher.isBookingDay;
@@ -33,7 +34,7 @@ public class BookingDayDBOToBookingDayConverterTest {
 
         // Assertion
         assertThat(result, isBookingDay()
-                .withDay(dbo.getDay())
+                .withDay(LocalDate.from(dbo.getDay().toInstant()))
                 .withId(dbo.getId())
         );
     }

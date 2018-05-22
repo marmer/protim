@@ -117,6 +117,13 @@
             <artifactId>font-awesome</artifactId>
             <version>5.0.10</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.github.benas</groupId>
+            <artifactId>random-beans</artifactId>
+            <version>3.7.0</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -146,6 +153,8 @@
                 <configuration>
                     <matcherSources>
                         <matcherSource>io.github.marmer.protim.service.model</matcherSource>
+                        <matcherSource>io.github.marmer.protim.api.dto</matcherSource>
+                        <matcherSource>io.github.marmer.protim.persistence.dbo</matcherSource>
                     </matcherSources>
                     <ignoreClassesWithoutProperties>true</ignoreClassesWithoutProperties>
                     <outputDir>target/generated-test-sources</outputDir>
