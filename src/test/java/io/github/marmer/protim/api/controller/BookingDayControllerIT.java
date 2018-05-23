@@ -11,6 +11,7 @@ import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.rules.SpringClassRule;
 import org.springframework.test.context.junit4.rules.SpringMethodRule;
 import org.springframework.test.web.servlet.MockMvc;
@@ -20,7 +21,7 @@ import java.util.GregorianCalendar;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -48,14 +49,22 @@ public class BookingDayControllerIT {
     }
 
     @Test
-    public void testGetDay_DayExists_ShouldShowDay()
+    public void testGetDay_MultipleDaysExist_ShouldShowDay()
             throws Exception {
         // Preparation
-        final BookingDayDBO entity = new BookingDayDBO().setDay(new GregorianCalendar(1985, Calendar.JANUARY, 2));
-        bookingDayRepository.save(entity);
+        bookingDayRepository.save(
+                new BookingDayDBO()
+                        .setDay(
+                                new GregorianCalendar(1985, Calendar.JANUARY, 2)));
+        bookingDayRepository.save(
+                new BookingDayDBO()
+                        .setDay(
+                                new GregorianCalendar(1985, Calendar.JANUARY, 3)));
 
         // Execution
-        mockMvc.perform(get("api/day"))
+        mockMvc.perform(get("/api/day/1985-01-02"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.day", equalTo("1985-01-02")));
     }
 

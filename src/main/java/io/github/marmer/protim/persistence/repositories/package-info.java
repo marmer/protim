@@ -1,5 +1,5 @@
 /**
- * Spring data repos
+ * Spring data repositories.
  *
  * @author marmer
  * @since 03.10.2017

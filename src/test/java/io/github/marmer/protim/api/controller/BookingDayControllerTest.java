@@ -1,7 +1,9 @@
 package io.github.marmer.protim.api.controller;
 
-import io.github.marmer.protim.persistence.dbo.BookingDayDBO;
-import io.github.marmer.protim.persistence.repositories.BookingDayRepository;
+import io.github.marmer.protim.api.converter.Converter;
+import io.github.marmer.protim.api.dto.BookingDayDTO;
+import io.github.marmer.protim.service.crud.BookingDayService;
+import io.github.marmer.protim.service.model.BookingDay;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -13,14 +15,16 @@ import org.springframework.test.context.junit4.rules.SpringClassRule;
 import org.springframework.test.context.junit4.rules.SpringMethodRule;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
+import java.time.Month;
 
-import static java.util.Collections.singletonList;
+import static java.util.Optional.empty;
+import static java.util.Optional.ofNullable;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest
 public class BookingDayControllerTest {
@@ -36,17 +40,43 @@ public class BookingDayControllerTest {
     private BookingDayController classUnderTest;
 
     @MockBean
-    private BookingDayRepository bookingDayRepository;
+    private BookingDayService bookingDayService;
+    @MockBean
+    private Converter<BookingDay, BookingDayDTO> bookingDayToBookingDayDTOConverter;
 
     @Test
     public void testGetDay_DayEsists_ShouldShowDay()
             throws Exception {
         // Preparation
-        when(bookingDayRepository.findAll()).thenReturn(singletonList(new BookingDayDBO().setDay(new GregorianCalendar(2012, Calendar.DECEMBER, 21))));
+        final LocalDate date = LocalDate.of(2012, Month.DECEMBER, 21);
+        final BookingDay bookingDay = BookingDay.builder().day(date).build();
+        when(bookingDayService.getBookingDay(date)).thenReturn(ofNullable(bookingDay));
+        when(bookingDayToBookingDayDTOConverter.convert(bookingDay)).thenReturn(new BookingDayDTO().setDay(LocalDate.of(2002, 3, 4)));
 
         // Execution
-        mockMvc.perform(get("api/day"))
-                .andExpect(jsonPath("$.day", equalTo("2012-12-21")));
+        mockMvc.perform(get("/api/day/2012-12-21"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.day", equalTo("2002-03-04")));
     }
 
+    @Test
+    public void testGetDay_DayDoesNotExist_ShouldServeStatusNotFound()
+            throws Exception {
+        // Preparation
+        final LocalDate date = LocalDate.of(2012, Month.DECEMBER, 21);
+        final BookingDay bookingDay = BookingDay.builder().day(date).build();
+        when(bookingDayService.getBookingDay(date)).thenReturn(empty());
+
+        // Execution
+        mockMvc.perform(get("/api/day/2012-12-21"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void testGetDay_InvalidDateFormatChosen_ShouldServeStatusNotFound()
+            throws Exception {
+        // Execution
+        mockMvc.perform(get("/api/day/iReallyAmNoDate"))
+                .andExpect(status().isNotFound());
+    }
 }
