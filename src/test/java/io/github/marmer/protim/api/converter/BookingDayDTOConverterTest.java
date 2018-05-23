@@ -14,11 +14,11 @@ import static io.github.marmer.protim.test.Testdataprovider.newInstanceOf;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;
 
-public class BookingDayToBookingDayDTOConverterTest {
+public class BookingDayDTOConverterTest {
     @Rule
     public MockitoRule mockito = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
     @InjectMocks
-    private BookingDayToBookingDayDTOConverter classUnderTest;
+    private BookingDayDTOConverter classUnderTest;
 
     @Test
     public void testConvert_BookingDayGiven_AllRelevantFieldsShouldGetFilled()

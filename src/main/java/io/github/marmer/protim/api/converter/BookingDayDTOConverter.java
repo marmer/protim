@@ -5,7 +5,7 @@ import io.github.marmer.protim.service.model.BookingDay;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BookingDayToBookingDayDTOConverter implements Converter<BookingDay, BookingDayDTO> {
+public class BookingDayDTOConverter implements Converter<BookingDay, BookingDayDTO> {
 
     @Override
     public BookingDayDTO convert(final BookingDay source) {

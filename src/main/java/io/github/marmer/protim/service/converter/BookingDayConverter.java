@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.Calendar;
 
 @Service
-public class BookingDayDBOToBookingDayConverter implements Converter<BookingDayDBO, BookingDay> {
+public class BookingDayConverter implements Converter<BookingDayDBO, BookingDay> {
     @Override
     public BookingDay convert(final BookingDayDBO source) {
         if (source == null) {
