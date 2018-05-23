@@ -10,4 +10,5 @@ import java.time.LocalDate;
 public class BookingDay {
     private Long id;
     private LocalDate day;
+    private Booking booking;
 }

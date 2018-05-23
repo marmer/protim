@@ -14,8 +14,6 @@ import org.mockito.quality.Strictness;
 
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.Optional;
 
 import static org.hamcrest.Matchers.is;
@@ -38,7 +36,7 @@ public class BookingDayServiceImplTest {
         // Preparation
         final LocalDate date = LocalDate.of(2020, 3, 4);
         final BookingDayDBO dbo = newBookingDayDBO();
-        when(bookingDayRepository.findByDay(new GregorianCalendar(2020, 02, 4))).thenReturn(dbo);
+        when(bookingDayRepository.findByDay(date)).thenReturn(dbo);
         final BookingDay bookingDay = newBookingDay();
         when(bookingDayConverter.convert(dbo)).thenReturn(bookingDay);
 
@@ -56,7 +54,6 @@ public class BookingDayServiceImplTest {
     }
 
     private BookingDayDBO newBookingDayDBO() {
-        return new BookingDayDBO()
-                .setDay(new GregorianCalendar(1985, Calendar.JANUARY, 2));
+        return new BookingDayDBO();
     }
 }

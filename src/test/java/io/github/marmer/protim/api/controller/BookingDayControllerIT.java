@@ -16,8 +16,8 @@ import org.springframework.test.context.junit4.rules.SpringClassRule;
 import org.springframework.test.context.junit4.rules.SpringMethodRule;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.time.LocalDate;
+import java.time.Month;
 
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -55,11 +55,11 @@ public class BookingDayControllerIT {
         bookingDayRepository.save(
                 new BookingDayDBO()
                         .setDay(
-                                new GregorianCalendar(1985, Calendar.JANUARY, 2)));
+                                LocalDate.of(1985, Month.JANUARY, 2)));
         bookingDayRepository.save(
                 new BookingDayDBO()
                         .setDay(
-                                new GregorianCalendar(1985, Calendar.JANUARY, 3)));
+                                LocalDate.of(1985, Month.JANUARY, 3)));
 
         // Execution
         mockMvc.perform(get("/api/day/1985-01-02"))

@@ -4,7 +4,8 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
-import java.util.Calendar;
+import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Entity(name = "booking_day")
@@ -14,7 +15,10 @@ public class BookingDayDBO {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Long id;
-    @Temporal(TemporalType.DATE)
+    @Basic
     @Column(unique = true, nullable = false)
-    private Calendar day;
+    private LocalDate day;
+    @JoinColumn(name = "day")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BookingDBO> bookings;
 }

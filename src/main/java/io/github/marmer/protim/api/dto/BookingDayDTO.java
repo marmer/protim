@@ -11,4 +11,5 @@ import java.time.LocalDate;
 public class BookingDayDTO {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate day;
+    private BookingDTO bookingDTO;
 }

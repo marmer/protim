@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
-import java.util.GregorianCalendar;
 import java.util.Optional;
 
 @Service
@@ -20,7 +19,7 @@ public class BookingDayServiceImpl implements BookingDayService {
 
     @Override
     public Optional<BookingDay> getBookingDay(final LocalDate date) {
-        final BookingDayDBO bookingDay = bookingDayRepository.findByDay(new GregorianCalendar(date.getYear(), date.getMonthValue() - 1, date.getDayOfMonth()));
+        final BookingDayDBO bookingDay = bookingDayRepository.findByDay(date);
         return Optional.ofNullable(toBookingDayConverter.convert(bookingDay));
     }
 }

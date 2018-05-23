@@ -1,0 +1,29 @@
+package io.github.marmer.protim.persistence.dbo;
+
+import lombok.Data;
+import lombok.experimental.Accessors;
+
+import javax.persistence.*;
+import java.time.LocalTime;
+
+@Data
+@Entity(name = "booking")
+@Accessors(chain = true)
+public class BookingDBO {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column
+    private Long id;
+    @Column
+    @Basic
+    private LocalTime startTime;
+    @Column
+    @Basic
+    private LocalTime duration;
+    @Column
+    private String description;
+    @Column
+    private String notes;
+    @Column
+    private String ticket;
+}
