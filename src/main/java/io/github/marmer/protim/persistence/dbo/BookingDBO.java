@@ -26,4 +26,6 @@ public class BookingDBO {
     private String notes;
     @Column
     private String ticket;
+    @Version
+    private Long version;
 }

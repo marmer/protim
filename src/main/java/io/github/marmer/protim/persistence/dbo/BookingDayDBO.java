@@ -21,4 +21,6 @@ public class BookingDayDBO {
     @JoinColumn(name = "day")
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BookingDBO> bookings;
+    @Version
+    private Long version;
 }
