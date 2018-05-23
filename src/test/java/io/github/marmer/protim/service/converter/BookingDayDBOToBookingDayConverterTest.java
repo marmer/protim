@@ -10,6 +10,8 @@ import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
 
 import java.time.LocalDate;
+import java.time.Month;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import static io.github.marmer.protim.service.model.BookingDayMatcher.isBookingDay;
@@ -27,14 +29,15 @@ public class BookingDayDBOToBookingDayConverterTest {
     public void testConvert_BookingDayGiven_ShouldConvertAllRelevantProperties()
             throws Exception {
         // Preparation
+        final BookingDayDBO dbo = newBookingDayDBO()
+                .setDay(new GregorianCalendar(2002, Calendar.FEBRUARY, 20));
 
         // Execution
-        final BookingDayDBO dbo = newBookingDayDBO();
         final BookingDay result = classUnderTest.convert(dbo);
 
         // Assertion
         assertThat(result, isBookingDay()
-                .withDay(LocalDate.from(dbo.getDay().toInstant()))
+                .withDay(LocalDate.of(2002, Month.FEBRUARY, 20))
                 .withId(dbo.getId())
         );
     }
