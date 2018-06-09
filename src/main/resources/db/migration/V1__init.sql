@@ -6,7 +6,7 @@ create table booking_day (
 
 create table booking (
   id          BIGSERIAL PRIMARY KEY,
-  day         BIGINT NOT NULL references booking_day (id),
+  day         BIGINT references booking_day (id),
   start_time  time,
   duration    time,
   description varchar,
