@@ -7,7 +7,8 @@ import javax.persistence.*;
 import java.time.LocalTime;
 
 @Data
-@Entity(name = "booking")
+@Entity
+@Table(name = "bookings")
 @Accessors(chain = true)
 public class BookingDBO {
     @Id

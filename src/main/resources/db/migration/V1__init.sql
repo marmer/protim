@@ -1,12 +1,12 @@
-create table booking_day (
+create table booking_days (
   id      BIGSERIAL PRIMARY KEY,
   day     date unique not null,
   version bigint
 );
 
-create table booking (
+create table bookings (
   id          BIGSERIAL PRIMARY KEY,
-  day         BIGINT references booking_day (id),
+  day         BIGINT references booking_days (id),
   start_time  time,
   duration    time,
   description varchar,

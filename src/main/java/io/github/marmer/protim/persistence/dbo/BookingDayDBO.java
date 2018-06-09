@@ -8,7 +8,8 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Data
-@Entity(name = "booking_day")
+@Entity
+@Table(name = "booking_days")
 @Accessors(chain = true)
 public class BookingDayDBO {
     @Id

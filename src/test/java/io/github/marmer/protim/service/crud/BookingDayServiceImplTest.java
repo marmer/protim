@@ -55,7 +55,7 @@ public class BookingDayServiceImplTest {
             throws Exception {
         // Preparation
         final LocalDate day = LocalDate.of(1985, 1, 2);
-        when(bookingDayRepository.findEntryIdsFor(day)).thenReturn(asList(2L, 5L, 8L));
+        when(bookingDayRepository.findEntryIdsForDay(day)).thenReturn(asList(2L, 5L, 8L));
 
         // Execution
         final List<Long> results = classUnderTest.getEnttyIDsForDay(day);
