@@ -14,8 +14,11 @@ import org.mockito.quality.Strictness;
 
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.List;
 import java.util.Optional;
 
+import static java.util.Arrays.asList;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
@@ -45,6 +48,20 @@ public class BookingDayServiceImplTest {
 
         // Assertion
         assertThat(result.get(), is(bookingDay));
+    }
+
+    @Test
+    public void testGetEnttyIDsForDay_EntriesExistForTheGivenDay_ShouldReturnTheirIDs()
+            throws Exception {
+        // Preparation
+        final LocalDate day = LocalDate.of(1985, 1, 2);
+        when(bookingDayRepository.findEntryIdsFor(day)).thenReturn(asList(2L, 5L, 8L));
+
+        // Execution
+        final List<Long> results = classUnderTest.getEnttyIDsForDay(day);
+
+        // Assertion
+        assertThat(results, contains(2L, 5L, 8L));
     }
 
     private BookingDay newBookingDay() {
