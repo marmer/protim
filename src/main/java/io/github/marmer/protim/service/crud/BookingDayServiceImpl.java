@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,5 +23,10 @@ public class BookingDayServiceImpl implements BookingDayService {
     public Optional<BookingDay> getBookingDay(final LocalDate date) {
         final BookingDayDBO bookingDay = bookingDayRepository.findByDay(date);
         return Optional.ofNullable(toBookingDayConverter.convert(bookingDay));
+    }
+
+    @Override
+    public List<Long> getEnttyIDsForDay(final LocalDate day) {
+        return Collections.emptyList();
     }
 }

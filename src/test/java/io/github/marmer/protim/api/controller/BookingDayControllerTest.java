@@ -18,8 +18,10 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDate;
 import java.time.Month;
 
+import static java.util.Arrays.asList;
 import static java.util.Optional.empty;
 import static java.util.Optional.ofNullable;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -78,5 +80,17 @@ public class BookingDayControllerTest {
         // Execution
         mockMvc.perform(get("/api/day/iReallyAmNoDate"))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void test_DayHasEntries_ShouldLiestEntries()
+            throws Exception {
+        // Preparation
+        when(bookingDayService.getEnttyIDsForDay(LocalDate.of(2012, 12, 21))).thenReturn(asList(1L, 2L, 3L));
+
+        // Execution
+        mockMvc.perform(get("/api/day/2012-12-21/entries"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.entries", contains(1, 2, 3)));
     }
 }

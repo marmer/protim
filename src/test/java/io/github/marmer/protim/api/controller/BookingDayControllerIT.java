@@ -1,5 +1,6 @@
 package io.github.marmer.protim.api.controller;
 
+import io.github.marmer.protim.persistence.dbo.BookingDBO;
 import io.github.marmer.protim.persistence.dbo.BookingDayDBO;
 import io.github.marmer.protim.persistence.repositories.BookingDayRepository;
 import io.github.marmer.protim.test.DbCleanupService;
@@ -21,8 +22,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDate;
 import java.time.Month;
 
+import static java.util.Collections.singletonList;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -55,9 +59,11 @@ public class BookingDayControllerIT {
     public void testGetDay_MultipleDaysExist_ShouldShowDay()
             throws Exception {
         // Preparation
+        final BookingDBO booking = new BookingDBO().setDescription("bookingDescription");
         bookingDayRepository.save(
                 new BookingDayDBO()
-                        .setDay(LocalDate.of(1985, Month.JANUARY, 2)));
+                        .setDay(LocalDate.of(1985, Month.JANUARY, 2))
+                        .setBookings(singletonList(booking)));
         bookingDayRepository.save(
                 new BookingDayDBO()
                         .setDay(LocalDate.of(1985, Month.JANUARY, 3)));
@@ -66,7 +72,9 @@ public class BookingDayControllerIT {
         mockMvc.perform(get("/api/day/1985-01-02"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.day", equalTo("1985-01-02")));
+                .andDo(print())
+                .andExpect(jsonPath("$.day", equalTo("1985-01-02")))
+                .andExpect(jsonPath("$.bookings", contains(booking.getId())));
     }
 
 }
