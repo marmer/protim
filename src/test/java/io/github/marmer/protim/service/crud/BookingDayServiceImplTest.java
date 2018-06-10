@@ -66,17 +66,22 @@ public class BookingDayServiceImplTest {
         assertThat(bookingDay.get(), isBookingDay().withDay(day));
     }
     @Test
-    public void testGetEnttyIDsForDay_EntriesExistForTheGivenDay_ShouldReturnTheirIDs()
+    public void testGetBookingStartTimesForDay_EntriesExistForTheGivenDay_ShouldReturnTheirIDs()
             throws Exception {
         // Preparation
         final LocalDate day = LocalDate.of(1985, 1, 2);
-        when(bookingDayRepository.findBookingIdsForDay(day)).thenReturn(asList(2L, 5L, 8L));
+        when(bookingDayRepository.findBookingStartTimesForDay(day))
+                .thenReturn(asList(
+                        LocalTime.of(1, 2),
+                        LocalTime.of(3, 4)));
 
         // Execution
         final List<LocalTime> results = classUnderTest.getBookingStartTimesForDay(day);
 
         // Assertion
-        assertThat(results, contains(2L, 5L, 8L));
+        assertThat(results, contains(
+                LocalTime.of(1, 2),
+                LocalTime.of(3, 4)));
     }
 
     private BookingDay newBookingDay() {

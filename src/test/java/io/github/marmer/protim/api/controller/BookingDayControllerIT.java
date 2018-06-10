@@ -93,8 +93,8 @@ public class BookingDayControllerIT {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.startTimes", contains(
-                        booking3.getStartTime(),
-                        booking1.getStartTime(),
-                        booking2.getStartTime())));
+                        "13:15",
+                        "18:45",
+                        "19:30")));
     }
 }

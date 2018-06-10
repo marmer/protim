@@ -12,6 +12,7 @@ import org.springframework.test.context.junit4.rules.SpringClassRule;
 import org.springframework.test.context.junit4.rules.SpringMethodRule;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -50,7 +51,7 @@ public class BookingDayRepositoryIT {
     }
 
     @Test
-    public void testFindEntryIdsFor_SomeBookingDaysWithDifferentBookingsExist_ShuoldOnlyFindBookingsForTheRelatedDay()
+    public void testFindBookingStartTimesForDay_SomeBookingDaysWithDifferentBookingsExist_ShuoldOnlyFindBookingsForTheRelatedDay()
             throws Exception {
         // Preparation
         final LocalDate day = LocalDate.of(2002, 2, 2);
@@ -59,25 +60,28 @@ public class BookingDayRepositoryIT {
                         .setDay(day)
                         .setBookings(
                                 asList(new BookingDBO()
-                                                .setDescription("desc1"),
+                                                .setStartTime(LocalTime.of(1, 2)),
                                         new BookingDBO()
-                                                .setDescription("desc2"))));
+                                                .setStartTime(LocalTime.of(5, 6)),
+                                        new BookingDBO()
+                                                .setStartTime(LocalTime.of(3, 4))
+                                )));
         final BookingDayDBO bookingDayIrrelevant = entityManager.persist(
                 new BookingDayDBO()
                         .setDay(day.plusDays(1))
                         .setBookings(
                                 asList(new BookingDBO()
-                                                .setDescription("desc3"),
+                                                .setStartTime(LocalTime.of(5, 6)),
                                         new BookingDBO()
-                                                .setDescription("desc4"))));
+                                                .setStartTime(LocalTime.of(7, 8)))));
 
         // Execution
-        final List<Long> results = classUnderTest.findBookingIdsForDay(day);
+        final List<LocalTime> results = classUnderTest.findBookingStartTimesForDay(day);
 
         // Assertion
         assertThat(results, contains(
-                bookingDay.getBookings().get(0).getId(),
-                bookingDay.getBookings().get(1).getId()));
+                bookingDay.getBookings().get(0).getStartTime(),
+                bookingDay.getBookings().get(2).getStartTime(),
+                bookingDay.getBookings().get(1).getStartTime()));
     }
-
 }
