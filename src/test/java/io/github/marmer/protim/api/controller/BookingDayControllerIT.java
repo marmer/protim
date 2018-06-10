@@ -21,7 +21,6 @@ import java.time.LocalDate;
 import java.time.Month;
 
 import static java.util.Collections.singletonList;
-import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -53,7 +52,7 @@ public class BookingDayControllerIT {
     }
 
     @Test
-    public void testGetDay_MultipleDaysExist_ShouldShowDay()
+    public void testGetDay_MultipleDaysExist_ShouldShowRequestedDay()
             throws Exception {
         // Preparation
         final BookingDBO booking = new BookingDBO().setDescription("bookingDescription");
@@ -70,8 +69,6 @@ public class BookingDayControllerIT {
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andDo(print())
-                .andExpect(jsonPath("$.day", equalTo("1985-01-02")))
-                .andExpect(jsonPath("$.bookings", contains(booking.getId())));
+                .andExpect(jsonPath("$.day", equalTo("1985-01-02")));
     }
-
 }
