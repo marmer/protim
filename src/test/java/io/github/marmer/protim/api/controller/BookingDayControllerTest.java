@@ -89,8 +89,8 @@ public class BookingDayControllerTest {
         when(bookingDayService.getEnttyIDsForDay(LocalDate.of(2012, 12, 21))).thenReturn(asList(1L, 2L, 3L));
 
         // Execution
-        mockMvc.perform(get("/api/day/2012-12-21/entries"))
+        mockMvc.perform(get("/api/day/2012-12-21/bookings"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.entries", contains(1, 2, 3)));
+                .andExpect(jsonPath("$.ids", contains(1, 2, 3)));
     }
 }

@@ -2,7 +2,7 @@ package io.github.marmer.protim.api.controller;
 
 import io.github.marmer.protim.api.converter.Converter;
 import io.github.marmer.protim.api.dto.BookingDayDTO;
-import io.github.marmer.protim.api.dto.BookingDayEntriesDTO;
+import io.github.marmer.protim.api.dto.BookingDayIdsDTO;
 import io.github.marmer.protim.service.crud.BookingDayService;
 import io.github.marmer.protim.service.model.BookingDay;
 import lombok.RequiredArgsConstructor;
@@ -34,9 +34,9 @@ public class BookingDayController {
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @GetMapping("/{day:\\d{4}-\\d{2}-\\d{2}}/entries")
-    public ResponseEntity<BookingDayEntriesDTO> getEntries(@PathVariable("day") @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE) final LocalDate day) {
+    @GetMapping("/{day:\\d{4}-\\d{2}-\\d{2}}/bookings")
+    public ResponseEntity<BookingDayIdsDTO> getBookings(@PathVariable("day") @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE) final LocalDate day) {
         final List<Long> entryIDs = bookingDayService.getEnttyIDsForDay(day);
-        return ResponseEntity.ok(new BookingDayEntriesDTO().setEntries(entryIDs));
+        return ResponseEntity.ok(new BookingDayIdsDTO().setIds(entryIDs));
     }
 }

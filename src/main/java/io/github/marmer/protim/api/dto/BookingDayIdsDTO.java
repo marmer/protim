@@ -7,6 +7,6 @@ import java.util.List;
 
 @Data
 @Accessors(chain = true)
-public class BookingDayEntriesDTO {
-    private List<Long> entries;
+public class BookingDayIdsDTO {
+    private List<Long> ids;
 }

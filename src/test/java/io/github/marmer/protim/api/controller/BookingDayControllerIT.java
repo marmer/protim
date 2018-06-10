@@ -21,6 +21,7 @@ import java.time.LocalDate;
 import java.time.Month;
 
 import static java.util.Collections.singletonList;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
@@ -68,7 +69,30 @@ public class BookingDayControllerIT {
         mockMvc.perform(get("/api/day/1985-01-02"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andDo(print())
                 .andExpect(jsonPath("$.day", equalTo("1985-01-02")));
+    }
+
+    @Test
+    public void testGetEntries_BookingsForMultipleDaysExist_ShouldListBookingsForRequestedDays()
+            throws Exception {
+        // Preparation
+        final BookingDBO booking = new BookingDBO().setDescription("bookingDescription");
+        bookingDayRepository.save(
+                new BookingDayDBO()
+                        .setDay(LocalDate.of(1985, Month.JANUARY, 2))
+                        .setBookings(singletonList(booking)));
+        bookingDayRepository.save(
+                new BookingDayDBO()
+                        .setDay(LocalDate.of(1985, Month.JANUARY, 3))
+                        .setBookings(singletonList(new BookingDBO()
+                                .setDescription("theOtherBooking"))));
+
+        // Execution
+        mockMvc.perform(get("/api/day/1985-01-02/bookings"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andDo(print())
+                .andExpect(jsonPath("$.ids", contains(booking.getId().intValue())));
+
     }
 }
