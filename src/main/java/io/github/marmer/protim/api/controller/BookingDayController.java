@@ -2,7 +2,7 @@ package io.github.marmer.protim.api.controller;
 
 import io.github.marmer.protim.api.converter.Converter;
 import io.github.marmer.protim.api.dto.BookingDayDTO;
-import io.github.marmer.protim.api.dto.BookingDayIdsDTO;
+import io.github.marmer.protim.api.dto.BookingStartTimesDTO;
 import io.github.marmer.protim.service.crud.BookingDayService;
 import io.github.marmer.protim.service.model.BookingDay;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,8 +36,8 @@ public class BookingDayController {
     }
 
     @GetMapping("/{day:\\d{4}-\\d{2}-\\d{2}}/bookings")
-    public ResponseEntity<BookingDayIdsDTO> getBookingIds(@PathVariable("day") @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE) final LocalDate day) {
-        final List<Long> entryIDs = bookingDayService.getBookingIDsForDay(day);
-        return ResponseEntity.ok(new BookingDayIdsDTO().setIds(entryIDs));
+    public ResponseEntity<BookingStartTimesDTO> getBookingIds(@PathVariable("day") @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE) final LocalDate day) {
+        final List<LocalTime> startTimes = bookingDayService.getBookingStartTimesForDay(day);
+        return ResponseEntity.ok(new BookingStartTimesDTO().setStartTimes(startTimes));
     }
 }

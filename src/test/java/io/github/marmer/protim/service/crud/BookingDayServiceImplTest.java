@@ -13,6 +13,7 @@ import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.Month;
 import java.util.List;
 import java.util.Optional;
@@ -72,7 +73,7 @@ public class BookingDayServiceImplTest {
         when(bookingDayRepository.findBookingIdsForDay(day)).thenReturn(asList(2L, 5L, 8L));
 
         // Execution
-        final List<Long> results = classUnderTest.getBookingIDsForDay(day);
+        final List<LocalTime> results = classUnderTest.getBookingStartTimesForDay(day);
 
         // Assertion
         assertThat(results, contains(2L, 5L, 8L));

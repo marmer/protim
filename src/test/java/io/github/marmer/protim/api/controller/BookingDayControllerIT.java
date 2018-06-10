@@ -92,7 +92,7 @@ public class BookingDayControllerIT {
         mockMvc.perform(get("/api/day/1985-01-02/bookings"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$", contains(
+                .andExpect(jsonPath("$.startTimes", contains(
                         booking3.getStartTime(),
                         booking1.getStartTime(),
                         booking2.getStartTime())));

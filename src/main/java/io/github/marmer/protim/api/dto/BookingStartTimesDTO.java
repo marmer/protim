@@ -5,15 +5,11 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 
 import java.time.LocalTime;
+import java.util.List;
 
 @Data
 @Accessors(chain = true)
-public class BookingDTO {
+public class BookingStartTimesDTO {
     @JsonFormat(pattern = "HH:mm")
-    private LocalTime startTime;
-    @JsonFormat(pattern = "HH:mm")
-    private LocalTime duration;
-    private String description;
-    private String notes;
-    private String ticket;
+    private List<LocalTime> startTimes;
 }

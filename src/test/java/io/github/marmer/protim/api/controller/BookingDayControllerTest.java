@@ -16,6 +16,7 @@ import org.springframework.test.context.junit4.rules.SpringMethodRule;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.time.Month;
 
 import static java.util.Arrays.asList;
@@ -25,6 +26,7 @@ import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -86,11 +88,15 @@ public class BookingDayControllerTest {
     public void test_DayHasEntries_ShouldLiestEntries()
             throws Exception {
         // Preparation
-        when(bookingDayService.getBookingIDsForDay(LocalDate.of(2012, 12, 21))).thenReturn(asList(1L, 2L, 3L));
+        when(bookingDayService.getBookingStartTimesForDay(LocalDate.of(2012, 12, 21)))
+                .thenReturn(asList(
+                        LocalTime.of(10, 15),
+                        LocalTime.of(15, 30)));
 
         // Execution
         mockMvc.perform(get("/api/day/2012-12-21/bookings"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.ids", contains(1, 2, 3)));
+                .andDo(print())
+                .andExpect(jsonPath("$.startTimes", contains("10:15", "15:30")));
     }
 }
