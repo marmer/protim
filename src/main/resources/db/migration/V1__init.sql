@@ -1,6 +1,6 @@
 create table booking_days (
   id      BIGSERIAL PRIMARY KEY,
-  day     date unique not null,
+  day     date not null,
   version bigint
 );
 

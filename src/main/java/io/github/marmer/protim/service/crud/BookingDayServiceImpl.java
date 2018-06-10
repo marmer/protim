@@ -20,7 +20,7 @@ public class BookingDayServiceImpl implements BookingDayService {
 
     @Override
     public Optional<BookingDay> getBookingDay(final LocalDate date) {
-        final BookingDayDBO bookingDay = bookingDayRepository.findByDay(date);
+        final BookingDayDBO bookingDay = bookingDayRepository.findFirstByDayIs(date).orElse(null);
         return Optional.ofNullable(toBookingDayConverter.convert(bookingDay));
     }
 

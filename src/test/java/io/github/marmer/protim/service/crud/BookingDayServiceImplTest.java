@@ -39,7 +39,7 @@ public class BookingDayServiceImplTest {
         // Preparation
         final LocalDate date = LocalDate.of(2020, 3, 4);
         final BookingDayDBO dbo = newBookingDayDBO();
-        when(bookingDayRepository.findByDay(date)).thenReturn(dbo);
+        when(bookingDayRepository.findFirstByDayIs(date)).thenReturn(Optional.of(dbo));
         final BookingDay bookingDay = newBookingDay();
         when(bookingDayConverter.convert(dbo)).thenReturn(bookingDay);
 

@@ -7,9 +7,10 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 public interface BookingDayRepository extends JpaRepository<BookingDayDBO, Long> {
-    BookingDayDBO findByDay(LocalDate day);
+    Optional<BookingDayDBO> findFirstByDayIs(LocalDate day);
 
     @Query("SELECT b.id FROM BookingDayDBO d JOIN d.bookings b WHERE d.day = ?1")
     List<Long> findBookingIdsForDay(LocalDate day);

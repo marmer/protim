@@ -13,6 +13,7 @@ import org.springframework.test.context.junit4.rules.SpringMethodRule;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import static io.github.marmer.protim.persistence.dbo.BookingDayDBOMatcher.isBookingDayDBO;
 import static java.util.Arrays.asList;
@@ -42,10 +43,10 @@ public class BookingDayRepositoryIT {
         final Long id = entityManager.persistAndGetId(new BookingDayDBO().setDay(day), Long.class);
 
         // Execution
-        final BookingDayDBO bookingDay = classUnderTest.findByDay(day);
+        final Optional<BookingDayDBO> bookingDay = classUnderTest.findFirstByDayIs(day);
 
         // Assertion
-        assertThat(bookingDay, isBookingDayDBO().withId(id));
+        assertThat(bookingDay.get(), isBookingDayDBO().withId(id));
     }
 
     @Test
