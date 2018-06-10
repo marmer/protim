@@ -17,6 +17,7 @@ import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 
+import static io.github.marmer.protim.service.model.BookingDayMatcher.isBookingDay;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
@@ -51,6 +52,19 @@ public class BookingDayServiceImplTest {
     }
 
     @Test
+    public void testGetBookingDay_BookingDayDoesNotExist_ShouldReturnAnInstance()
+            throws Exception {
+        // Preparation
+        final LocalDate day = LocalDate.of(2002, 2, 2);
+        when(bookingDayRepository.findFirstByDayIs(day)).thenReturn(Optional.empty());
+
+        // Execution
+        final Optional<BookingDay> bookingDay = classUnderTest.getBookingDay(day);
+
+        // Assertion
+        assertThat(bookingDay.get(), isBookingDay().withDay(day));
+    }
+    @Test
     public void testGetEnttyIDsForDay_EntriesExistForTheGivenDay_ShouldReturnTheirIDs()
             throws Exception {
         // Preparation
@@ -58,7 +72,7 @@ public class BookingDayServiceImplTest {
         when(bookingDayRepository.findBookingIdsForDay(day)).thenReturn(asList(2L, 5L, 8L));
 
         // Execution
-        final List<Long> results = classUnderTest.getEnttyIDsForDay(day);
+        final List<Long> results = classUnderTest.getBookingIDsForDay(day);
 
         // Assertion
         assertThat(results, contains(2L, 5L, 8L));

@@ -86,7 +86,7 @@ public class BookingDayControllerTest {
     public void test_DayHasEntries_ShouldLiestEntries()
             throws Exception {
         // Preparation
-        when(bookingDayService.getEnttyIDsForDay(LocalDate.of(2012, 12, 21))).thenReturn(asList(1L, 2L, 3L));
+        when(bookingDayService.getBookingIDsForDay(LocalDate.of(2012, 12, 21))).thenReturn(asList(1L, 2L, 3L));
 
         // Execution
         mockMvc.perform(get("/api/day/2012-12-21/bookings"))

@@ -35,8 +35,8 @@ public class BookingDayController {
     }
 
     @GetMapping("/{day:\\d{4}-\\d{2}-\\d{2}}/bookings")
-    public ResponseEntity<BookingDayIdsDTO> getBookings(@PathVariable("day") @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE) final LocalDate day) {
-        final List<Long> entryIDs = bookingDayService.getEnttyIDsForDay(day);
+    public ResponseEntity<BookingDayIdsDTO> getBookingIds(@PathVariable("day") @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE) final LocalDate day) {
+        final List<Long> entryIDs = bookingDayService.getBookingIDsForDay(day);
         return ResponseEntity.ok(new BookingDayIdsDTO().setIds(entryIDs));
     }
 }

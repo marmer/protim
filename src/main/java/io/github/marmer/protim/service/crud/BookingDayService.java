@@ -24,5 +24,5 @@ public interface BookingDayService {
      * @param day The day of interest.
      * @return ID List.
      */
-    List<Long> getEnttyIDsForDay(LocalDate day);
+    List<Long> getBookingIDsForDay(LocalDate day);
 }

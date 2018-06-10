@@ -93,6 +93,5 @@ public class BookingDayControllerIT {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(jsonPath("$.ids", contains(booking.getId().intValue())));
-
     }
 }
