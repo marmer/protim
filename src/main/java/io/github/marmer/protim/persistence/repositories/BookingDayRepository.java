@@ -11,6 +11,6 @@ import java.util.List;
 public interface BookingDayRepository extends JpaRepository<BookingDayDBO, Long> {
     BookingDayDBO findByDay(LocalDate day);
 
-    @Query("SELECT b.id FROM BookingDayDBO d JOIN FETCH BookingDBO b WHERE d.day = ?1")
+    @Query("SELECT b.id FROM BookingDayDBO d JOIN d.bookings b WHERE d.day = ?1")
     List<Long> findEntryIdsForDay(LocalDate day);
 }
