@@ -12,5 +12,5 @@ public interface BookingDayRepository extends JpaRepository<BookingDayDBO, Long>
     BookingDayDBO findByDay(LocalDate day);
 
     @Query("SELECT b.id FROM BookingDayDBO d JOIN d.bookings b WHERE d.day = ?1")
-    List<Long> findEntryIdsForDay(LocalDate day);
+    List<Long> findBookingIdsForDay(LocalDate day);
 }

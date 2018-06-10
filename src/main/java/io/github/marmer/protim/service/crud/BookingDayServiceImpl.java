@@ -26,6 +26,6 @@ public class BookingDayServiceImpl implements BookingDayService {
 
     @Override
     public List<Long> getEnttyIDsForDay(final LocalDate day) {
-        return bookingDayRepository.findEntryIdsForDay(day);
+        return bookingDayRepository.findBookingIdsForDay(day);
     }
 }

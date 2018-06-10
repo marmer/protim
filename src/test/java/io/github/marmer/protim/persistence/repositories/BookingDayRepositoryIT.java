@@ -26,7 +26,7 @@ import static org.junit.Assert.assertThat;
 
 @SpringBootTest
 @AutoConfigureMockMvc
-public class BookingRepositoryIT {
+public class BookingDayRepositoryIT {
     @ClassRule
     public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
     @Rule
@@ -61,7 +61,7 @@ public class BookingRepositoryIT {
                                                 .setDescription("desc4"))));
 
         // Execution
-        final List<Long> results = classUnderTest.findEntryIdsForDay(day);
+        final List<Long> results = classUnderTest.findBookingIdsForDay(day);
 
         // Assertion
         assertThat(results, contains(
