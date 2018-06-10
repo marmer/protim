@@ -1,6 +1,7 @@
 package io.github.marmer.protim.test;
 
-import io.github.marmer.protim.persistence.repositories.BookingDayRepository;
+import io.github.marmer.protim.persistence.dbo.BookingDBO;
+import io.github.marmer.protim.persistence.dbo.BookingDayDBO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,11 +11,15 @@ import javax.persistence.EntityManager;
 @Service
 public class DbCleanupService {
     @Autowired
-    private BookingDayRepository bookingDayRepository;
     private EntityManager entityManager;
 
     @Transactional
     public void clearAll() {
-        bookingDayRepository.deleteAll();
+        removeAllFrom(BookingDBO.class);
+        removeAllFrom(BookingDayDBO.class);
+    }
+
+    private <T> void removeAllFrom(final Class<T> entityType) {
+        entityManager.createQuery("DELETE FROM " + entityType.getName()).executeUpdate();
     }
 }
