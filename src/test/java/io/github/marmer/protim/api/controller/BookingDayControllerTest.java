@@ -1,8 +1,10 @@
 package io.github.marmer.protim.api.controller;
 
 import io.github.marmer.protim.api.converter.Converter;
+import io.github.marmer.protim.api.dto.BookingDTO;
 import io.github.marmer.protim.api.dto.BookingDayDTO;
 import io.github.marmer.protim.service.crud.BookingDayService;
+import io.github.marmer.protim.service.model.Booking;
 import io.github.marmer.protim.service.model.BookingDay;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -18,15 +20,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
+import java.util.Optional;
 
 import static java.util.Arrays.asList;
 import static java.util.Optional.empty;
 import static java.util.Optional.ofNullable;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -47,6 +48,8 @@ public class BookingDayControllerTest {
     private BookingDayService bookingDayService;
     @MockBean
     private Converter<BookingDay, BookingDayDTO> bookingDayToBookingDayDTOConverter;
+    @MockBean
+    private Converter<Booking, BookingDTO> bookingToBookingDtoConverter;
 
     @Test
     public void testGetDay_DayEsists_ShouldShowDay()
@@ -96,7 +99,24 @@ public class BookingDayControllerTest {
         // Execution
         mockMvc.perform(get("/api/day/2012-12-21/bookings"))
                 .andExpect(status().isOk())
-                .andDo(print())
                 .andExpect(jsonPath("$.startTimes", contains("10:15", "15:30")));
+    }
+
+    @Test
+    public void testGetBooking_BookingExists_ShouldServeBooking()
+            throws Exception {
+        // Preparation
+        final Booking booking = Booking.builder().description("The only one").build();
+        when(bookingDayService.getBookingForTime(
+                LocalDate.of(2012, 12, 21),
+                LocalTime.of(7, 13)
+        )).thenReturn(Optional.of(booking));
+        final BookingDTO bookingDTO = new BookingDTO().setDescription("Whoop Whoop");
+        when(bookingToBookingDtoConverter.convert(booking)).thenReturn(bookingDTO);
+
+        // Execution
+        mockMvc.perform(get("/api/day/2012-12-21/bookings/{startTime}", "07:13"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.description", is("Whoop Whoop")));
     }
 }

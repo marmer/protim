@@ -9,7 +9,7 @@ import java.time.LocalTime;
 @Value
 @Builder
 @Wither
-class Booking {
+public class Booking {
     private LocalTime startTime;
     private LocalTime duration;
     private String description;

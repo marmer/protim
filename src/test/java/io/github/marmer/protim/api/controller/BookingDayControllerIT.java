@@ -23,8 +23,7 @@ import java.time.Month;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -96,5 +95,31 @@ public class BookingDayControllerIT {
                         "13:15",
                         "18:45",
                         "19:30")));
+    }
+
+    @Test
+    public void testGetBooking_RequestForAnExistingBooking_ShouldServeTheRelatedBooking()
+            throws Exception {
+        // Preparation
+        final BookingDBO booking1 = new BookingDBO()
+                .setStartTime(LocalTime.of(18, 45))
+                .setDescription("right");
+        final BookingDBO booking2 = new BookingDBO()
+                .setStartTime(LocalTime.of(19, 30))
+                .setDescription("wrong1");
+        final BookingDBO booking3 = new BookingDBO()
+                .setStartTime(LocalTime.of(13, 15))
+                .setDescription("wrong2");
+
+        bookingDayRepository.save(
+                new BookingDayDBO()
+                        .setDay(LocalDate.of(1985, Month.JANUARY, 2))
+                        .setBookings(asList(booking1, booking2, booking3)));
+
+        // Execution
+        mockMvc.perform(get("/api/day/1985-01-02/bookings/{startTime}", "18:45"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.description", is("right")));
     }
 }
