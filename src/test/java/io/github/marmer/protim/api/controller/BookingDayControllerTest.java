@@ -10,6 +10,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.InjectMocks;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -118,5 +119,21 @@ public class BookingDayControllerTest {
         mockMvc.perform(get("/api/day/2012-12-21/bookings/{startTime}", "07:13"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.description", is("Whoop Whoop")));
+    }
+
+    @Test
+    public void testGetBooking_BookingDoesNotExistExist_ShouldServe404()
+            throws Exception {
+        // Preparation
+        final Booking booking = Booking.builder().description("The only one").build();
+        when(bookingDayService.getBookingForTime(
+                Mockito.any(LocalDate.class),
+                Mockito.any(LocalTime.class)
+        )).thenReturn(Optional.of(booking));
+        final BookingDTO bookingDTO = new BookingDTO().setDescription("Whoop Whoop");
+
+        // Execution
+        mockMvc.perform(get("/api/day/2012-12-21/bookings/{startTime}", "07:13"))
+                .andExpect(status().isNotFound());
     }
 }

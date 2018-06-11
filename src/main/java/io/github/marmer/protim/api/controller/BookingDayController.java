@@ -34,8 +34,9 @@ public class BookingDayController {
     public ResponseEntity<BookingDayDTO> getDay(@PathVariable("day") @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE) final LocalDate day) {
         final Optional<BookingDay> bookingDay = bookingDayService.getBookingDay(day);
         return bookingDay
-                .map(bookingDay1 -> ResponseEntity.ok(toBookingDayDTOConverter.convert(bookingDay1)))
-                .orElseGet(() -> ResponseEntity.notFound().build());
+                .map(toBookingDayDTOConverter::convert)
+                .map(ResponseEntity::ok)
+                .orElseGet(ResponseEntity.notFound()::build);
     }
 
     @GetMapping("/{day:\\d{4}-\\d{2}-\\d{2}}/bookings")
@@ -48,6 +49,10 @@ public class BookingDayController {
     public ResponseEntity<BookingDTO> getBooking(@PathVariable("day") @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE) final LocalDate day,
                                                  @PathVariable("startTime") @DateTimeFormat(pattern = "HH:mm", iso = DateTimeFormat.ISO.TIME) final LocalTime startTime) {
         final Optional<Booking> booking = bookingDayService.getBookingForTime(day, startTime);
-        return ResponseEntity.ok(toBookingDTOConverter.convert(booking.get()));
+
+        return booking
+                .map(toBookingDTOConverter::convert)
+                .map(ResponseEntity::ok)
+                .orElseGet(ResponseEntity.notFound()::build);
     }
 }
