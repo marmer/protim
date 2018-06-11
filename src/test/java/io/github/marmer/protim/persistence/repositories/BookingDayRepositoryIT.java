@@ -19,6 +19,7 @@ import java.util.Optional;
 import static io.github.marmer.protim.persistence.dbo.BookingDayDBOMatcher.isBookingDayDBO;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.contains;
+import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 
@@ -83,5 +84,37 @@ public class BookingDayRepositoryIT {
                 bookingDay.getBookings().get(0).getStartTime(),
                 bookingDay.getBookings().get(2).getStartTime(),
                 bookingDay.getBookings().get(1).getStartTime()));
+    }
+
+    @Test
+    public void testFindBookingByStartTimeForDay_SomeBookingDaysWithDifferentBookingsExist_ShuoldOnlyFindBookingsForTheRelatedDay()
+            throws Exception {
+        // Preparation
+        final LocalDate day = LocalDate.of(2002, 2, 2);
+        final BookingDayDBO bookingDay = entityManager.persist(
+                new BookingDayDBO()
+                        .setDay(day)
+                        .setBookings(
+                                asList(new BookingDBO()
+                                                .setStartTime(LocalTime.of(1, 2)),
+                                        new BookingDBO()
+                                                .setStartTime(LocalTime.of(5, 6)),
+                                        new BookingDBO()
+                                                .setStartTime(LocalTime.of(3, 4))
+                                )));
+        final BookingDayDBO bookingDayIrrelevant = entityManager.persist(
+                new BookingDayDBO()
+                        .setDay(day.plusDays(1))
+                        .setBookings(
+                                asList(new BookingDBO()
+                                                .setStartTime(LocalTime.of(5, 6)),
+                                        new BookingDBO()
+                                                .setStartTime(LocalTime.of(7, 8)))));
+
+        // Execution
+        final Optional<BookingDBO> result = classUnderTest.findBookingByStartTimeForDay(day, LocalTime.of(5, 6));
+
+        // Assertion
+        assertThat(result.get(), is(bookingDay.getBookings().get(1)));
     }
 }

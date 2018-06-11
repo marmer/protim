@@ -27,14 +27,14 @@ import java.util.Optional;
 public class BookingDayController {
 
     private final BookingDayService bookingDayService;
-    private final Converter<BookingDay, BookingDayDTO> toBookingDayDTOConverter;
-    private final Converter<Booking, BookingDTO> toBookingDTOConverter;
+    private final Converter<BookingDay, BookingDayDTO> bookingDayDTOConverter;
+    private final Converter<Booking, BookingDTO> bookingDTOConverter;
 
     @GetMapping("/{day:\\d{4}-\\d{2}-\\d{2}}")
     public ResponseEntity<BookingDayDTO> getDay(@PathVariable("day") @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE) final LocalDate day) {
         final Optional<BookingDay> bookingDay = bookingDayService.getBookingDay(day);
         return bookingDay
-                .map(toBookingDayDTOConverter::convert)
+                .map(bookingDayDTOConverter::convert)
                 .map(ResponseEntity::ok)
                 .orElseGet(ResponseEntity.notFound()::build);
     }
@@ -51,7 +51,7 @@ public class BookingDayController {
         final Optional<Booking> booking = bookingDayService.getBookingForTime(day, startTime);
 
         return booking
-                .map(toBookingDTOConverter::convert)
+                .map(bookingDTOConverter::convert)
                 .map(ResponseEntity::ok)
                 .orElseGet(ResponseEntity.notFound()::build);
     }

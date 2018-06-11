@@ -48,9 +48,9 @@ public class BookingDayControllerTest {
     @MockBean
     private BookingDayService bookingDayService;
     @MockBean
-    private Converter<BookingDay, BookingDayDTO> bookingDayToBookingDayDTOConverter;
+    private Converter<BookingDay, BookingDayDTO> bookingDayDTOConverter;
     @MockBean
-    private Converter<Booking, BookingDTO> bookingToBookingDtoConverter;
+    private Converter<Booking, BookingDTO> bookingDTOConverter;
 
     @Test
     public void testGetDay_DayEsists_ShouldShowDay()
@@ -59,7 +59,7 @@ public class BookingDayControllerTest {
         final LocalDate date = LocalDate.of(2012, Month.DECEMBER, 21);
         final BookingDay bookingDay = BookingDay.builder().day(date).build();
         when(bookingDayService.getBookingDay(date)).thenReturn(ofNullable(bookingDay));
-        when(bookingDayToBookingDayDTOConverter.convert(bookingDay)).thenReturn(new BookingDayDTO().setDay(LocalDate.of(2002, 3, 4)));
+        when(bookingDayDTOConverter.convert(bookingDay)).thenReturn(new BookingDayDTO().setDay(LocalDate.of(2002, 3, 4)));
 
         // Execution
         mockMvc.perform(get("/api/day/2012-12-21"))
@@ -113,7 +113,7 @@ public class BookingDayControllerTest {
                 LocalTime.of(7, 13)
         )).thenReturn(Optional.of(booking));
         final BookingDTO bookingDTO = new BookingDTO().setDescription("Whoop Whoop");
-        when(bookingToBookingDtoConverter.convert(booking)).thenReturn(bookingDTO);
+        when(bookingDTOConverter.convert(booking)).thenReturn(bookingDTO);
 
         // Execution
         mockMvc.perform(get("/api/day/2012-12-21/bookings/{startTime}", "07:13"))

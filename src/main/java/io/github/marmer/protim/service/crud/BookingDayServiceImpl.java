@@ -19,15 +19,15 @@ import java.util.Optional;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class BookingDayServiceImpl implements BookingDayService {
     private final BookingDayRepository bookingDayRepository;
-    private final Converter<BookingDayDBO, BookingDay> toBookingDayConverter;
-    private final Converter<BookingDBO, Booking> toBookingConverter;
+    private final Converter<BookingDayDBO, BookingDay> bookingDayConverter;
+    private final Converter<BookingDBO, Booking> bookingConverter;
 
     @Override
     public Optional<BookingDay> getBookingDay(final LocalDate date) {
         final Optional<BookingDayDBO> bookingDay = bookingDayRepository.findFirstByDayIs(date);
         return Optional.of(
                 bookingDay
-                        .map(toBookingDayConverter::convert)
+                        .map(bookingDayConverter::convert)
                         .orElseGet(() -> BookingDay.builder().day(date).build()));
     }
 
@@ -39,6 +39,6 @@ public class BookingDayServiceImpl implements BookingDayService {
     @Override
     public Optional<Booking> getBookingForTime(final LocalDate day, final LocalTime startTime) {
         final Optional<BookingDBO> booking = bookingDayRepository.findBookingByStartTimeForDay(day, startTime);
-        return booking.map(toBookingConverter::convert);
+        return booking.map(bookingConverter::convert);
     }
 }
