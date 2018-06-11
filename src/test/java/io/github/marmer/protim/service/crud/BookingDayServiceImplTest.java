@@ -1,15 +1,14 @@
 package io.github.marmer.protim.service.crud;
 
+import io.github.marmer.protim.api.converter.Converter;
 import io.github.marmer.protim.persistence.dbo.BookingDBO;
 import io.github.marmer.protim.persistence.dbo.BookingDayDBO;
 import io.github.marmer.protim.persistence.repositories.BookingDayRepository;
-import io.github.marmer.protim.service.converter.BookingConverter;
-import io.github.marmer.protim.service.converter.BookingDayConverter;
 import io.github.marmer.protim.service.model.Booking;
 import io.github.marmer.protim.service.model.BookingDay;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
@@ -33,14 +32,18 @@ import static org.mockito.Mockito.when;
 public class BookingDayServiceImplTest {
     @Rule
     public MockitoRule mockito = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
-    @InjectMocks
     private BookingDayServiceImpl classUnderTest;
     @Mock
     private BookingDayRepository bookingDayRepository;
     @Mock
-    private BookingDayConverter bookingDayConverter;
+    private Converter<BookingDayDBO, BookingDay> bookingDayConverter;
     @Mock
-    private BookingConverter bookingConverter;
+    private Converter<BookingDBO, Booking> bookingConverter;
+
+    @Before
+    public void setUp() throws Exception {
+        classUnderTest = new BookingDayServiceImpl(bookingDayRepository, bookingDayConverter, bookingConverter);
+    }
 
     @Test
     public void testGetBookingDay_BookingDayExists_ShouldDeliverBusinessModelVersion()
