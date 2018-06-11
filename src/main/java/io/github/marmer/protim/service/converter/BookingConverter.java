@@ -9,6 +9,12 @@ import org.springframework.stereotype.Service;
 public class BookingConverter implements Converter<BookingDBO, Booking> {
     @Override
     public Booking convert(final BookingDBO source) {
-        return null;
+        return source == null ? null : Booking.builder()
+                .startTime(source.getStartTime())
+                .duration(source.getDuration())
+                .description(source.getDescription())
+                .notes(source.getNotes())
+                .ticket(source.getTicket())
+                .build();
     }
 }
