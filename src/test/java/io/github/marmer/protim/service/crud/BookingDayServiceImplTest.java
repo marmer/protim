@@ -1,8 +1,11 @@
 package io.github.marmer.protim.service.crud;
 
+import io.github.marmer.protim.persistence.dbo.BookingDBO;
 import io.github.marmer.protim.persistence.dbo.BookingDayDBO;
 import io.github.marmer.protim.persistence.repositories.BookingDayRepository;
+import io.github.marmer.protim.service.converter.BookingConverter;
 import io.github.marmer.protim.service.converter.BookingDayConverter;
+import io.github.marmer.protim.service.model.Booking;
 import io.github.marmer.protim.service.model.BookingDay;
 import org.junit.Rule;
 import org.junit.Test;
@@ -18,6 +21,8 @@ import java.time.Month;
 import java.util.List;
 import java.util.Optional;
 
+import static io.github.marmer.protim.api.dto.testdata.BookingTestdata.newBooking;
+import static io.github.marmer.protim.persistence.dbo.testdata.BookingDBOTestdata.newBookingDBO;
 import static io.github.marmer.protim.service.model.BookingDayMatcher.isBookingDay;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.contains;
@@ -34,6 +39,8 @@ public class BookingDayServiceImplTest {
     private BookingDayRepository bookingDayRepository;
     @Mock
     private BookingDayConverter bookingDayConverter;
+    @Mock
+    private BookingConverter bookingConverter;
 
     @Test
     public void testGetBookingDay_BookingDayExists_ShouldDeliverBusinessModelVersion()
@@ -82,6 +89,24 @@ public class BookingDayServiceImplTest {
         assertThat(results, contains(
                 LocalTime.of(1, 2),
                 LocalTime.of(3, 4)));
+    }
+
+    @Test
+    public void testGetBookingForTime_ABookingExistsForTheRelatedDay_ShouldBeReturned()
+            throws Exception {
+        // Preparation
+        final Booking booking = newBooking();
+        final LocalDate day = LocalDate.of(2012, 3, 4);
+        final LocalTime startTime = LocalTime.of(5, 6);
+        final BookingDBO bookingDBO = newBookingDBO();
+        when(bookingDayRepository.findBookingByStartTimeForDay(day, startTime)).thenReturn(Optional.of(bookingDBO));
+        when(bookingConverter.convert(bookingDBO)).thenReturn(booking);
+
+        // Execution
+        final Optional<Booking> result = classUnderTest.getBookingForTime(day, startTime);
+
+        // Assertion
+        assertThat(result.get(), is(booking));
     }
 
     private BookingDay newBookingDay() {
