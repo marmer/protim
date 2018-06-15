@@ -3,17 +3,17 @@ package io.github.marmer.protim.api.controller;
 import io.github.marmer.protim.api.converter.Converter;
 import io.github.marmer.protim.api.dto.BookingDTO;
 import io.github.marmer.protim.api.dto.BookingDayDTO;
-import io.github.marmer.protim.service.crud.BookingDayService;
+import io.github.marmer.protim.service.crud.BookingsService;
 import io.github.marmer.protim.service.model.Booking;
 import io.github.marmer.protim.service.model.BookingDay;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.junit4.rules.SpringClassRule;
 import org.springframework.test.context.junit4.rules.SpringMethodRule;
 import org.springframework.test.web.servlet.MockMvc;
@@ -23,15 +23,17 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.util.Optional;
 
+import static io.github.marmer.protim.service.model.BookingTestdata.newBooking;
 import static java.util.Arrays.asList;
 import static java.util.Optional.empty;
 import static java.util.Optional.ofNullable;
 import static org.hamcrest.Matchers.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 @WebMvcTest
 public class BookingDayControllerTest {
     @ClassRule
@@ -46,11 +48,13 @@ public class BookingDayControllerTest {
     private BookingDayController classUnderTest;
 
     @MockBean
-    private BookingDayService bookingDayService;
+    private BookingsService bookingsService;
     @MockBean
     private Converter<BookingDay, BookingDayDTO> bookingDayDTOConverter;
     @MockBean
     private Converter<Booking, BookingDTO> bookingDTOConverter;
+    @MockBean
+    private Converter<BookingDTO, Booking> bookingConverter;
 
     @Test
     public void testGetDay_DayEsists_ShouldShowDay()
@@ -58,7 +62,7 @@ public class BookingDayControllerTest {
         // Preparation
         final LocalDate date = LocalDate.of(2012, Month.DECEMBER, 21);
         final BookingDay bookingDay = BookingDay.builder().day(date).build();
-        when(bookingDayService.getBookingDay(date)).thenReturn(ofNullable(bookingDay));
+        when(bookingsService.getBookingDay(date)).thenReturn(ofNullable(bookingDay));
         when(bookingDayDTOConverter.convert(bookingDay)).thenReturn(new BookingDayDTO().setDay(LocalDate.of(2002, 3, 4)));
 
         // Execution
@@ -73,7 +77,7 @@ public class BookingDayControllerTest {
         // Preparation
         final LocalDate date = LocalDate.of(2012, Month.DECEMBER, 21);
         final BookingDay bookingDay = BookingDay.builder().day(date).build();
-        when(bookingDayService.getBookingDay(date)).thenReturn(empty());
+        when(bookingsService.getBookingDay(date)).thenReturn(empty());
 
         // Execution
         mockMvc.perform(get("/api/day/2012-12-21"))
@@ -92,7 +96,7 @@ public class BookingDayControllerTest {
     public void test_DayHasEntries_ShouldLiestEntries()
             throws Exception {
         // Preparation
-        when(bookingDayService.getBookingStartTimesForDay(LocalDate.of(2012, 12, 21)))
+        when(bookingsService.getBookingStartTimesForDay(LocalDate.of(2012, 12, 21)))
                 .thenReturn(asList(
                         LocalTime.of(10, 15),
                         LocalTime.of(15, 30)));
@@ -108,7 +112,7 @@ public class BookingDayControllerTest {
             throws Exception {
         // Preparation
         final Booking booking = Booking.builder().description("The only one").build();
-        when(bookingDayService.getBookingAtDayForTime(
+        when(bookingsService.getBookingAtDayForTime(
                 LocalDate.of(2012, 12, 21),
                 LocalTime.of(7, 13)
         )).thenReturn(Optional.of(booking));
@@ -126,14 +130,41 @@ public class BookingDayControllerTest {
             throws Exception {
         // Preparation
         final Booking booking = Booking.builder().description("The only one").build();
-        when(bookingDayService.getBookingAtDayForTime(
-                Mockito.any(LocalDate.class),
-                Mockito.any(LocalTime.class)
+        when(bookingsService.getBookingAtDayForTime(
+                any(LocalDate.class),
+                any(LocalTime.class)
         )).thenReturn(Optional.of(booking));
         final BookingDTO bookingDTO = new BookingDTO().setDescription("Whoop Whoop");
 
         // Execution
         mockMvc.perform(get("/api/day/2012-12-21/bookings/{startTime}", "07:13"))
                 .andExpect(status().isNotFound());
+    }
+
+    @Test
+    public void testPutBooking_BookingGiven_ShouldStoreGivenBooking()
+            throws Exception {
+        // Preparation
+        final LocalDate day = LocalDate.of(2014, 7, 13);
+        final LocalTime startTime = LocalTime.of(16, 0);
+
+        final Booking booking = newBooking();
+        when(bookingConverter.convert(any(BookingDTO.class))).thenReturn(booking);
+
+        // Execution
+        mockMvc.perform(
+                put("/api/day/{day}/bookings/", day, startTime)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content("{\n" +
+                                "  \"startTime\": \"16:00\"\n" +
+                                "  \"duration\": \"01:56\"\n" +
+                                "  \"description\": \"watching football\"\n" +
+                                "  \"notes\": \"it's not called soccer\"\n" +
+                                "  \"ticket\": \"WORLDCUP-2014\"\n" +
+                                "}"))
+                .andExpect(status().isCreated());
+
+        // Assertion
+        bookingsService.setBookingAtDay(day, booking);
     }
 }

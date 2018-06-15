@@ -4,7 +4,10 @@ import io.github.marmer.protim.persistence.dbo.BookingDBO;
 import io.github.marmer.protim.persistence.dbo.BookingDayDBO;
 import io.github.marmer.protim.persistence.repositories.BookingDayRepository;
 import io.github.marmer.protim.test.DbCleanupService;
-import org.junit.*;
+import org.junit.Before;
+import org.junit.ClassRule;
+import org.junit.Rule;
+import org.junit.Test;
 import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -18,10 +21,14 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
 
+import static io.github.marmer.protim.persistence.dbo.BookingDBOMatcher.isBookingDBO;
+import static io.github.marmer.protim.persistence.dbo.BookingDayDBOMatcher.isBookingDayDBO;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.hamcrest.Matchers.*;
+import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -119,4 +126,40 @@ public class BookingDayControllerIT {
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.description", is("right")));
     }
+
+    @Test
+    public void test_EntryIsAdded_RelatedDayWithEntryShouldExist()
+            throws Exception {
+        // Preparation
+        final LocalDate day = LocalDate.of(2014, 7, 13);
+        final LocalTime startTime = LocalTime.of(16, 0);
+
+        // Execution
+        mockMvc.perform(
+                put("/api/day/{day}/bookings/", day, startTime)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content("{\n" +
+                                "  \"startTime\": \"16:00\"\n" +
+                                "  \"duration\": \"01:56\"\n" +
+                                "  \"description\": \"watching football\"\n" +
+                                "  \"notes\": \"it's not called soccer\"\n" +
+                                "  \"ticket\": \"WORLDCUP-2014\"\n" +
+                                "}"))
+                .andExpect(status().isCreated());
+
+        // Assertion
+        assertThat(bookingDayRepository.findAll(), contains(isBookingDayDBO()
+                .withDay(day)
+                .withBookings(contains(
+                        isBookingDBO()
+                                .withStartTime(startTime)
+                                .withDescription("watching football")
+                ))));
+    }
+
+    // TODO: marmer 15.06.2018 Booking at the given time exists allready -> override
+    // TODO: marmer 15.06.2018 additional URL Parameter with a startTime and allready existing at parameter start time -> refresh the old one
+    // TODO: marmer 15.06.2018 additional URL Parameter with a startTime and a not existing at parameter start time -> 404
+    // TODO: marmer 15.06.2018 day does not exist and start time in url given -> 404
+    // TODO: marmer 15.06.2018 day does not exist and start time in url not given -> create day with the start time.
 }
