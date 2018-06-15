@@ -48,7 +48,7 @@ public class BookingDayController {
     @GetMapping("/{day:\\d{4}-\\d{2}-\\d{2}}/bookings/{startTime}")
     public ResponseEntity<BookingDTO> getBooking(@PathVariable("day") @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE) final LocalDate day,
                                                  @PathVariable("startTime") @DateTimeFormat(pattern = "HH:mm", iso = DateTimeFormat.ISO.TIME) final LocalTime startTime) {
-        final Optional<Booking> booking = bookingDayService.getBookingForTime(day, startTime);
+        final Optional<Booking> booking = bookingDayService.getBookingAtDayForTime(day, startTime);
 
         return booking
                 .map(bookingDTOConverter::convert)

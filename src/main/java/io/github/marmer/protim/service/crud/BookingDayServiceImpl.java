@@ -37,7 +37,7 @@ public class BookingDayServiceImpl implements BookingDayService {
     }
 
     @Override
-    public Optional<Booking> getBookingForTime(final LocalDate day, final LocalTime startTime) {
+    public Optional<Booking> getBookingAtDayForTime(final LocalDate day, final LocalTime startTime) {
         final Optional<BookingDBO> booking = bookingDayRepository.findBookingByStartTimeForDay(day, startTime);
         return booking.map(bookingConverter::convert);
     }

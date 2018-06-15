@@ -108,7 +108,7 @@ public class BookingDayControllerTest {
             throws Exception {
         // Preparation
         final Booking booking = Booking.builder().description("The only one").build();
-        when(bookingDayService.getBookingForTime(
+        when(bookingDayService.getBookingAtDayForTime(
                 LocalDate.of(2012, 12, 21),
                 LocalTime.of(7, 13)
         )).thenReturn(Optional.of(booking));
@@ -126,7 +126,7 @@ public class BookingDayControllerTest {
             throws Exception {
         // Preparation
         final Booking booking = Booking.builder().description("The only one").build();
-        when(bookingDayService.getBookingForTime(
+        when(bookingDayService.getBookingAtDayForTime(
                 Mockito.any(LocalDate.class),
                 Mockito.any(LocalTime.class)
         )).thenReturn(Optional.of(booking));

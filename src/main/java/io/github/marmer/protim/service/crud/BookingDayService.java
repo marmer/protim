@@ -35,5 +35,5 @@ public interface BookingDayService {
      * @param startTime The start time of the booking
      * @return The booking if it exists.
      */
-    Optional<Booking> getBookingForTime(LocalDate day, LocalTime startTime);
+    Optional<Booking> getBookingAtDayForTime(LocalDate day, LocalTime startTime);
 }

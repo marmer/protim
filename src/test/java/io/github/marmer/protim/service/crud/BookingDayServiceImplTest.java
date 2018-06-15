@@ -106,7 +106,7 @@ public class BookingDayServiceImplTest {
         when(bookingConverter.convert(bookingDBO)).thenReturn(booking);
 
         // Execution
-        final Optional<Booking> result = classUnderTest.getBookingForTime(day, startTime);
+        final Optional<Booking> result = classUnderTest.getBookingAtDayForTime(day, startTime);
 
         // Assertion
         assertThat(result.get(), is(booking));
