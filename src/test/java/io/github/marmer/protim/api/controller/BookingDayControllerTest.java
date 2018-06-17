@@ -157,11 +157,11 @@ public class BookingDayControllerTest {
                 put("/api/day/{day}/bookings/", day, startTime)
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content("{\n" +
-                                "  \"startTime\": \"16:00\"\n" +
-                                "  \"duration\": \"01:56\"\n" +
-                                "  \"description\": \"watching football\"\n" +
-                                "  \"notes\": \"it's not called soccer\"\n" +
-                                "  \"ticket\": \"WORLDCUP-2014\"\n" +
+                                "    \"startTime\": \"16:00\",\n" +
+                                "    \"duration\": \"01:56\",\n" +
+                                "    \"description\": \"watching football\",\n" +
+                                "    \"notes\": \"it's not called soccer\",\n" +
+                                "    \"ticket\": \"WORLDCUP-2014\"\n" +
                                 "}"))
                 .andExpect(status().isCreated());
 
