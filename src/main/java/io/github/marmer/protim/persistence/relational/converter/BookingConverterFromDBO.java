@@ -1,14 +1,14 @@
-package io.github.marmer.protim.service.converter;
+package io.github.marmer.protim.persistence.relational.converter;
 
-import io.github.marmer.protim.api.converter.Converter;
-import io.github.marmer.protim.api.dto.BookingDTO;
+import io.github.marmer.protim.persistence.relational.dbo.BookingDBO;
+import io.github.marmer.protim.service.converter.Converter;
 import io.github.marmer.protim.service.model.Booking;
 import org.springframework.stereotype.Service;
 
 @Service
-public class BookingConverterFromDTO implements Converter<BookingDTO, Booking> {
+public class BookingConverterFromDBO implements Converter<BookingDBO, Booking> {
     @Override
-    public Booking convert(final BookingDTO source) {
+    public Booking convert(final BookingDBO source) {
         return source == null ? null : Booking.builder()
                 .startTime(source.getStartTime())
                 .duration(source.getDuration())

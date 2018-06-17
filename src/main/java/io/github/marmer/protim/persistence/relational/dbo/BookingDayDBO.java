@@ -1,4 +1,4 @@
-package io.github.marmer.protim.persistence.dbo;
+package io.github.marmer.protim.persistence.relational.dbo;
 
 import lombok.Data;
 import lombok.experimental.Accessors;

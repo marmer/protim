@@ -1,9 +1,9 @@
 package io.github.marmer.protim.api.controller;
 
-import io.github.marmer.protim.api.converter.Converter;
 import io.github.marmer.protim.api.dto.BookingDTO;
 import io.github.marmer.protim.api.dto.BookingDayDTO;
 import io.github.marmer.protim.api.dto.BookingStartTimesDTO;
+import io.github.marmer.protim.service.converter.Converter;
 import io.github.marmer.protim.service.crud.BookingsService;
 import io.github.marmer.protim.service.model.Booking;
 import io.github.marmer.protim.service.model.BookingDay;

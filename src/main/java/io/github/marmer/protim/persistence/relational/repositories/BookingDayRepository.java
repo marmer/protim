@@ -1,8 +1,8 @@
-package io.github.marmer.protim.persistence.repositories;
+package io.github.marmer.protim.persistence.relational.repositories;
 
 
-import io.github.marmer.protim.persistence.dbo.BookingDBO;
-import io.github.marmer.protim.persistence.dbo.BookingDayDBO;
+import io.github.marmer.protim.persistence.relational.dbo.BookingDBO;
+import io.github.marmer.protim.persistence.relational.dbo.BookingDayDBO;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

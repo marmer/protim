@@ -1,7 +1,7 @@
 package io.github.marmer.protim.test;
 
-import io.github.marmer.protim.persistence.dbo.BookingDBO;
-import io.github.marmer.protim.persistence.dbo.BookingDayDBO;
+import io.github.marmer.protim.persistence.relational.dbo.BookingDBO;
+import io.github.marmer.protim.persistence.relational.dbo.BookingDayDBO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

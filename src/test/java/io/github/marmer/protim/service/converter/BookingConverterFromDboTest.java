@@ -1,6 +1,7 @@
 package io.github.marmer.protim.service.converter;
 
-import io.github.marmer.protim.persistence.dbo.BookingDBO;
+import io.github.marmer.protim.persistence.relational.converter.BookingConverterFromDBO;
+import io.github.marmer.protim.persistence.relational.dbo.BookingDBO;
 import io.github.marmer.protim.service.model.Booking;
 import org.junit.Rule;
 import org.junit.Test;
@@ -9,7 +10,7 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
 
-import static io.github.marmer.protim.persistence.dbo.testdata.BookingDBOTestdata.newBookingDBO;
+import static io.github.marmer.protim.persistence.relational.dbo.testdata.BookingDBOTestdata.newBookingDBO;
 import static io.github.marmer.protim.service.model.BookingMatcher.isBooking;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;

@@ -151,7 +151,7 @@
                     <matcherSources>
                         <matcherSource>io.github.marmer.protim.service.model</matcherSource>
                         <matcherSource>io.github.marmer.protim.api.dto</matcherSource>
-                        <matcherSource>io.github.marmer.protim.persistence.dbo</matcherSource>
+                        <matcherSource>io.github.marmer.protim.persistence.relational.dbo</matcherSource>
                     </matcherSources>
                     <ignoreClassesWithoutProperties>true</ignoreClassesWithoutProperties>
                     <outputDir>target/generated-test-sources</outputDir>

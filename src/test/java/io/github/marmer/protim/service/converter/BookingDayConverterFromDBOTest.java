@@ -1,6 +1,7 @@
 package io.github.marmer.protim.service.converter;
 
-import io.github.marmer.protim.persistence.dbo.BookingDayDBO;
+import io.github.marmer.protim.persistence.relational.converter.BookingDayConverterFromDBO;
+import io.github.marmer.protim.persistence.relational.dbo.BookingDayDBO;
 import io.github.marmer.protim.service.model.BookingDay;
 import org.junit.Rule;
 import org.junit.Test;
@@ -14,11 +15,11 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
-public class BookingDayConverterTest {
+public class BookingDayConverterFromDBOTest {
     @Rule
     public MockitoRule mockito = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
     @InjectMocks
-    private BookingDayConverter classUnderTest;
+    private BookingDayConverterFromDBO classUnderTest;
 
     @Test
     public void testConvert_BookingDayGiven_ShouldConvertAllRelevantProperties()

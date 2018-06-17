@@ -1,7 +1,7 @@
-package io.github.marmer.protim.persistence.repositories;
+package io.github.marmer.protim.persistence.relational.repositories;
 
-import io.github.marmer.protim.persistence.dbo.BookingDBO;
-import io.github.marmer.protim.persistence.dbo.BookingDayDBO;
+import io.github.marmer.protim.persistence.relational.dbo.BookingDBO;
+import io.github.marmer.protim.persistence.relational.dbo.BookingDayDBO;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -16,7 +16,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
-import static io.github.marmer.protim.persistence.dbo.BookingDayDBOMatcher.isBookingDayDBO;
+import static io.github.marmer.protim.persistence.relational.dbo.BookingDayDBOMatcher.isBookingDayDBO;
 import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
