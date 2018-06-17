@@ -22,7 +22,7 @@ public class BookingDayDBO {
     private LocalDate day;
     @JoinColumn(name = "day")
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<BookingDBO> bookings;
+    private List<BookingDBO> bookings = new ArrayList<>();
     @Version
     private Long version;
 

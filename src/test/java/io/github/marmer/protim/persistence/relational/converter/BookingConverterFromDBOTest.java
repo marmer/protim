@@ -1,6 +1,5 @@
-package io.github.marmer.protim.service.converter;
+package io.github.marmer.protim.persistence.relational.converter;
 
-import io.github.marmer.protim.persistence.relational.converter.BookingConverterFromDBO;
 import io.github.marmer.protim.persistence.relational.dbo.BookingDBO;
 import io.github.marmer.protim.service.model.Booking;
 import org.junit.Rule;

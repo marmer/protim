@@ -32,7 +32,7 @@ public class BookingDayController {
     @PutMapping("/{day:\\d{4}-\\d{2}-\\d{2}}/bookings/")
     @ResponseStatus(HttpStatus.CREATED)
     public void putBooking(@PathVariable("day") @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE) final LocalDate day,
-                           final BookingDTO bookingDto) {
+                           @RequestBody final BookingDTO bookingDto) {
         final Booking booking = bookingConverter.convert(bookingDto);
         bookingsCrudService.setBookingAtDay(day, booking);
     }

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
 @Service
@@ -48,6 +49,7 @@ public class BookingsCrudServiceRelational implements BookingsCrudService {
         final BookingDayDBO bookingDayDbo = bookingDayRepository.findFirstByDay(day).orElse(new BookingDayDBO().setDay(day));
         final BookingDBO bookingDbo = bookingDBOConverter.convert(booking);
 
+        bookingDayDbo.getBookings().removeIf(bookingDBO -> Objects.equals(bookingDBO.getStartTime(), booking.getStartTime()));
         bookingDayDbo.addBookings(bookingDbo);
         bookingDayRepository.save(bookingDayDbo);
     }

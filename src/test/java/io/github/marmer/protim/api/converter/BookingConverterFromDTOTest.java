@@ -1,6 +1,5 @@
-package io.github.marmer.protim.service.converter;
+package io.github.marmer.protim.api.converter;
 
-import io.github.marmer.protim.api.converter.BookingConverterFromDTO;
 import io.github.marmer.protim.api.dto.BookingDTO;
 import io.github.marmer.protim.service.model.Booking;
 import org.junit.Rule;

@@ -140,11 +140,11 @@ public class BookingManipulationEndToEndIT {
                 put("/api/day/{day}/bookings/", day, startTime)
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content("{\n" +
-                                "  \"startTime\": \"16:00\"\n" +
-                                "  \"duration\": \"01:56\"\n" +
-                                "  \"description\": \"watching football\"\n" +
-                                "  \"notes\": \"it's not called soccer\"\n" +
-                                "  \"ticket\": \"WORLDCUP-2014\"\n" +
+                                "    \"startTime\": \"16:00\",\n" +
+                                "    \"duration\": \"01:56\",\n" +
+                                "    \"description\": \"watching football\",\n" +
+                                "    \"notes\": \"it's not called soccer\",\n" +
+                                "    \"ticket\": \"WORLDCUP-2014\"\n" +
                                 "}"))
                 .andExpect(status().isCreated());
 
@@ -162,5 +162,4 @@ public class BookingManipulationEndToEndIT {
     // TODO: marmer 15.06.2018 additional URL Parameter with a startTime and allready existing at parameter start time -> refresh the old one
     // TODO: marmer 15.06.2018 additional URL Parameter with a startTime and a not existing at parameter start time -> 404
     // TODO: marmer 15.06.2018 day does not exist and start time in url given -> 404
-    // TODO: marmer 15.06.2018 day does not exist and start time in url not given -> create day with the start time.
 }
