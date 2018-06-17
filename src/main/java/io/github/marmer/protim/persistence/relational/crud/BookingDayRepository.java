@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BookingDayRepository extends JpaRepository<BookingDayDBO, Long> {
-    Optional<BookingDayDBO> findFirstByDayIs(LocalDate day);
+    Optional<BookingDayDBO> findFirstByDay(LocalDate day);
 
     @Query("SELECT b.startTime FROM BookingDayDBO d JOIN d.bookings b WHERE d.day = ?1 ORDER BY b.startTime")
     List<LocalTime> findBookingStartTimesForDay(LocalDate day);

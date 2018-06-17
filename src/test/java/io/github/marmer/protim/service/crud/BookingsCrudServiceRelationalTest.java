@@ -10,6 +10,8 @@ import io.github.marmer.protim.service.model.BookingDay;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
@@ -18,16 +20,18 @@ import org.mockito.quality.Strictness;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import static io.github.marmer.protim.persistence.relational.dbo.BookingDayDBOMatcher.isBookingDayDBO;
 import static io.github.marmer.protim.persistence.relational.dbo.testdata.BookingDBOTestdata.newBookingDBO;
 import static io.github.marmer.protim.service.model.BookingDayMatcher.isBookingDay;
 import static io.github.marmer.protim.service.model.BookingTestdata.newBooking;
-import static java.util.Arrays.asList;
-import static org.hamcrest.Matchers.contains;
-import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 public class BookingsCrudServiceRelationalTest {
@@ -40,10 +44,14 @@ public class BookingsCrudServiceRelationalTest {
     private Converter<BookingDayDBO, BookingDay> bookingDayConverter;
     @Mock
     private Converter<BookingDBO, Booking> bookingConverter;
+    @Mock
+    private Converter<Booking, BookingDBO> bookingDboConverter;
+    @Captor
+    private ArgumentCaptor<BookingDayDBO> bookingDayDBOCaptor;
 
     @Before
     public void setUp() throws Exception {
-        classUnderTest = new BookingsCrudServiceRelational(bookingDayRepository, bookingDayConverter, bookingConverter);
+        classUnderTest = new BookingsCrudServiceRelational(bookingDayRepository, bookingDayConverter, bookingConverter, bookingDboConverter);
     }
 
     @Test
@@ -52,7 +60,7 @@ public class BookingsCrudServiceRelationalTest {
         // Preparation
         final LocalDate date = LocalDate.of(2020, 3, 4);
         final BookingDayDBO dbo = newBookingDayDBO();
-        when(bookingDayRepository.findFirstByDayIs(date)).thenReturn(Optional.of(dbo));
+        when(bookingDayRepository.findFirstByDay(date)).thenReturn(Optional.of(dbo));
         final BookingDay bookingDay = newBookingDay();
         when(bookingDayConverter.convert(dbo)).thenReturn(bookingDay);
 
@@ -68,7 +76,7 @@ public class BookingsCrudServiceRelationalTest {
             throws Exception {
         // Preparation
         final LocalDate day = LocalDate.of(2002, 2, 2);
-        when(bookingDayRepository.findFirstByDayIs(day)).thenReturn(Optional.empty());
+        when(bookingDayRepository.findFirstByDay(day)).thenReturn(Optional.empty());
 
         // Execution
         final Optional<BookingDay> bookingDay = classUnderTest.getBookingDay(day);
@@ -112,6 +120,55 @@ public class BookingsCrudServiceRelationalTest {
 
         // Assertion
         assertThat(result.get(), is(booking));
+    }
+
+    @Test
+    public void testSetBookingAtDay_BookingDayEsistsAllready_ShouldAddGivenBookingToDay()
+            throws Exception {
+        // Preparation
+        final LocalDate day = LocalDate.of(2112, 12, 21);
+        final Booking booking = newBooking();
+        final BookingDBO bookingDBO = newBookingDBO();
+        when(bookingDboConverter.convert(booking)).thenReturn(bookingDBO);
+        final BookingDayDBO bookingDayDbo = newBookingDayDBO();
+        final BookingDBO oldBookingDBO = newBookingDBO();
+        bookingDayDbo.setBookings(asList(oldBookingDBO));
+        when(bookingDayRepository.findFirstByDay(day)).thenReturn(Optional.of(bookingDayDbo));
+
+        // Execution
+        classUnderTest.setBookingAtDay(day, booking);
+
+        // Assertion
+        verify(bookingDayRepository).save(bookingDayDBOCaptor.capture());
+        assertThat(bookingDayDBOCaptor.getValue(), is(allOf(
+                sameInstance(bookingDayDbo),
+                isBookingDayDBO()
+                        .withBookings(contains(oldBookingDBO, bookingDBO)))));
+    }
+
+    @Test
+    public void testSetBookingAtDay_BookingDayDoesNotExistYet_ShuoldCreateBookingDayAndAddBooking()
+            throws Exception {
+        // Preparation
+        final LocalDate day = LocalDate.of(2112, 12, 21);
+        final Booking booking = newBooking();
+        final BookingDBO bookingDBO = newBookingDBO();
+        when(bookingDboConverter.convert(booking)).thenReturn(bookingDBO);
+        final BookingDayDBO bookingDayDbo = newBookingDayDBO();
+        when(bookingDayRepository.findFirstByDay(day)).thenReturn(Optional.empty());
+
+        // Execution
+        classUnderTest.setBookingAtDay(day, booking);
+
+        // Assertion
+        verify(bookingDayRepository).save(bookingDayDBOCaptor.capture());
+        assertThat(bookingDayDBOCaptor.getValue(), is(
+                isBookingDayDBO()
+                        .withBookings(contains(bookingDBO))));
+    }
+
+    private <T> List<T> asList(final T... elements) {
+        return new ArrayList<>(Arrays.asList(elements));
     }
 
     private BookingDay newBookingDay() {

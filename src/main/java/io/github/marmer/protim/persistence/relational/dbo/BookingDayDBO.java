@@ -5,6 +5,7 @@ import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -24,4 +25,11 @@ public class BookingDayDBO {
     private List<BookingDBO> bookings;
     @Version
     private Long version;
+
+    public void addBookings(final BookingDBO bookingDbo) {
+        if (bookings == null) {
+            bookings = new ArrayList<>();
+        }
+        bookings.add(bookingDbo);
+    }
 }

@@ -45,7 +45,7 @@ public class BookingDayRepositoryIT {
         final Long id = entityManager.persistAndGetId(new BookingDayDBO().setDay(day), Long.class);
 
         // Execution
-        final Optional<BookingDayDBO> bookingDay = classUnderTest.findFirstByDayIs(day);
+        final Optional<BookingDayDBO> bookingDay = classUnderTest.findFirstByDay(day);
 
         // Assertion
         assertThat(bookingDay.get(), isBookingDayDBO().withId(id));

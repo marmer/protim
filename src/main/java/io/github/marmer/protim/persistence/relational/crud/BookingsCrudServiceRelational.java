@@ -19,15 +19,16 @@ import java.util.Optional;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class BookingsCrudServiceRelational implements BookingsCrudService {
     private final BookingDayRepository bookingDayRepository;
-    private final Converter<BookingDayDBO, BookingDay> bookingDayDTOConverter;
-    private final Converter<BookingDBO, Booking> bookingDTOConverter;
+    private final Converter<BookingDayDBO, BookingDay> bookingDayConverter;
+    private final Converter<BookingDBO, Booking> bookingConverter;
+    private final Converter<Booking, BookingDBO> bookingDBOConverter;
 
     @Override
     public Optional<BookingDay> getBookingDay(final LocalDate date) {
-        final Optional<BookingDayDBO> bookingDay = bookingDayRepository.findFirstByDayIs(date);
+        final Optional<BookingDayDBO> bookingDay = bookingDayRepository.findFirstByDay(date);
         return Optional.of(
                 bookingDay
-                        .map(bookingDayDTOConverter::convert)
+                        .map(bookingDayConverter::convert)
                         .orElseGet(() -> BookingDay.builder().day(date).build()));
     }
 
@@ -39,11 +40,15 @@ public class BookingsCrudServiceRelational implements BookingsCrudService {
     @Override
     public Optional<Booking> getBookingAtDayForTime(final LocalDate day, final LocalTime startTime) {
         final Optional<BookingDBO> booking = bookingDayRepository.findBookingByStartTimeForDay(day, startTime);
-        return booking.map(bookingDTOConverter::convert);
+        return booking.map(bookingConverter::convert);
     }
 
     @Override
     public void setBookingAtDay(final LocalDate day, final Booking booking) {
-        // TODO: marmer 15.06.2018 implement me
+        final BookingDayDBO bookingDayDbo = bookingDayRepository.findFirstByDay(day).orElse(new BookingDayDBO().setDay(day));
+        final BookingDBO bookingDbo = bookingDBOConverter.convert(booking);
+
+        bookingDayDbo.addBookings(bookingDbo);
+        bookingDayRepository.save(bookingDayDbo);
     }
 }
