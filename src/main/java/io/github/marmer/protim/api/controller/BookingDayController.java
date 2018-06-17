@@ -4,7 +4,7 @@ import io.github.marmer.protim.api.dto.BookingDTO;
 import io.github.marmer.protim.api.dto.BookingDayDTO;
 import io.github.marmer.protim.api.dto.BookingStartTimesDTO;
 import io.github.marmer.protim.service.converter.Converter;
-import io.github.marmer.protim.service.crud.BookingsService;
+import io.github.marmer.protim.service.crud.BookingsCrudService;
 import io.github.marmer.protim.service.model.Booking;
 import io.github.marmer.protim.service.model.BookingDay;
 import lombok.RequiredArgsConstructor;
@@ -24,7 +24,7 @@ import java.util.Optional;
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
 public class BookingDayController {
 
-    private final BookingsService bookingsService;
+    private final BookingsCrudService bookingsCrudService;
     private final Converter<BookingDay, BookingDayDTO> bookingDayDTOConverter;
     private final Converter<Booking, BookingDTO> bookingDTOConverter;
     private final Converter<BookingDTO, Booking> bookingConverter;
@@ -34,12 +34,12 @@ public class BookingDayController {
     public void putBooking(@PathVariable("day") @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE) final LocalDate day,
                            final BookingDTO bookingDto) {
         final Booking booking = bookingConverter.convert(bookingDto);
-        bookingsService.setBookingAtDay(day, booking);
+        bookingsCrudService.setBookingAtDay(day, booking);
     }
 
     @GetMapping("/{day:\\d{4}-\\d{2}-\\d{2}}")
     public ResponseEntity<BookingDayDTO> getDay(@PathVariable("day") @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE) final LocalDate day) {
-        final Optional<BookingDay> bookingDay = bookingsService.getBookingDay(day);
+        final Optional<BookingDay> bookingDay = bookingsCrudService.getBookingDay(day);
         return bookingDay
                 .map(bookingDayDTOConverter::convert)
                 .map(ResponseEntity::ok)
@@ -48,14 +48,14 @@ public class BookingDayController {
 
     @GetMapping("/{day:\\d{4}-\\d{2}-\\d{2}}/bookings")
     public ResponseEntity<BookingStartTimesDTO> getBookingIds(@PathVariable("day") @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE) final LocalDate day) {
-        final List<LocalTime> startTimes = bookingsService.getBookingStartTimesForDay(day);
+        final List<LocalTime> startTimes = bookingsCrudService.getBookingStartTimesForDay(day);
         return ResponseEntity.ok(new BookingStartTimesDTO().setStartTimes(startTimes));
     }
 
     @GetMapping("/{day:\\d{4}-\\d{2}-\\d{2}}/bookings/{startTime}")
     public ResponseEntity<BookingDTO> getBooking(@PathVariable("day") @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE) final LocalDate day,
                                                  @PathVariable("startTime") @DateTimeFormat(pattern = "HH:mm", iso = DateTimeFormat.ISO.TIME) final LocalTime startTime) {
-        final Optional<Booking> booking = bookingsService.getBookingAtDayForTime(day, startTime);
+        final Optional<Booking> booking = bookingsCrudService.getBookingAtDayForTime(day, startTime);
 
         return booking
                 .map(bookingDTOConverter::convert)

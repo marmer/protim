@@ -1,9 +1,9 @@
-package io.github.marmer.protim.service.crud;
+package io.github.marmer.protim.persistence.relational.crud;
 
 import io.github.marmer.protim.persistence.relational.dbo.BookingDBO;
 import io.github.marmer.protim.persistence.relational.dbo.BookingDayDBO;
-import io.github.marmer.protim.persistence.relational.repositories.BookingDayRepository;
 import io.github.marmer.protim.service.converter.Converter;
+import io.github.marmer.protim.service.crud.BookingsCrudService;
 import io.github.marmer.protim.service.model.Booking;
 import io.github.marmer.protim.service.model.BookingDay;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
-public class BookingsServiceImpl implements BookingsService {
+public class BookingsCrudServiceRelational implements BookingsCrudService {
     private final BookingDayRepository bookingDayRepository;
     private final Converter<BookingDayDBO, BookingDay> bookingDayDTOConverter;
     private final Converter<BookingDBO, Booking> bookingDTOConverter;

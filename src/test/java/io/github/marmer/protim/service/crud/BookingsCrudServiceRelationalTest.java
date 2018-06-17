@@ -1,8 +1,9 @@
 package io.github.marmer.protim.service.crud;
 
+import io.github.marmer.protim.persistence.relational.crud.BookingDayRepository;
+import io.github.marmer.protim.persistence.relational.crud.BookingsCrudServiceRelational;
 import io.github.marmer.protim.persistence.relational.dbo.BookingDBO;
 import io.github.marmer.protim.persistence.relational.dbo.BookingDayDBO;
-import io.github.marmer.protim.persistence.relational.repositories.BookingDayRepository;
 import io.github.marmer.protim.service.converter.Converter;
 import io.github.marmer.protim.service.model.Booking;
 import io.github.marmer.protim.service.model.BookingDay;
@@ -29,10 +30,10 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.when;
 
-public class BookingsServiceImplTest {
+public class BookingsCrudServiceRelationalTest {
     @Rule
     public MockitoRule mockito = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
-    private BookingsServiceImpl classUnderTest;
+    private BookingsCrudServiceRelational classUnderTest;
     @Mock
     private BookingDayRepository bookingDayRepository;
     @Mock
@@ -42,7 +43,7 @@ public class BookingsServiceImplTest {
 
     @Before
     public void setUp() throws Exception {
-        classUnderTest = new BookingsServiceImpl(bookingDayRepository, bookingDayConverter, bookingConverter);
+        classUnderTest = new BookingsCrudServiceRelational(bookingDayRepository, bookingDayConverter, bookingConverter);
     }
 
     @Test

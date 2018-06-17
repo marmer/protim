@@ -11,7 +11,7 @@ import java.util.Optional;
 /**
  * Service related to Bookingdays.
  */
-public interface BookingsService {
+public interface BookingsCrudService {
     /**
      * Provides the {@link BookingDay} for a specific date.
      *

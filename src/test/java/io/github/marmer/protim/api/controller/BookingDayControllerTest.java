@@ -3,7 +3,7 @@ package io.github.marmer.protim.api.controller;
 import io.github.marmer.protim.api.dto.BookingDTO;
 import io.github.marmer.protim.api.dto.BookingDayDTO;
 import io.github.marmer.protim.service.converter.Converter;
-import io.github.marmer.protim.service.crud.BookingsService;
+import io.github.marmer.protim.service.crud.BookingsCrudService;
 import io.github.marmer.protim.service.model.Booking;
 import io.github.marmer.protim.service.model.BookingDay;
 import org.junit.ClassRule;
@@ -34,6 +34,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 @WebMvcTest
 public class BookingDayControllerTest {
     @ClassRule
@@ -48,7 +49,7 @@ public class BookingDayControllerTest {
     private BookingDayController classUnderTest;
 
     @MockBean
-    private BookingsService bookingsService;
+    private BookingsCrudService bookingsCrudService;
     @MockBean
     private Converter<BookingDay, BookingDayDTO> bookingDayDTOConverter;
     @MockBean
@@ -62,7 +63,7 @@ public class BookingDayControllerTest {
         // Preparation
         final LocalDate date = LocalDate.of(2012, Month.DECEMBER, 21);
         final BookingDay bookingDay = BookingDay.builder().day(date).build();
-        when(bookingsService.getBookingDay(date)).thenReturn(ofNullable(bookingDay));
+        when(bookingsCrudService.getBookingDay(date)).thenReturn(ofNullable(bookingDay));
         when(bookingDayDTOConverter.convert(bookingDay)).thenReturn(new BookingDayDTO().setDay(LocalDate.of(2002, 3, 4)));
 
         // Execution
@@ -77,7 +78,7 @@ public class BookingDayControllerTest {
         // Preparation
         final LocalDate date = LocalDate.of(2012, Month.DECEMBER, 21);
         final BookingDay bookingDay = BookingDay.builder().day(date).build();
-        when(bookingsService.getBookingDay(date)).thenReturn(empty());
+        when(bookingsCrudService.getBookingDay(date)).thenReturn(empty());
 
         // Execution
         mockMvc.perform(get("/api/day/2012-12-21"))
@@ -96,7 +97,7 @@ public class BookingDayControllerTest {
     public void test_DayHasEntries_ShouldLiestEntries()
             throws Exception {
         // Preparation
-        when(bookingsService.getBookingStartTimesForDay(LocalDate.of(2012, 12, 21)))
+        when(bookingsCrudService.getBookingStartTimesForDay(LocalDate.of(2012, 12, 21)))
                 .thenReturn(asList(
                         LocalTime.of(10, 15),
                         LocalTime.of(15, 30)));
@@ -112,7 +113,7 @@ public class BookingDayControllerTest {
             throws Exception {
         // Preparation
         final Booking booking = Booking.builder().description("The only one").build();
-        when(bookingsService.getBookingAtDayForTime(
+        when(bookingsCrudService.getBookingAtDayForTime(
                 LocalDate.of(2012, 12, 21),
                 LocalTime.of(7, 13)
         )).thenReturn(Optional.of(booking));
@@ -130,7 +131,7 @@ public class BookingDayControllerTest {
             throws Exception {
         // Preparation
         final Booking booking = Booking.builder().description("The only one").build();
-        when(bookingsService.getBookingAtDayForTime(
+        when(bookingsCrudService.getBookingAtDayForTime(
                 any(LocalDate.class),
                 any(LocalTime.class)
         )).thenReturn(Optional.of(booking));
@@ -165,6 +166,6 @@ public class BookingDayControllerTest {
                 .andExpect(status().isCreated());
 
         // Assertion
-        bookingsService.setBookingAtDay(day, booking);
+        bookingsCrudService.setBookingAtDay(day, booking);
     }
 }

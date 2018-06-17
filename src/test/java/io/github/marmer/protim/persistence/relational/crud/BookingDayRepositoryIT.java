@@ -1,4 +1,4 @@
-package io.github.marmer.protim.persistence.relational.repositories;
+package io.github.marmer.protim.persistence.relational.crud;
 
 import io.github.marmer.protim.persistence.relational.dbo.BookingDBO;
 import io.github.marmer.protim.persistence.relational.dbo.BookingDayDBO;

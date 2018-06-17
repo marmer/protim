@@ -1,8 +1,9 @@
-package io.github.marmer.protim.api.controller;
+package io.github.marmer.protim.test.endtoend;
 
+import io.github.marmer.protim.api.controller.BookingDayController;
+import io.github.marmer.protim.persistence.relational.crud.BookingDayRepository;
 import io.github.marmer.protim.persistence.relational.dbo.BookingDBO;
 import io.github.marmer.protim.persistence.relational.dbo.BookingDayDBO;
-import io.github.marmer.protim.persistence.relational.repositories.BookingDayRepository;
 import io.github.marmer.protim.test.DbCleanupService;
 import org.junit.Before;
 import org.junit.ClassRule;
