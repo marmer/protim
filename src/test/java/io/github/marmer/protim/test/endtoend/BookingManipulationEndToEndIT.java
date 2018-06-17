@@ -1,7 +1,6 @@
 package io.github.marmer.protim.test.endtoend;
 
 import io.github.marmer.protim.api.controller.BookingDayController;
-import io.github.marmer.protim.persistence.relational.crud.BookingDayRepository;
 import io.github.marmer.protim.persistence.relational.dbo.BookingDBO;
 import io.github.marmer.protim.persistence.relational.dbo.BookingDayDBO;
 import io.github.marmer.protim.test.DbCleanupService;
@@ -47,10 +46,9 @@ public class BookingManipulationEndToEndIT {
     private BookingDayController classUnderTest;
 
     @Autowired
-    private BookingDayRepository bookingDayRepository;
-
-    @Autowired
     private DbCleanupService dbCleanupService;
+    @Autowired
+    private TransactionlessTestEntityManager entityManager;
 
     @Before
     public void setUp() {
@@ -61,10 +59,10 @@ public class BookingManipulationEndToEndIT {
     public void testGetDay_MultipleDaysExist_ShouldShowRequestedDay()
             throws Exception {
         // Preparation
-        bookingDayRepository.save(
+        entityManager.persist(
                 new BookingDayDBO()
                         .setDay(LocalDate.of(1985, Month.JANUARY, 2)));
-        bookingDayRepository.save(
+        entityManager.persist(
                 new BookingDayDBO()
                         .setDay(LocalDate.of(1985, Month.JANUARY, 3)));
 
@@ -82,11 +80,11 @@ public class BookingManipulationEndToEndIT {
         final BookingDBO booking1 = new BookingDBO().setStartTime(LocalTime.of(18, 45));
         final BookingDBO booking2 = new BookingDBO().setStartTime(LocalTime.of(19, 30));
         final BookingDBO booking3 = new BookingDBO().setStartTime(LocalTime.of(13, 15));
-        bookingDayRepository.save(
+        entityManager.persist(
                 new BookingDayDBO()
                         .setDay(LocalDate.of(1985, Month.JANUARY, 2))
                         .setBookings(asList(booking1, booking2, booking3)));
-        bookingDayRepository.save(
+        entityManager.persist(
                 new BookingDayDBO()
                         .setDay(LocalDate.of(1985, Month.JANUARY, 3))
                         .setBookings(singletonList(new BookingDBO()
@@ -116,7 +114,7 @@ public class BookingManipulationEndToEndIT {
                 .setStartTime(LocalTime.of(13, 15))
                 .setDescription("wrong2");
 
-        bookingDayRepository.save(
+        entityManager.persist(
                 new BookingDayDBO()
                         .setDay(LocalDate.of(1985, Month.JANUARY, 2))
                         .setBookings(asList(booking1, booking2, booking3)));
@@ -149,7 +147,7 @@ public class BookingManipulationEndToEndIT {
                 .andExpect(status().isCreated());
 
         // Assertion
-        assertThat(bookingDayRepository.findAll(), contains(isBookingDayDBO()
+        assertThat(entityManager.findAllOf(BookingDayDBO.class), contains(isBookingDayDBO()
                 .withDay(day)
                 .withBookings(contains(
                         isBookingDBO()
