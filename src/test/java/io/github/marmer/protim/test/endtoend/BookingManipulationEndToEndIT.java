@@ -128,7 +128,7 @@ public class BookingManipulationEndToEndIT {
     }
 
     @Test
-    public void test_EntryIsAdded_RelatedDayWithEntryShouldExist()
+    public void testPutBooking_EntryIsAdded_RelatedDayWithEntryShouldExist()
             throws Exception {
         // Preparation
         final LocalDate day = LocalDate.of(2014, 7, 13);
@@ -157,7 +157,43 @@ public class BookingManipulationEndToEndIT {
                 ))));
     }
 
-    // TODO: marmer 15.06.2018 Booking at the given time exists allready -> override
+    @Test
+    public void testPutBooking_EntryIsAddedForOverride_RelatedDayWithOnlyTheNewEntryShouldExist()
+            throws Exception {
+        // Preparation
+        final LocalDate day = LocalDate.of(2014, 7, 13);
+        final LocalTime startTime = LocalTime.of(16, 0);
+
+        this.entityManager.persistAndFlush(
+                new BookingDayDBO()
+                        .setDay(day)
+                        .setBookings(singletonList(new BookingDBO()
+                                .setDescription("Doing the opposite of watching football")
+                                .setStartTime(startTime))));
+
+        // Execution
+        mockMvc.perform(
+                put("/api/day/{day}/bookings/", day, startTime)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content("{\n" +
+                                "    \"startTime\": \"16:00\",\n" +
+                                "    \"duration\": \"01:56\",\n" +
+                                "    \"description\": \"watching football\",\n" +
+                                "    \"notes\": \"it's not called soccer\",\n" +
+                                "    \"ticket\": \"WORLDCUP-2014\"\n" +
+                                "}"))
+                .andExpect(status().isCreated());
+
+        // Assertion
+        assertThat(entityManager.findAllOf(BookingDayDBO.class), contains(isBookingDayDBO()
+                .withDay(day)
+                .withBookings(contains(
+                        isBookingDBO()
+                                .withStartTime(startTime)
+                                .withDescription("watching football")
+                ))));
+    }
+
     // TODO: marmer 15.06.2018 additional URL Parameter with a startTime and allready existing at parameter start time -> refresh the old one
     // TODO: marmer 15.06.2018 additional URL Parameter with a startTime and a not existing at parameter start time -> 404
     // TODO: marmer 15.06.2018 day does not exist and start time in url given -> 404
