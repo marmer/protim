@@ -40,8 +40,7 @@ public interface BookingsCrudService {
     /**
      * Adds or refreshes a booking at the given day.
      *
-     * @param day     The day to refresh the booking for.
-     * @param booking The new booking.
+     * @param bookingChangeRequest Change request.
      */
-    void setBookingAtDay(LocalDate day, Booking booking);
+    void setBookingAtDay(BookingChangeRequest bookingChangeRequest);
 }

@@ -3,6 +3,7 @@ package io.github.marmer.protim.api.controller;
 import io.github.marmer.protim.api.dto.BookingDTO;
 import io.github.marmer.protim.api.dto.BookingDayDTO;
 import io.github.marmer.protim.service.converter.Converter;
+import io.github.marmer.protim.service.crud.BookingChangeRequest;
 import io.github.marmer.protim.service.crud.BookingsCrudService;
 import io.github.marmer.protim.service.model.Booking;
 import io.github.marmer.protim.service.model.BookingDay;
@@ -166,6 +167,6 @@ public class BookingDayControllerTest {
                 .andExpect(status().isCreated());
 
         // Assertion
-        bookingsCrudService.setBookingAtDay(day, booking);
+        bookingsCrudService.setBookingAtDay(new BookingChangeRequest(day, booking));
     }
 }

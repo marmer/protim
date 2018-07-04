@@ -3,6 +3,7 @@ package io.github.marmer.protim.persistence.relational.crud;
 import io.github.marmer.protim.persistence.relational.dbo.BookingDBO;
 import io.github.marmer.protim.persistence.relational.dbo.BookingDayDBO;
 import io.github.marmer.protim.service.converter.Converter;
+import io.github.marmer.protim.service.crud.BookingChangeRequest;
 import io.github.marmer.protim.service.crud.BookingsCrudService;
 import io.github.marmer.protim.service.model.Booking;
 import io.github.marmer.protim.service.model.BookingDay;
@@ -45,11 +46,11 @@ public class BookingsCrudServiceRelational implements BookingsCrudService {
     }
 
     @Override
-    public void setBookingAtDay(final LocalDate day, final Booking booking) {
-        final BookingDayDBO bookingDayDbo = bookingDayRepository.findFirstByDay(day).orElse(new BookingDayDBO().setDay(day));
-        final BookingDBO bookingDbo = bookingDBOConverter.convert(booking);
+    public void setBookingAtDay(final BookingChangeRequest bookingChangeRequest) {
+        final BookingDayDBO bookingDayDbo = bookingDayRepository.findFirstByDay(bookingChangeRequest.getDay()).orElse(new BookingDayDBO().setDay(bookingChangeRequest.getDay()));
+        final BookingDBO bookingDbo = bookingDBOConverter.convert(bookingChangeRequest.getBooking());
 
-        bookingDayDbo.getBookings().removeIf(bookingDBO -> Objects.equals(bookingDBO.getStartTime(), booking.getStartTime()));
+        bookingDayDbo.getBookings().removeIf(bookingDBO -> Objects.equals(bookingDBO.getStartTime(), bookingChangeRequest.getBooking().getStartTime()));
         bookingDayDbo.addBookings(bookingDbo);
         bookingDayRepository.save(bookingDayDbo);
     }

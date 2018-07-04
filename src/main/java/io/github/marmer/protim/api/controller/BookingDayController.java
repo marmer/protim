@@ -4,6 +4,7 @@ import io.github.marmer.protim.api.dto.BookingDTO;
 import io.github.marmer.protim.api.dto.BookingDayDTO;
 import io.github.marmer.protim.api.dto.BookingStartTimesDTO;
 import io.github.marmer.protim.service.converter.Converter;
+import io.github.marmer.protim.service.crud.BookingChangeRequest;
 import io.github.marmer.protim.service.crud.BookingsCrudService;
 import io.github.marmer.protim.service.model.Booking;
 import io.github.marmer.protim.service.model.BookingDay;
@@ -12,7 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -34,7 +41,7 @@ public class BookingDayController {
     public void putBooking(@PathVariable("day") @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE) final LocalDate day,
                            @RequestBody final BookingDTO bookingDto) {
         final Booking booking = bookingConverter.convert(bookingDto);
-        bookingsCrudService.setBookingAtDay(day, booking);
+        bookingsCrudService.setBookingAtDay(new BookingChangeRequest(day, booking));
     }
 
     @GetMapping("/{day:\\d{4}-\\d{2}-\\d{2}}")
