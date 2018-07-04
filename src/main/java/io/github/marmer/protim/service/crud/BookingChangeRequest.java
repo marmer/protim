@@ -7,6 +7,7 @@ import lombok.Value;
 import lombok.experimental.Wither;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 
 @Value
@@ -15,5 +16,6 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class BookingChangeRequest {
     private final LocalDate day;
+    private final LocalTime startTime;
     private final Booking booking;
 }

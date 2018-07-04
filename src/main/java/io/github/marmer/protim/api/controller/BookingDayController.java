@@ -41,7 +41,21 @@ public class BookingDayController {
     public void putBooking(@PathVariable("day") @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE) final LocalDate day,
                            @RequestBody final BookingDTO bookingDto) {
         final Booking booking = bookingConverter.convert(bookingDto);
-        bookingsCrudService.setBookingAtDay(new BookingChangeRequest(day, booking));
+        bookingsCrudService.setBookingAtDay(bookingChangeRequestWith().day(day).booking(booking).build());
+    }
+
+    @PutMapping("/{day:\\d{4}-\\d{2}-\\d{2}}/bookings/{startTime:\\d{2}:\\d{2}}")
+    @ResponseStatus(HttpStatus.CREATED)
+    public void putBooking(@PathVariable("day") @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE) final LocalDate day,
+                           @PathVariable("startTime") @DateTimeFormat(pattern = "HH:mm", iso = DateTimeFormat.ISO.TIME) final LocalTime startTime,
+                           @RequestBody final BookingDTO bookingDto) {
+        final Booking booking = bookingConverter.convert(bookingDto);
+        bookingsCrudService.setBookingAtDay(bookingChangeRequestWith().day(day).booking(booking).startTime(startTime).build());
+    }
+
+
+    private BookingChangeRequest.BookingChangeRequestBuilder bookingChangeRequestWith() {
+        return BookingChangeRequest.builder();
     }
 
     @GetMapping("/{day:\\d{4}-\\d{2}-\\d{2}}")

@@ -136,7 +136,7 @@ public class BookingsCrudServiceRelationalTest {
         when(bookingDayRepository.findFirstByDay(day)).thenReturn(Optional.of(bookingDayDbo));
 
         // Execution
-        classUnderTest.setBookingAtDay(new BookingChangeRequest(day, booking));
+        classUnderTest.setBookingAtDay(newBookingChangeRequestWith().day(day).booking(booking).build());
 
         // Assertion
         verify(bookingDayRepository).save(bookingDayDBOCaptor.capture());
@@ -144,6 +144,10 @@ public class BookingsCrudServiceRelationalTest {
                 sameInstance(bookingDayDbo),
                 isBookingDayDBO()
                         .withBookings(contains(oldBookingDBO, bookingDBO)))));
+    }
+
+    private BookingChangeRequest.BookingChangeRequestBuilder newBookingChangeRequestWith() {
+        return BookingChangeRequest.builder();
     }
 
     @Test
@@ -163,7 +167,7 @@ public class BookingsCrudServiceRelationalTest {
         when(bookingDayRepository.findFirstByDay(day)).thenReturn(Optional.of(bookingDayDbo));
 
         // Execution
-        classUnderTest.setBookingAtDay(new BookingChangeRequest(day, booking));
+        classUnderTest.setBookingAtDay(newBookingChangeRequestWith().day(day).booking(booking).build());
 
         // Assertion
         verify(bookingDayRepository).save(bookingDayDBOCaptor.capture());
@@ -185,7 +189,7 @@ public class BookingsCrudServiceRelationalTest {
         when(bookingDayRepository.findFirstByDay(day)).thenReturn(Optional.empty());
 
         // Execution
-        classUnderTest.setBookingAtDay(new BookingChangeRequest(day, booking));
+        classUnderTest.setBookingAtDay(newBookingChangeRequestWith().day(day).booking(booking).build());
 
         // Assertion
         verify(bookingDayRepository).save(bookingDayDBOCaptor.capture());

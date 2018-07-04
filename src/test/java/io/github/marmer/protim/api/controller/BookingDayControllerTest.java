@@ -30,6 +30,7 @@ import static java.util.Optional.empty;
 import static java.util.Optional.ofNullable;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
@@ -155,7 +156,7 @@ public class BookingDayControllerTest {
 
         // Execution
         mockMvc.perform(
-                put("/api/day/{day}/bookings/", day, startTime)
+                put("/api/day/{day}/bookings/", day)
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content("{\n" +
                                 "    \"startTime\": \"16:00\",\n" +
@@ -167,6 +168,37 @@ public class BookingDayControllerTest {
                 .andExpect(status().isCreated());
 
         // Assertion
-        bookingsCrudService.setBookingAtDay(new BookingChangeRequest(day, booking));
+        verify(bookingsCrudService).setBookingAtDay(bookingChangeRequestWith().day(day).booking(booking).build());
+    }
+
+    private BookingChangeRequest.BookingChangeRequestBuilder bookingChangeRequestWith() {
+        return BookingChangeRequest.builder();
+    }
+
+    @Test
+    public void testPutBookingForUpdate_BookingAtExistingStartTimeGiven_ShouldStoreGivenBooking()
+            throws Exception {
+        // Preparation
+        final LocalDate day = LocalDate.of(2014, 7, 13);
+        final LocalTime startTime = LocalTime.of(16, 0);
+
+        final Booking booking = newBooking();
+        when(bookingConverter.convert(any(BookingDTO.class))).thenReturn(booking);
+
+        // Execution
+        mockMvc.perform(
+                put("/api/day/{day}/bookings/{startTime}", day, startTime)
+                        .contentType(MediaType.APPLICATION_JSON_UTF8)
+                        .content("{\n" +
+                                "    \"startTime\": \"16:00\",\n" +
+                                "    \"duration\": \"01:56\",\n" +
+                                "    \"description\": \"watching football\",\n" +
+                                "    \"notes\": \"it's not called soccer\",\n" +
+                                "    \"ticket\": \"WORLDCUP-2014\"\n" +
+                                "}"))
+                .andExpect(status().isCreated());
+
+        // Assertion
+        bookingChangeRequestWith().day(day).startTime(startTime).booking(booking).build();
     }
 }
