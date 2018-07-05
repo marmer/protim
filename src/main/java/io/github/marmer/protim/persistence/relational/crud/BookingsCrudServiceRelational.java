@@ -46,14 +46,19 @@ public class BookingsCrudServiceRelational implements BookingsCrudService {
     }
 
     @Override
-    public void setBookingAtDay(final BookingChangeRequest bookingChangeRequest) {
-        final BookingDayDBO bookingDayDbo = bookingDayRepository.findFirstByDay(bookingChangeRequest.getDay()).orElse(new BookingDayDBO().setDay(bookingChangeRequest.getDay()));
-        final BookingDBO bookingDbo = bookingDBOConverter.convert(bookingChangeRequest.getBooking());
+    public void setBookingAtDay(final BookingChangeRequest changeRequest) {
+        final BookingDayDBO bookingDayDbo = bookingDayRepository.findFirstByDay(changeRequest.getDay()).orElse(new BookingDayDBO().setDay(changeRequest.getDay()));
+        final BookingDBO bookingDbo = bookingDBOConverter.convert(changeRequest.getBooking());
 
         final List<BookingDBO> bookings = bookingDayDbo.getBookings();
-        bookings.removeIf(bookingDBO -> Objects.equals(bookingDBO.getStartTime(), bookingChangeRequest.getBooking().getStartTime()));
-        bookings.removeIf(bookingDBO -> bookingDBO.getStartTime().equals(bookingChangeRequest.getStartTime()));
+        bookings.removeIf(bookingDBO -> Objects.equals(bookingDBO.getStartTime(), changeRequest.getBooking().getStartTime()));
+        bookings.removeIf(bookingDBO -> bookingDBO.getStartTime().equals(changeRequest.getStartTime()));
         bookingDayDbo.addBookings(bookingDbo);
         bookingDayRepository.save(bookingDayDbo);
+    }
+
+    @Override
+    public void delete(BookingChangeRequest changeRequest) {
+        // TODO: marmer 05.07.2018 Implement me
     }
 }

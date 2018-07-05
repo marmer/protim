@@ -28,8 +28,7 @@ import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
@@ -229,5 +228,39 @@ public class BookingManipulationEndToEndIT {
                                 .withStartTime(startTime)
                                 .withDescription("watching football")
                 ))));
+    }
+
+    @Test
+    public void testDeleteBooking_BookingDayWithMoreThanOneBookingIsGiven_ShouldOnlyRemoveTheRequestedBooking()
+            throws Exception {
+
+        // Preparation
+        final LocalDate day = LocalDate.of(2014, 7, 13);
+        final LocalTime startTime = LocalTime.of(16, 0);
+        final LocalTime startTimeToRemove = LocalTime.of(15, 0);
+
+        this.entityManager.persistAndFlush(
+                new BookingDayDBO()
+                        .setDay(day)
+                        .setBookings(asList(
+                                new BookingDBO()
+                                        .setDescription("watching football")
+                                        .setStartTime(startTime),
+                                new BookingDBO()
+                                        .setDescription("doing the opposite of watching football")
+                                        .setStartTime(startTimeToRemove))));
+
+        // Execution
+        mockMvc.perform(
+                delete("/api/day/{day}/bookings/{startTimeToRemove}", day, startTimeToRemove))
+                .andExpect(status().isNoContent());
+
+        // Assertion
+        assertThat(entityManager.findAllOf(BookingDayDBO.class), contains(isBookingDayDBO()
+                .withDay(day)
+                .withBookings(contains(
+                        isBookingDBO()
+                                .withStartTime(startTime)
+                                .withDescription("watching football")))));
     }
 }

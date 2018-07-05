@@ -201,4 +201,22 @@ public class BookingDayControllerTest {
         // Assertion
         bookingChangeRequestWith().day(day).startTime(oldStartTime).booking(booking).build();
     }
+
+    @Test
+    public void test_GotRequest_ShouldDeleteTheAppropriateBooking()
+            throws Exception {
+        // Preparation
+        final LocalDate day = LocalDate.of(2014, 7, 13);
+        final LocalTime startTime = LocalTime.of(16, 0);
+
+        // Execution
+        mockMvc.perform(
+                put("/api/day/{day}/bookings/{startTime}", day, startTime))
+                .andExpect(status().isNoContent());
+
+        // Assertion
+        verify(bookingsCrudService).delete(BookingChangeRequest.builder()
+                .day(day)
+                .startTime(startTime).build());
+    }
 }

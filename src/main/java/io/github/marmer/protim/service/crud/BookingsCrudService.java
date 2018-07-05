@@ -40,7 +40,14 @@ public interface BookingsCrudService {
     /**
      * Adds or refreshes a booking at the given day.
      *
-     * @param bookingChangeRequest Change request.
+     * @param changeRequest Change request.
      */
-    void setBookingAtDay(BookingChangeRequest bookingChangeRequest);
+    void setBookingAtDay(BookingChangeRequest changeRequest);
+
+    /**
+     * Deletes a booking which matches the given {@link BookingChangeRequest}.
+     *
+     * @param changeRequest Description what booking to delete.
+     */
+    void delete(BookingChangeRequest changeRequest);
 }

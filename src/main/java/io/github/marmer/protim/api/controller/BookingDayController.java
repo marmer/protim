@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -41,6 +42,13 @@ public class BookingDayController {
     public void putBooking(@PathVariable("day") @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE) final LocalDate day,
                            @RequestBody final BookingDTO bookingDto) {
         putBooking(day, null, bookingDto);
+    }
+
+    @DeleteMapping("/{day:\\d{4}-\\d{2}-\\d{2}}/bookings/{oldStartTime:\\d{2}:\\d{2}}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteBooking(@PathVariable("day") @DateTimeFormat(pattern = "yyyy-MM-dd", iso = DateTimeFormat.ISO.DATE) final LocalDate day,
+                              @PathVariable("oldStartTime") @DateTimeFormat(pattern = "HH:mm", iso = DateTimeFormat.ISO.TIME) final LocalTime oldStartTime) {
+        bookingsCrudService.delete(bookingChangeRequestWith().day(day).startTime(oldStartTime).build());
     }
 
     @PutMapping("/{day:\\d{4}-\\d{2}-\\d{2}}/bookings/{oldStartTime:\\d{2}:\\d{2}}")
