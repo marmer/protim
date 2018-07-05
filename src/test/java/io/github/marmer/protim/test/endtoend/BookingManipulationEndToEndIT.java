@@ -230,8 +230,4 @@ public class BookingManipulationEndToEndIT {
                                 .withDescription("watching football")
                 ))));
     }
-
-    // TODO: marmer 15.06.2018 additional URL Parameter with a startTime and allready existing at parameter start time -> refresh the old one
-    // TODO: marmer 15.06.2018 additional URL Parameter with a startTime and a not existing at parameter start time -> 404
-    // TODO: marmer 15.06.2018 day does not exist and start time in url given -> 404
 }
