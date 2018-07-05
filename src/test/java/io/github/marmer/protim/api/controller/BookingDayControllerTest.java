@@ -32,8 +32,7 @@ import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -211,7 +210,7 @@ public class BookingDayControllerTest {
 
         // Execution
         mockMvc.perform(
-                put("/api/day/{day}/bookings/{startTime}", day, startTime))
+                delete("/api/day/{day}/bookings/{startTime}", day, startTime))
                 .andExpect(status().isNoContent());
 
         // Assertion

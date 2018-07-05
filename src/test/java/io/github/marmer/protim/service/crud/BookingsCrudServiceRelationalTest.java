@@ -29,10 +29,11 @@ import static io.github.marmer.protim.persistence.relational.dbo.BookingDayDBOMa
 import static io.github.marmer.protim.persistence.relational.dbo.testdata.BookingDBOTestdata.newBookingDBO;
 import static io.github.marmer.protim.service.model.BookingDayMatcher.isBookingDay;
 import static io.github.marmer.protim.service.model.BookingTestdata.newBooking;
+import static java.util.Collections.emptyList;
 import static org.hamcrest.Matchers.*;
+import static org.hamcrest.Matchers.contains;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class BookingsCrudServiceRelationalTest {
     @Rule
@@ -223,6 +224,96 @@ public class BookingsCrudServiceRelationalTest {
         assertThat(bookingDayDBOCaptor.getValue(), is(
                 isBookingDayDBO()
                         .withBookings(contains(bookingDBO))));
+    }
+
+    @Test
+    public void testDelete_BookingDayWithMoreThenOneBookingExists_OnlyTheBookingWithTheGivenTimehasBeenRemoved()
+            throws Exception {
+        // Preparation
+        final LocalDate day = LocalDate.of(2112, 12, 21);
+        final LocalTime startTime = LocalTime.of(12, 34);
+
+        final BookingDBO bookingToDelete = newBookingDBO()
+                .setStartTime(startTime);
+        final BookingDBO bookingToKeep = newBookingDBO()
+                .setStartTime(startTime.plusHours(1));
+
+        final BookingDayDBO bookingDay = newBookingDayDBO()
+                .setDay(day)
+                .setBookings(asList(
+                        bookingToDelete,
+                        bookingToKeep
+                ));
+
+        when(bookingDayRepository.findFirstByDay(day)).thenReturn(Optional.of(bookingDay));
+
+        // Execution
+        classUnderTest.delete(newBookingChangeRequestWith().day(day).startTime(startTime).build());
+
+        // Assertion
+        verify(bookingDayRepository).save(bookingDay);
+        assertThat(bookingDay.getBookings(), contains(bookingToKeep));
+    }
+
+    @Test
+    public void testDelete_BookingDayWithOnlyTheRequestedBookingExists_BookingShouldBeDeleted()
+            throws Exception {
+        // Preparation
+        final LocalDate day = LocalDate.of(2112, 12, 21);
+        final LocalTime startTime = LocalTime.of(12, 34);
+
+        final BookingDBO bookingToDelete = newBookingDBO()
+                .setStartTime(startTime);
+
+        final BookingDayDBO bookingDay = newBookingDayDBO()
+                .setDay(day)
+                .setBookings(asList(bookingToDelete));
+
+        when(bookingDayRepository.findFirstByDay(day)).thenReturn(Optional.of(bookingDay));
+
+        // Execution
+        classUnderTest.delete(newBookingChangeRequestWith().day(day).startTime(startTime).build());
+
+        // Assertion
+        verify(bookingDayRepository).save(bookingDay);
+        assertThat(bookingDay.getBookings(), is(empty()));
+    }
+
+
+    @Test
+    public void testDelete_DayDoesNotExist_ShouldNotSaveAnything()
+            throws Exception {
+        // Preparation
+        final LocalDate day = LocalDate.of(2112, 12, 21);
+        final LocalTime startTime = LocalTime.of(12, 34);
+
+        when(bookingDayRepository.findFirstByDay(day)).thenReturn(Optional.empty());
+
+        // Execution
+        classUnderTest.delete(newBookingChangeRequestWith().day(day).startTime(startTime).build());
+
+        // Assertion
+        verifyNoMoreInteractions(bookingDayRepository);
+    }
+
+    @Test
+    public void testDelete_NoBookingExistsForTheGivenDay_ShouldNotSaveAnything()
+            throws Exception {
+        // Preparation
+        final LocalDate day = LocalDate.of(2112, 12, 21);
+        final LocalTime startTime = LocalTime.of(12, 34);
+
+        final BookingDayDBO bookingDay = newBookingDayDBO()
+                .setDay(day)
+                .setBookings(emptyList());
+
+        when(bookingDayRepository.findFirstByDay(day)).thenReturn(Optional.of(bookingDay));
+
+        // Execution
+        classUnderTest.delete(newBookingChangeRequestWith().day(day).startTime(startTime).build());
+
+        // Assertion
+        verifyNoMoreInteractions(bookingDayRepository);
     }
 
     private <T> List<T> asList(final T... elements) {

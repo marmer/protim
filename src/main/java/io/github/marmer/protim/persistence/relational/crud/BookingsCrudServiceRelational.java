@@ -16,6 +16,7 @@ import java.time.LocalTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 @Service
 @RequiredArgsConstructor(onConstructor = @__(@Autowired))
@@ -58,7 +59,17 @@ public class BookingsCrudServiceRelational implements BookingsCrudService {
     }
 
     @Override
-    public void delete(BookingChangeRequest changeRequest) {
-        // TODO: marmer 05.07.2018 Implement me
+    public void delete(final BookingChangeRequest changeRequest) {
+        final Optional<BookingDayDBO> bookingDayOptional = bookingDayRepository.findFirstByDay(changeRequest.getDay());
+        bookingDayOptional.ifPresent(removeBookingWithStartTime(changeRequest.getStartTime()));
+    }
+
+    private Consumer<BookingDayDBO> removeBookingWithStartTime(final LocalTime startTime) {
+        return bookingDay -> {
+            final List<BookingDBO> bookings = bookingDay.getBookings();
+            if (bookings.removeIf(bookingDBO -> bookingDBO.getStartTime().equals(startTime))) {
+                bookingDayRepository.save(bookingDay);
+            }
+        };
     }
 }

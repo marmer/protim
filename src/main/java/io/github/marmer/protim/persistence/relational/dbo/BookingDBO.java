@@ -1,6 +1,7 @@
 package io.github.marmer.protim.persistence.relational.dbo;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
@@ -10,6 +11,7 @@ import java.time.LocalTime;
 @Entity
 @Table(name = "bookings")
 @Accessors(chain = true)
+@EqualsAndHashCode(exclude = {"id", "version"})
 public class BookingDBO {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
