@@ -23,3 +23,4 @@ The beginning of a small tool to manage production time
   * With remote connector (using the API)
   * With local storage
 * Use BBD framework for end to end tests
+* Configure Travis to use some kind of production DB but use an in Memory DB für Development :D
