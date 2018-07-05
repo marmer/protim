@@ -8,7 +8,6 @@ import io.github.marmer.protim.service.crud.BookingsCrudService;
 import io.github.marmer.protim.service.model.Booking;
 import io.github.marmer.protim.service.model.BookingDay;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -19,7 +18,7 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 @Service
-@RequiredArgsConstructor(onConstructor = @__(@Autowired))
+@RequiredArgsConstructor()
 public class BookingsCrudServiceRelational implements BookingsCrudService {
     private final BookingDayRepository bookingDayRepository;
     private final Converter<BookingDayDBO, BookingDay> bookingDayConverter;
