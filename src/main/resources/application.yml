@@ -1,8 +1,9 @@
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/protim
-    username: protim
-    password: protim
+#    url: jdbc:postgresql://localhost:5432/protim
+    url: jdbc:h2:file:~/protim_db
+    username: protim_user
+    password: protim_pw
   jpa:
     hibernate:
       use-new-id-generator-mappings: true
