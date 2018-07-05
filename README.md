@@ -10,3 +10,16 @@
 
 # protim
 The beginning of a small tool to manage production time
+
+
+#TODO
+* Repackage by layer
+* Add API documentation
+* Secure the API
+    * Basic auth
+    * JDBC Authentication
+    * HTTPS
+* Prepare desktop version
+  * With remote connector (using the API)
+  * With local storage
+* Use BBD framework for end to end tests
