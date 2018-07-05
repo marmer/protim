@@ -12,9 +12,11 @@ addons:
     token:
       secure: "qFEpZVd5B+DC3TC5Dox1SAF6zrhuMYyDRHyyqXOQqW46knpYwzsz5Qikd0QoKy0Mue65lhScYR3ManM9fF7W+8dgGDUbRgt+uxUsPwFN6hawESikYpjvGasCDwXqNQlJqE8ZrtHFnx/VrNqBaIojkuwLfHwGrwz4qa0rQc/NPhwm/JXZl1i6DqHx+hesE2NcuMycHK9fhEwRZz0HVgWPSzcxZ133Nyrj94ful12MckKL4xlJCQJQ5cKo3No6f+9gp77Vgu7Q04Eaq5rqVr9OZVcyGF1GnH3vCVFFlb8s0RXCHdeu/F9u2yC+U6viNLTfzyas/74sc4Cu29cRyFb7T78kVlK8ZQ28x76lGulin14xv5LM/Is2D25OXbvh5psbdcO64Cl512rLFALYqzpxP4qoRDrd3I3mTS2efasawPVwOIIM2baKYHxaU/f4u2XtQJOHud4CL4U2Xr/HjzQvgvzC5Ud7JbV7cJucct67laV+tBM+Re8SYIh6dH8o8Th8LNiUNGO9s8AYjcucsRXQiKUZJ12scl+nN6CchJoKP7O7i/8GW9cEXrqheW7C6+QSIPKeXy7j+55LcjEFOEZvptBXmgBMIgrfn0ZMS2mhC+CNZ6aQOiVotNOoux87M4xAmCT7pReI6KYLKqOjGlXXH1kosuZqP0sRTXZXnZleLlo="
 env:
-- SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/protim
-- SPRING_DATASOURCE_USERNAME=protim_user
-- SPRING_DATASOURCE_PASSWORD=protim_pw
+  global:
+  - SPRING_DATASOURCE_USERNAME=protim_ci_user SPRING_DATASOURCE_PASSWORD=protim_ci_pw
+  matrix:
+  - SPRING_DATASOURCE_URL=jdbc:h2:file:~/protim_ci_db
+  - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/protim_ci_db
 cache:
   directories:
   - "$HOME/.m2/repository"
@@ -29,8 +31,8 @@ before_install:
 - export PATH=$M2_HOME/bin:$PATH
 
 before_script:  
-  - psql -c "CREATE DATABASE protim;" -U postgres
-  - psql -c "CREATE USER protim WITH PASSWORD 'protim';" -U postgres
+  - psql -c "CREATE DATABASE protim_ci_db;" -U postgres_ci_user
+  - psql -c "CREATE USER protim_ci_user WITH PASSWORD 'protim_ci_pw';" -U postgres_ci_user
 install:
 - mvn clean install -DskipTests=true -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -B -V -U
 script:
