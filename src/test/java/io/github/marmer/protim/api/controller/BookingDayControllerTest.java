@@ -180,14 +180,14 @@ public class BookingDayControllerTest {
             throws Exception {
         // Preparation
         final LocalDate day = LocalDate.of(2014, 7, 13);
-        final LocalTime startTime = LocalTime.of(16, 0);
+        final LocalTime oldStartTime = LocalTime.of(16, 0);
 
         final Booking booking = newBooking();
         when(bookingConverter.convert(any(BookingDTO.class))).thenReturn(booking);
 
         // Execution
         mockMvc.perform(
-                put("/api/day/{day}/bookings/{startTime}", day, startTime)
+                put("/api/day/{day}/bookings/{oldStartTime}", day, oldStartTime)
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content("{\n" +
                                 "    \"startTime\": \"16:00\",\n" +
@@ -199,6 +199,6 @@ public class BookingDayControllerTest {
                 .andExpect(status().isCreated());
 
         // Assertion
-        bookingChangeRequestWith().day(day).startTime(startTime).booking(booking).build();
+        bookingChangeRequestWith().day(day).startTime(oldStartTime).booking(booking).build();
     }
 }

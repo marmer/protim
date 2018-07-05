@@ -178,6 +178,33 @@ public class BookingsCrudServiceRelationalTest {
     }
 
     @Test
+    public void testSetBookingAtDay_BookingDayEsistsAllreadyWithBookingWithTheOldTime_ShouldAddGivenBookingToDay()
+            throws Exception {
+        // Preparation
+        final LocalDate day = LocalDate.of(2112, 12, 21);
+        final LocalTime startTime = LocalTime.of(15, 38);
+        final LocalTime oldStartTime = LocalTime.of(12, 34);
+        final Booking booking = newBooking()
+                .withStartTime(startTime);
+        final BookingDBO bookingDBO = newBookingDBO();
+        when(bookingDboConverter.convert(booking)).thenReturn(bookingDBO);
+        final BookingDayDBO bookingDayDbo = newBookingDayDBO();
+        final BookingDBO oldBookingDBO = newBookingDBO();
+        oldBookingDBO.setStartTime(oldStartTime);
+        bookingDayDbo.setBookings(asList(oldBookingDBO));
+        when(bookingDayRepository.findFirstByDay(day)).thenReturn(Optional.of(bookingDayDbo));
+        // Execution
+        classUnderTest.setBookingAtDay(newBookingChangeRequestWith().day(day).booking(booking).startTime(oldStartTime).build());
+
+        // Assertion
+        verify(bookingDayRepository).save(bookingDayDBOCaptor.capture());
+        assertThat(bookingDayDBOCaptor.getValue(), is(allOf(
+                sameInstance(bookingDayDbo),
+                isBookingDayDBO()
+                        .withBookings(contains(bookingDBO)))));
+    }
+
+    @Test
     public void testSetBookingAtDay_BookingDayDoesNotExistYet_ShuoldCreateBookingDayAndAddBooking()
             throws Exception {
         // Preparation

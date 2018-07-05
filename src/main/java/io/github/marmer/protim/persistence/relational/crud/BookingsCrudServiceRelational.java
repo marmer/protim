@@ -50,7 +50,9 @@ public class BookingsCrudServiceRelational implements BookingsCrudService {
         final BookingDayDBO bookingDayDbo = bookingDayRepository.findFirstByDay(bookingChangeRequest.getDay()).orElse(new BookingDayDBO().setDay(bookingChangeRequest.getDay()));
         final BookingDBO bookingDbo = bookingDBOConverter.convert(bookingChangeRequest.getBooking());
 
-        bookingDayDbo.getBookings().removeIf(bookingDBO -> Objects.equals(bookingDBO.getStartTime(), bookingChangeRequest.getBooking().getStartTime()));
+        final List<BookingDBO> bookings = bookingDayDbo.getBookings();
+        bookings.removeIf(bookingDBO -> Objects.equals(bookingDBO.getStartTime(), bookingChangeRequest.getBooking().getStartTime()));
+        bookings.removeIf(bookingDBO -> bookingDBO.getStartTime().equals(bookingChangeRequest.getStartTime()));
         bookingDayDbo.addBookings(bookingDbo);
         bookingDayRepository.save(bookingDayDbo);
     }
