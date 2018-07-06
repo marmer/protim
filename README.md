@@ -16,9 +16,10 @@ The beginning of a small tool to manage production time
 * Repackage by layer
 * Add API documentation
 * Secure the API
-    * Basic auth
+    * Basic and/or Digest Auth
     * JDBC Authentication
     * HTTPS
+    * Consider to configure CSRF protection for the site
 * Prepare desktop version
   * With remote connector (using the API)
   * With local storage
