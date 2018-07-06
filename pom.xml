@@ -302,7 +302,8 @@
                 <configuration>
                     <imageName>${project.name}</imageName>
                     <baseImage>openjdk:8-alpine</baseImage>
-                    <entryPoint>["java", "-jar", "/${project.name}/${project.build.finalName}.jar"]</entryPoint>
+                    <workdir>/${project.name}</workdir>
+                    <entryPoint>["java", "-jar", "${project.build.finalName}.jar"]</entryPoint>
                     <resources>
                         <resource>
                             <targetPath>/${project.name}</targetPath>
