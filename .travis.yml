@@ -8,6 +8,7 @@ addons:
   apt:
     packages:
     - oracle-java8-installer
+    - docker-ce
   sonarcloud:
     organization: "marmer-github"
     token:
