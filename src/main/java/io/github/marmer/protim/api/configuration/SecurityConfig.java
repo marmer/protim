@@ -11,8 +11,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
-
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -21,7 +19,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(final HttpSecurity http) throws Exception {
         http
                 .csrf().disable() // we are stateles (no session or cookies) so it should be fine
-                .cors().and() // TODO: marmer 07.07.2018 cors configuration
+                .cors().and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
@@ -31,11 +29,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    CorsConfigurationSource corsConfigurationSource() {
-        // TODO: marmer 07.07.2018 Take origins from Configuration instead of a hard coded one
+    protected GlobalCorsConfig corsConfig() {
+        return new GlobalCorsConfig();
+    }
+
+    @Bean
+    protected CorsConfigurationSource corsConfigurationSource(final GlobalCorsConfig globalCorsConfig) {
         final CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList("https://marmer.online", "https://marmer.github.io"));
-        configuration.setAllowedMethods(Arrays.asList("GET", "POST", "DELETE", "PUT"));
+        configuration.setAllowedOrigins(globalCorsConfig.getAllowedOrigins());
+        configuration.setAllowedMethods(globalCorsConfig.getAllowedMethods());
+        configuration.setAllowedHeaders(globalCorsConfig.getAllowedHeaders());
+        configuration.setAllowCredentials(globalCorsConfig.getAllowCredentials());
+        configuration.setExposedHeaders(globalCorsConfig.getExposedHeaders());
+        configuration.setMaxAge(globalCorsConfig.getMaxAge());
         final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;

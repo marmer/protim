@@ -265,4 +265,27 @@ public class BookingManipulationEndToEndIT {
                                 .withStartTime(startTime)
                                 .withDescription("watching football")))));
     }
+
+    @Test
+    public void testGetBookings_CorsconfigurationMatchingToRequest_ShouldNotAllowAccess()
+            throws Exception {
+        // Execution
+        mockMvc.perform(
+                options("/api/day")
+                        .header("Access-Control-Request-Method", "GET")
+                        .header("Origin", "http://www.unknownURL.com"))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    public void testGetBookings_CorsconfigurationNotMatchingToRequest_ShouldAllowAccess()
+            throws Exception {
+        // Execution
+        mockMvc.perform(
+                options("/api/day")
+                        .header("Access-Control-Request-Method", "GET")
+                        .header("Origin", "https://marmer.online"))
+                .andExpect(status().isOk());
+
+    }
 }

@@ -29,3 +29,9 @@ server:
     keyAlias: protim
     enabled: true
   port: 443
+global:
+  cors:
+    config:
+      allowed-origins:
+      - https://marmer.online
+      - https://marmer.github.io
