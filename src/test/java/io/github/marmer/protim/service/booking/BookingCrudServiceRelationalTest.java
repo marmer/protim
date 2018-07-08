@@ -1,13 +1,10 @@
-package io.github.marmer.protim.service.crud;
+package io.github.marmer.protim.service.booking;
 
 import io.github.marmer.protim.persistence.relational.booking.BookingCrudServiceRelational;
 import io.github.marmer.protim.persistence.relational.booking.BookingDBO;
 import io.github.marmer.protim.persistence.relational.booking.BookingDayDBO;
 import io.github.marmer.protim.persistence.relational.booking.BookingDayRepository;
 import io.github.marmer.protim.service.Converter;
-import io.github.marmer.protim.service.booking.Booking;
-import io.github.marmer.protim.service.booking.BookingChangeRequest;
-import io.github.marmer.protim.service.booking.BookingDay;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -28,8 +25,8 @@ import java.util.Optional;
 
 import static io.github.marmer.protim.persistence.relational.booking.BookingDBOTestdata.newBookingDBO;
 import static io.github.marmer.protim.persistence.relational.booking.BookingDayDBOMatcher.isBookingDayDBO;
-import static io.github.marmer.protim.service.model.BookingDayMatcher.isBookingDay;
-import static io.github.marmer.protim.service.model.BookingTestdata.newBooking;
+import static io.github.marmer.protim.service.booking.BookingDayMatcher.isBookingDay;
+import static io.github.marmer.protim.service.booking.BookingTestdata.newBooking;
 import static java.util.Collections.emptyList;
 import static org.hamcrest.Matchers.*;
 import static org.hamcrest.Matchers.contains;

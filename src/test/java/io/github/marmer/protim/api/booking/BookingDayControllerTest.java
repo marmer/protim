@@ -23,7 +23,7 @@ import java.time.LocalTime;
 import java.time.Month;
 import java.util.Optional;
 
-import static io.github.marmer.protim.service.model.BookingTestdata.newBooking;
+import static io.github.marmer.protim.service.booking.BookingTestdata.newBooking;
 import static java.util.Arrays.asList;
 import static java.util.Optional.empty;
 import static java.util.Optional.ofNullable;

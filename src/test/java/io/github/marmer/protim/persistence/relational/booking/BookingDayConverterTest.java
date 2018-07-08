@@ -8,7 +8,7 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
 
-import static io.github.marmer.protim.service.model.BookingDayMatcher.isBookingDay;
+import static io.github.marmer.protim.service.booking.BookingDayMatcher.isBookingDay;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;

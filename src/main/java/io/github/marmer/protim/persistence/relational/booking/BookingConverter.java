@@ -4,7 +4,7 @@ import io.github.marmer.protim.service.Converter;
 import io.github.marmer.protim.service.booking.Booking;
 import org.springframework.stereotype.Service;
 
-@Service
+@Service("converterBookingDBOToBooking")
 public class BookingConverter implements Converter<BookingDBO, Booking> {
     @Override
     public Booking convert(final BookingDBO source) {
