@@ -34,8 +34,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@WithMockUser
-public class BookingManipulationEndToEndIT {
+@WithMockUser(roles = "USER")
+public class BookingEndToEndIT {
     @ClassRule
     public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
     @Rule
@@ -286,7 +286,6 @@ public class BookingManipulationEndToEndIT {
                         .header("Access-Control-Request-Method", "GET")
                         .header("Origin", "https://marmer.online"))
                 .andExpect(status().isOk());
-
     }
 
     @Test
