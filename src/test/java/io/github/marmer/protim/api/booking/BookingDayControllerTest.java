@@ -1,6 +1,6 @@
 package io.github.marmer.protim.api.booking;
 
-import io.github.marmer.protim.service.converter.Converter;
+import io.github.marmer.protim.service.Converter;
 import io.github.marmer.protim.service.crud.BookingChangeRequest;
 import io.github.marmer.protim.service.crud.BookingsCrudService;
 import io.github.marmer.protim.service.model.Booking;

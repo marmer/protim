@@ -1,4 +1,4 @@
-package io.github.marmer.protim.service.converter;
+package io.github.marmer.protim.service;
 
 /**
  * Converter class to convert objects from one type to another.

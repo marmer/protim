@@ -4,7 +4,7 @@ import io.github.marmer.protim.persistence.relational.booking.BookingCrudService
 import io.github.marmer.protim.persistence.relational.booking.BookingDBO;
 import io.github.marmer.protim.persistence.relational.booking.BookingDayDBO;
 import io.github.marmer.protim.persistence.relational.booking.BookingDayRepository;
-import io.github.marmer.protim.service.converter.Converter;
+import io.github.marmer.protim.service.Converter;
 import io.github.marmer.protim.service.model.Booking;
 import io.github.marmer.protim.service.model.BookingDay;
 import org.junit.Before;
