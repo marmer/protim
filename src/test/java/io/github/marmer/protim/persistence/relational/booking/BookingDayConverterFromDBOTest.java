@@ -1,6 +1,5 @@
-package io.github.marmer.protim.persistence.relational.converter;
+package io.github.marmer.protim.persistence.relational.booking;
 
-import io.github.marmer.protim.persistence.relational.dbo.BookingDayDBO;
 import io.github.marmer.protim.service.model.BookingDay;
 import org.junit.Rule;
 import org.junit.Test;

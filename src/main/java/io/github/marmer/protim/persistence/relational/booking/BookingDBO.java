@@ -1,4 +1,4 @@
-package io.github.marmer.protim.persistence.relational.dbo;
+package io.github.marmer.protim.persistence.relational.booking;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

@@ -1,7 +1,5 @@
-package io.github.marmer.protim.persistence.relational.crud;
+package io.github.marmer.protim.persistence.relational.booking;
 
-import io.github.marmer.protim.persistence.relational.dbo.BookingDBO;
-import io.github.marmer.protim.persistence.relational.dbo.BookingDayDBO;
 import io.github.marmer.protim.service.converter.Converter;
 import io.github.marmer.protim.service.crud.BookingChangeRequest;
 import io.github.marmer.protim.service.crud.BookingsCrudService;

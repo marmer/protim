@@ -1,7 +1,7 @@
 package io.github.marmer.protim.test.endtoend;
 
-import io.github.marmer.protim.persistence.relational.dbo.BookingDBO;
-import io.github.marmer.protim.persistence.relational.dbo.BookingDayDBO;
+import io.github.marmer.protim.persistence.relational.booking.BookingDBO;
+import io.github.marmer.protim.persistence.relational.booking.BookingDayDBO;
 import io.github.marmer.protim.test.DbCleanupService;
 import io.github.marmer.protim.test.TransactionlessTestEntityManager;
 import org.junit.Before;
@@ -21,8 +21,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
 
-import static io.github.marmer.protim.persistence.relational.dbo.BookingDBOMatcher.isBookingDBO;
-import static io.github.marmer.protim.persistence.relational.dbo.BookingDayDBOMatcher.isBookingDayDBO;
+import static io.github.marmer.protim.persistence.relational.booking.BookingDBOMatcher.isBookingDBO;
+import static io.github.marmer.protim.persistence.relational.booking.BookingDayDBOMatcher.isBookingDayDBO;
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
 import static org.hamcrest.Matchers.*;

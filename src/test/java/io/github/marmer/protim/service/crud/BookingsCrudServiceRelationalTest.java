@@ -1,9 +1,9 @@
 package io.github.marmer.protim.service.crud;
 
-import io.github.marmer.protim.persistence.relational.crud.BookingDayRepository;
-import io.github.marmer.protim.persistence.relational.crud.BookingsCrudServiceRelational;
-import io.github.marmer.protim.persistence.relational.dbo.BookingDBO;
-import io.github.marmer.protim.persistence.relational.dbo.BookingDayDBO;
+import io.github.marmer.protim.persistence.relational.booking.BookingDBO;
+import io.github.marmer.protim.persistence.relational.booking.BookingDayDBO;
+import io.github.marmer.protim.persistence.relational.booking.BookingDayRepository;
+import io.github.marmer.protim.persistence.relational.booking.BookingsCrudServiceRelational;
 import io.github.marmer.protim.service.converter.Converter;
 import io.github.marmer.protim.service.model.Booking;
 import io.github.marmer.protim.service.model.BookingDay;
@@ -25,8 +25,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
-import static io.github.marmer.protim.persistence.relational.dbo.BookingDayDBOMatcher.isBookingDayDBO;
-import static io.github.marmer.protim.persistence.relational.dbo.testdata.BookingDBOTestdata.newBookingDBO;
+import static io.github.marmer.protim.persistence.relational.booking.BookingDBOTestdata.newBookingDBO;
+import static io.github.marmer.protim.persistence.relational.booking.BookingDayDBOMatcher.isBookingDayDBO;
 import static io.github.marmer.protim.service.model.BookingDayMatcher.isBookingDay;
 import static io.github.marmer.protim.service.model.BookingTestdata.newBooking;
 import static java.util.Collections.emptyList;

@@ -1,8 +1,7 @@
-package io.github.marmer.protim.persistence.relational.dbo.testdata;
+package io.github.marmer.protim.persistence.relational.booking;
 
 import io.github.benas.randombeans.EnhancedRandomBuilder;
 import io.github.benas.randombeans.api.EnhancedRandom;
-import io.github.marmer.protim.persistence.relational.dbo.BookingDBO;
 
 public class BookingDBOTestdata {
     private final static EnhancedRandom builder = EnhancedRandomBuilder.aNewEnhancedRandomBuilder()
