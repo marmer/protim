@@ -13,11 +13,11 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
-public class BookingDayConverterFromDBOTest {
+public class BookingDayConverterTest {
     @Rule
     public MockitoRule mockito = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
     @InjectMocks
-    private BookingDayConverterFromDBO classUnderTest;
+    private BookingDayConverter classUnderTest;
 
     @Test
     public void testConvert_BookingDayGiven_ShouldConvertAllRelevantProperties()

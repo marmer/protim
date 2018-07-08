@@ -17,7 +17,7 @@ import java.util.function.Consumer;
 
 @Service
 @RequiredArgsConstructor()
-public class BookingsCrudServiceRelational implements BookingsCrudService {
+public class BookingCrudServiceRelational implements BookingsCrudService {
     private final BookingDayRepository bookingDayRepository;
     private final Converter<BookingDayDBO, BookingDay> bookingDayConverter;
     private final Converter<BookingDBO, Booking> bookingConverter;

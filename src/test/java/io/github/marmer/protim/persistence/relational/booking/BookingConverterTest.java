@@ -14,11 +14,11 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
-public class BookingConverterFromDBOTest {
+public class BookingConverterTest {
     @Rule
     public MockitoRule mockito = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
     @InjectMocks
-    private BookingConverterFromDBO classUnderTest;
+    private BookingConverter classUnderTest;
 
     @Test
     public void testConvert_BookingDBOGiven_ResultShouldContainAllRelevantValues()
