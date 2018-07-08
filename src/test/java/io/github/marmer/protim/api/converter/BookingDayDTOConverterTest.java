@@ -9,7 +9,7 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
 
-import static io.github.marmer.protim.api.dto.BookingDayDTOMatcher.isBookingDayDTO;
+import static io.github.marmer.protim.api.controller.booking.BookingDayDTOMatcher.isBookingDayDTO;
 import static io.github.marmer.protim.test.Testdataprovider.newInstanceOf;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;

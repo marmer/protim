@@ -39,3 +39,4 @@ global:
       allowed-origins:
       - https://marmer.online
       - https://marmer.github.io
+      - https://localhost
