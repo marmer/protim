@@ -1,6 +1,5 @@
 package io.github.marmer.protim.test.endtoend;
 
-import io.github.marmer.protim.api.controller.BookingDayController;
 import io.github.marmer.protim.persistence.relational.dbo.BookingDBO;
 import io.github.marmer.protim.persistence.relational.dbo.BookingDayDBO;
 import io.github.marmer.protim.test.DbCleanupService;
@@ -9,7 +8,6 @@ import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -43,9 +41,6 @@ public class BookingEndToEndIT {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @InjectMocks
-    private BookingDayController classUnderTest;
 
     @Autowired
     private DbCleanupService dbCleanupService;
@@ -266,32 +261,5 @@ public class BookingEndToEndIT {
                                 .withDescription("watching football")))));
     }
 
-    @Test
-    public void testGetBookings_CorsconfigurationMatchingToRequest_ShouldNotAllowAccess()
-            throws Exception {
-        // Execution
-        mockMvc.perform(
-                options("/api/day")
-                        .header("Access-Control-Request-Method", "GET")
-                        .header("Origin", "http://www.unknownURL.com"))
-                .andExpect(status().isForbidden());
-    }
 
-    @Test
-    public void testGetBookings_CorsconfigurationNotMatchingToRequest_ShouldAllowAccess()
-            throws Exception {
-        // Execution
-        mockMvc.perform(
-                options("/api/day")
-                        .header("Access-Control-Request-Method", "GET")
-                        .header("Origin", "https://marmer.online"))
-                .andExpect(status().isOk());
-    }
-
-    @Test
-    public void testLogout_UrlHasBeenCalled_ShouldSendStatusToForceTheBrowserToClearCredentials()
-            throws Exception {
-        // Execution
-        mockMvc.perform(get("/logout")).andExpect(status().isUnauthorized());
-    }
 }
