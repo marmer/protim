@@ -26,6 +26,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.springframework.boot.actuate.autoconfigure.security.servlet.EndpointRequest.toAnyEndpoint;
+
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
@@ -40,8 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessHandler(logoutSuccessHandler())
                 .permitAll().and()
                 .authorizeRequests()
-                .antMatchers("/**").hasRole("USER")
-                .and()
+                .requestMatchers(toAnyEndpoint()).hasRole(Role.ADMIN)
+                .antMatchers("/**").hasRole(Role.USER).and()
                 .httpBasic().realmName("protim");
     }
 
@@ -53,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     protected PasswordEncoder passwordEncoder() {
         final String idForEncode = "bcrypt";
-        final Map encoders = new HashMap<>();
+        final Map<String, PasswordEncoder> encoders = new HashMap<>();
         final BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
         encoders.put(idForEncode, bCryptPasswordEncoder);
         encoders.put("noop", NoOpPasswordEncoder.getInstance());
@@ -71,14 +73,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public UserDetailsService userDetailsService( /** TODO inject repo instead*/final PasswordEncoder pwEncoder) {
+    public UserDetailsService userDetailsService( /* TODO inject repo instead*/final PasswordEncoder pwEncoder) {
         return username -> {
-            if ("user".equals(username)) {
-                return new User(username,
-                        pwEncoder.encode("pw123"),
-                        Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")));
-            } else {
-                throw new UsernameNotFoundException(username);
+            switch (username) {
+                case Role.USER:
+                    return new User(username,
+                            pwEncoder.encode("user123"),
+                            Collections.singleton(new SimpleGrantedAuthority("ROLE_" + Role.USER)));
+                case Role.ADMIN:
+                    return new User(username,
+                            pwEncoder.encode("admin123"),
+                            Collections.singleton(new SimpleGrantedAuthority("ROLE_" + Role.ADMIN)));
+                default:
+                    throw new UsernameNotFoundException(username);
             }
         };
     }

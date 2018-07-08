@@ -1,5 +1,6 @@
 package io.github.marmer.protim.test.endtoend;
 
+import io.github.marmer.protim.api.configuration.Role;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -11,6 +12,8 @@ import org.springframework.test.context.junit4.rules.SpringClassRule;
 import org.springframework.test.context.junit4.rules.SpringMethodRule;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.anonymous;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.options;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -54,5 +57,35 @@ public class SecurityEndToEndIT {
             throws Exception {
         // Execution
         mockMvc.perform(get("/logout")).andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    public void testAtManagementApi_CallWithUser_ShouldBeForbidden()
+            throws Exception {
+        // Execution
+        mockMvc.perform(
+                get("/management")
+                        .with(user("someone").roles(Role.USER)))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    public void testAtManagementApi_CallWithAdmin_ShouldWork()
+            throws Exception {
+        // Execution
+        mockMvc.perform(
+                get("/management")
+                        .with(user("someone").roles(Role.ADMIN)))
+                .andExpect(status().isOk());
+    }
+
+    @Test
+    public void testAtManagementApi_CallWithAnonymous_ShouldWork()
+            throws Exception {
+        // Execution
+        mockMvc.perform(
+                get("/management")
+                        .with(anonymous()))
+                .andExpect(status().isUnauthorized());
     }
 }
