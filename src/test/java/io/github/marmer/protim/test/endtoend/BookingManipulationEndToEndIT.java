@@ -288,4 +288,11 @@ public class BookingManipulationEndToEndIT {
                 .andExpect(status().isOk());
 
     }
+
+    @Test
+    public void testLogout_UrlHasBeenCalled_ShouldSendStatusToForceTheBrowserToClearCredentials()
+            throws Exception {
+        // Execution
+        mockMvc.perform(get("/logout")).andExpect(status().isUnauthorized());
+    }
 }
