@@ -1,10 +1,10 @@
 package io.github.marmer.protim.api.booking;
 
 import io.github.marmer.protim.service.Converter;
-import io.github.marmer.protim.service.crud.BookingChangeRequest;
-import io.github.marmer.protim.service.crud.BookingsCrudService;
-import io.github.marmer.protim.service.model.Booking;
-import io.github.marmer.protim.service.model.BookingDay;
+import io.github.marmer.protim.service.booking.Booking;
+import io.github.marmer.protim.service.booking.BookingChangeRequest;
+import io.github.marmer.protim.service.booking.BookingDay;
+import io.github.marmer.protim.service.booking.BookingsCrudService;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;

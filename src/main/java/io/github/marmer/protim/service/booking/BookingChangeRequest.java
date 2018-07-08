@@ -1,6 +1,5 @@
-package io.github.marmer.protim.service.crud;
+package io.github.marmer.protim.service.booking;
 
-import io.github.marmer.protim.service.model.Booking;
 import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 import lombok.Value;

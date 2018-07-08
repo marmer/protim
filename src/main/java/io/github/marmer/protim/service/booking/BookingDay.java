@@ -1,4 +1,4 @@
-package io.github.marmer.protim.service.model;
+package io.github.marmer.protim.service.booking;
 
 import lombok.Builder;
 import lombok.Value;

@@ -2,6 +2,7 @@ package io.github.marmer.protim.service.model;
 
 import io.github.benas.randombeans.EnhancedRandomBuilder;
 import io.github.benas.randombeans.api.EnhancedRandom;
+import io.github.marmer.protim.service.booking.Booking;
 
 public class BookingTestdata {
     public static Booking newBooking() {

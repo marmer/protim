@@ -1,6 +1,6 @@
 package io.github.marmer.protim.api.booking;
 
-import io.github.marmer.protim.service.model.BookingDay;
+import io.github.marmer.protim.service.booking.BookingDay;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.InjectMocks;

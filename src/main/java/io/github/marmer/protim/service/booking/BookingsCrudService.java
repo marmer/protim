@@ -1,7 +1,4 @@
-package io.github.marmer.protim.service.crud;
-
-import io.github.marmer.protim.service.model.Booking;
-import io.github.marmer.protim.service.model.BookingDay;
+package io.github.marmer.protim.service.booking;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
