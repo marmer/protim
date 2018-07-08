@@ -1,8 +1,7 @@
-package io.github.marmer.protim.api.dto.testdata;
+package io.github.marmer.protim.api.booking;
 
 import io.github.benas.randombeans.EnhancedRandomBuilder;
 import io.github.benas.randombeans.api.EnhancedRandom;
-import io.github.marmer.protim.api.controller.booking.BookingDTO;
 
 public class BookingDTOTestdata {
     public static BookingDTO newBookingDTO() {

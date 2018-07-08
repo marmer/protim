@@ -1,4 +1,4 @@
-package io.github.marmer.protim.api.controller.booking;
+package io.github.marmer.protim.api.booking;
 
 import io.github.marmer.protim.service.converter.Converter;
 import io.github.marmer.protim.service.crud.BookingChangeRequest;

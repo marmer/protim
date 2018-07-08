@@ -1,6 +1,5 @@
-package io.github.marmer.protim.api.converter;
+package io.github.marmer.protim.api.booking;
 
-import io.github.marmer.protim.api.controller.booking.BookingDayDTO;
 import io.github.marmer.protim.service.converter.Converter;
 import io.github.marmer.protim.service.model.BookingDay;
 import org.springframework.stereotype.Service;

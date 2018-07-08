@@ -1,6 +1,5 @@
-package io.github.marmer.protim.api.converter;
+package io.github.marmer.protim.api.booking;
 
-import io.github.marmer.protim.api.controller.booking.BookingDayDTO;
 import io.github.marmer.protim.service.model.BookingDay;
 import org.junit.Rule;
 import org.junit.Test;
@@ -9,7 +8,7 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
 
-import static io.github.marmer.protim.api.controller.booking.BookingDayDTOMatcher.isBookingDayDTO;
+import static io.github.marmer.protim.api.booking.BookingDayDTOMatcher.isBookingDayDTO;
 import static io.github.marmer.protim.test.Testdataprovider.newInstanceOf;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertThat;

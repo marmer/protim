@@ -1,4 +1,4 @@
-package io.github.marmer.protim.api.controller.booking;
+package io.github.marmer.protim.api.booking;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;

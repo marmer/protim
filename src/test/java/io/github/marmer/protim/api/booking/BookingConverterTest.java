@@ -1,6 +1,5 @@
-package io.github.marmer.protim.api.converter;
+package io.github.marmer.protim.api.booking;
 
-import io.github.marmer.protim.api.controller.booking.BookingDTO;
 import io.github.marmer.protim.service.model.Booking;
 import org.junit.Rule;
 import org.junit.Test;
@@ -9,17 +8,17 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
 
-import static io.github.marmer.protim.api.dto.testdata.BookingDTOTestdata.newBookingDTO;
+import static io.github.marmer.protim.api.booking.BookingDTOTestdata.newBookingDTO;
 import static io.github.marmer.protim.service.model.BookingMatcher.isBooking;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
-public class BookingConverterFromDTOTest {
+public class BookingConverterTest {
     @Rule
     public MockitoRule mockito = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
     @InjectMocks
-    private BookingConverterFromDTO classUnderTest;
+    private BookingConverter classUnderTest;
 
     @Test
     public void testConvert_BookingDTOGiven_ResultShouldContainAllRelevantValues()
