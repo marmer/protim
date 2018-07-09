@@ -42,8 +42,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutSuccessHandler(logoutSuccessHandler())
                 .permitAll().and()
                 .authorizeRequests()
-                .requestMatchers(toAnyEndpoint()).hasRole(Role.ADMIN)
-                .antMatchers("/**").hasRole(Role.USER).and()
+                .requestMatchers(toAnyEndpoint()).hasRole(Role.ADMIN.name())
+                .antMatchers("/**").hasRole(Role.USER.name()).and()
                 .httpBasic().realmName("protim");
     }
 
@@ -76,11 +76,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public UserDetailsService userDetailsService( /* TODO inject repo instead*/final PasswordEncoder pwEncoder) {
         return username -> {
             switch (username) {
-                case Role.USER:
+                case "USER":
                     return new User(username,
                             pwEncoder.encode("user123"),
                             Collections.singleton(new SimpleGrantedAuthority("ROLE_" + Role.USER)));
-                case Role.ADMIN:
+                case "ADMIN":
                     return new User(username,
                             pwEncoder.encode("admin123"),
                             Collections.singleton(new SimpleGrantedAuthority("ROLE_" + Role.ADMIN)));

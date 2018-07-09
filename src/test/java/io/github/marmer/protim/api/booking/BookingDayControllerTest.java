@@ -8,7 +8,6 @@ import io.github.marmer.protim.service.booking.BookingsCrudService;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
-import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -46,9 +45,6 @@ public class BookingDayControllerTest {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @InjectMocks
-    private BookingDayController classUnderTest;
 
     @MockBean
     private BookingsCrudService bookingsCrudService;

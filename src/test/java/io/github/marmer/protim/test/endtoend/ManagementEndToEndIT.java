@@ -35,7 +35,7 @@ public class ManagementEndToEndIT {
         // Execution
         mockMvc.perform(
                 get("/management")
-                        .with(user("someone").roles(Role.USER)))
+                        .with(user("someone").roles(Role.USER.name())))
                 .andExpect(status().isForbidden());
     }
 
@@ -45,7 +45,7 @@ public class ManagementEndToEndIT {
         // Execution
         mockMvc.perform(
                 get("/management")
-                        .with(user("someone").roles(Role.ADMIN)))
+                        .with(user("someone").roles(Role.ADMIN.name())))
                 .andExpect(status().isOk());
     }
 

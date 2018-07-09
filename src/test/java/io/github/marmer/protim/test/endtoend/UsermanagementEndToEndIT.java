@@ -55,7 +55,7 @@ public class UsermanagementEndToEndIT {
 
         // Execution
         mockMvc.perform(
-                put("/api/user")
+                put("/api/usermanagement/user")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\n" +
                                 "  \"username\": \"Jim\",\n" +
