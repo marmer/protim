@@ -51,7 +51,7 @@ public class UsermanagementEndToEndIT {
     public void testPudUser_UserDoesNotExistYet_UserShouldExistNow()
             throws Exception {
         // Preparation
-        final String username = "Jim";
+        final String username = "JTKirk";
 
         // Execution
         mockMvc.perform(
@@ -59,7 +59,7 @@ public class UsermanagementEndToEndIT {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\n" +
                                 "  \"username\": \"Jim\",\n" +
-                                "  \"password\": \"tKirk\",\n" +
+                                "  \"password\": \"JTKirk\",\n" +
                                 "  \"roles\": [\n" +
                                 "    \"ADMIN\",\n" +
                                 "    \"USER\"\n" +
@@ -72,8 +72,8 @@ public class UsermanagementEndToEndIT {
         // Expectation
         assertThat(entityManager.find(UserDBO.class, username), isUserDBO()
                 .withId(is(notNullValue()))
-                .withUsername("jim")
-                .withPassword("tKirk")
+                .withUsername("Jim")
+                .withPassword(username)
                 .withRoles(contains(
                         isRoleDBO()
                                 .withName("ADMIN"),
