@@ -1,12 +1,12 @@
 [![Build Status](https://travis-ci.org/marmer/protim.svg)](https://travis-ci.org/marmer/protim)
-[![Code Coverage](https://sonarcloud.io/api/badges/measure?key=io.github.marmer.protim%3Aprotim&metric=coverage)](https://sonarcloud.io/dashboard/index/io.github.marmer.protim%3Aprotim)
-[![Technical Dept](https://sonarcloud.io/api/badges/measure?key=io.github.marmer.protim%3Aprotim&metric=sqale_debt_ratio)](https://sonarcloud.io/dashboard/index/io.github.marmer.protim%3Aprotim)
+[![Code Coverage](https://sonarcloud.io/api/project_badges/measure?project=io.github.marmer.protim%3Aprotim&metric=coverage)](https://sonarcloud.io/api/project_badges/measure?project=io.github.marmer.protim%3Aprotim&metric=coverage)
 [![Dependency Status](https://www.versioneye.com/user/projects/59d0915c6725bd445062a9f2/badge.svg?style=flat-square)](https://www.versioneye.com/user/projects/59d0915c6725bd445062a9f2)
- 
-[![Maintainability Rating](https://sonarcloud.io/api/badges/measure?key=io.github.marmer.protim%3Aprotim&metric=sqale_rating)](https://sonarcloud.io/dashboard/index/io.github.marmer.protim%3Aprotim) 
-[![Readability Rating](https://sonarcloud.io/api/badges/measure?key=io.github.marmer.protim%3Aprotim&metric=reliability_rating)](https://sonarcloud.io/dashboard/index/io.github.marmer.protim%3Aprotim) 
-[![Security Rating](https://sonarcloud.io/api/badges/measure?key=io.github.marmer.protim%3Aprotim&metric=security_rating)](https://sonarcloud.io/dashboard/index/io.github.marmer.protim%3Aprotim) 
-[![Code Smells](https://sonarcloud.io/api/badges/measure?key=io.github.marmer.protim%3Aprotim&metric=code_smells)](https://sonarcloud.io/dashboard/index/io.github.marmer.protim%3Aprotim)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=io.github.marmer.protim%3Aprotim&metric=alert_status)](https://sonarcloud.io/api/project_badges/measure?project=io.github.marmer.protim%3Aprotim&metric=alert_status)
+
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=io.github.marmer.protim%3Aprotim&metric=security_rating)](https://sonarcloud.io/api/project_badges/measure?project=io.github.marmer.protim%3Aprotim&metric=security_rating)
+[![Technical Dept](https://sonarcloud.io/api/project_badges/measure?project=io.github.marmer.protim%3Aprotim&metric=sqale_index)](https://sonarcloud.io/api/project_badges/measure?project=io.github.marmer.protim%3Aprotim&metric=sqale_index)
+[![Maintainability](https://sonarcloud.io/api/project_badges/measure?project=io.github.marmer.protim%3Aprotim&metric=sqale_rating)](https://sonarcloud.io/api/project_badges/measure?project=io.github.marmer.protim%3Aprotim&metric=https://sonarcloud.io/api/project_badges/measure?project=io.github.marmer.protim%3Aprotim&metric=https://sonarcloud.io/api/project_badges/measure?project=io.github.marmer.protim%3Aprotim&metric=https://sonarcloud.io/api/project_badges/measure?project=io.github.marmer.protim%3Aprotim&metric=sqale_rating)
+[![Reliability](https://sonarcloud.io/api/project_badges/measure?project=io.github.marmer.protim%3Aprotim&metric=reliability_rating)](https://sonarcloud.io/api/project_badges/measure?project=io.github.marmer.protim%3Aprotim&metric=https://sonarcloud.io/api/project_badges/measure?project=io.github.marmer.protim%3Aprotim&metric=https://sonarcloud.io/api/project_badges/measure?project=io.github.marmer.protim%3Aprotim&metric=reliability_rating)
 
 # protim
 The beginning of a small tool to manage production time
