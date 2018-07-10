@@ -11,7 +11,7 @@ import static java.util.Arrays.asList;
 
 @Data
 @Accessors(chain = true)
-class UserDTO {
+public class UserDTO {
     private String username;
     private String password;
     private Set<Role> roles;

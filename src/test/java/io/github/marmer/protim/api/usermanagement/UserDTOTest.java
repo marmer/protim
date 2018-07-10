@@ -4,10 +4,9 @@ import io.github.marmer.protim.api.configuration.Role;
 import lombok.var;
 import org.junit.Test;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.nullValue;
+import static io.github.marmer.protim.api.usermanagement.UserDTOMatcher.isUserDTO;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.fail;
 
 public class UserDTOTest {
     @Test
@@ -17,21 +16,38 @@ public class UserDTOTest {
         final var classUnderTest = new UserDTO();
 
         // Execution
-        classUnderTest.setRoles((Role[]) null);
+        final UserDTO result = classUnderTest.setRoles((Role[]) null);
 
         // Assertion
-        assertThat(classUnderTest.getRoles(), is(nullValue()));
+        assertThat(result, isUserDTO().withRoles(is(nullValue())));
     }
 
     @Test
-    public void test_RolesGiven_()
+    public void testSetRoles_RolesGiven_RolesShouldBeSet()
             throws Exception {
         // Preparation
+        final var classUnderTest = new UserDTO();
 
         // Execution
-        classUnderTest.();
+        final Role role1 = Role.ADMIN;
+        final Role role2 = Role.USER;
+        final UserDTO result = classUnderTest.setRoles(role1, role2);
 
         // Assertion
-        fail("implement me!");
+        assertThat(result, isUserDTO().withRoles(containsInAnyOrder(role1, role2)));
     }
+
+    @Test
+    public void testSetRoles_NothingGiven_ShouldSetEmpty()
+            throws Exception {
+        // Preparation
+        final var classUnderTest = new UserDTO();
+
+        // Execution
+        final UserDTO result = classUnderTest.setRoles();
+
+        // Assertion
+        assertThat(result, isUserDTO().withRoles(is(empty())));
+    }
+
 }
