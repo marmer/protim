@@ -48,6 +48,21 @@ public class UserDBOConverterTest {
     }
 
     @Test
+    public void testConvert_ModelWithoutRolesGiven_ModelRolesShouldBeNull()
+            throws Exception {
+        // Preparation
+        final User user = newUser().withRoles(null);
+        final RoleDBO roles = mock(RoleDBO.class);
+
+        // Execution
+        final UserDBO result = underTest.convert(user);
+
+        // Assertion
+        assertThat(result, isUserDBO()
+                .withRoles(is(nullValue())));
+    }
+
+    @Test
     public void testConvert_NullGiven_ShouldReturnNull()
             throws Exception {
         // Preparation
