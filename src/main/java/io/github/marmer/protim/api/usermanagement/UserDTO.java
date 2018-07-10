@@ -18,7 +18,7 @@ public class UserDTO {
     private boolean enabled;
 
     public UserDTO setRoles(final Role... roles) {
-        setRoles(roles == null ? null : new HashSet<>(asList(roles)));
+        this.roles = roles == null ? null : new HashSet<>(asList(roles));
         return this;
     }
 }
