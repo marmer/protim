@@ -13,10 +13,10 @@ public class UserDTOTest {
     public void testSetRoles_NullGiven_RolseShouldBeSet()
             throws Exception {
         // Preparation
-        final var classUnderTest = new UserDTO();
+        final var underTest = new UserDTO();
 
         // Execution
-        final UserDTO result = classUnderTest.setRoles((Role[]) null);
+        final UserDTO result = underTest.setRoles((Role[]) null);
 
         // Assertion
         assertThat(result, isUserDTO().withRoles(is(nullValue())));
@@ -26,12 +26,12 @@ public class UserDTOTest {
     public void testSetRoles_RolesGiven_RolesShouldBeSet()
             throws Exception {
         // Preparation
-        final var classUnderTest = new UserDTO();
+        final var underTest = new UserDTO();
 
         // Execution
         final Role role1 = Role.ADMIN;
         final Role role2 = Role.USER;
-        final UserDTO result = classUnderTest.setRoles(role1, role2);
+        final UserDTO result = underTest.setRoles(role1, role2);
 
         // Assertion
         assertThat(result, isUserDTO().withRoles(containsInAnyOrder(role1, role2)));
@@ -41,10 +41,10 @@ public class UserDTOTest {
     public void testSetRoles_NothingGiven_ShouldSetEmpty()
             throws Exception {
         // Preparation
-        final var classUnderTest = new UserDTO();
+        final var underTest = new UserDTO();
 
         // Execution
-        final UserDTO result = classUnderTest.setRoles();
+        final UserDTO result = underTest.setRoles();
 
         // Assertion
         assertThat(result, isUserDTO().withRoles(is(empty())));

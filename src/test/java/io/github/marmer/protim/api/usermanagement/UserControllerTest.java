@@ -21,7 +21,7 @@ import java.util.HashSet;
 
 import static io.github.marmer.protim.api.configuration.Role.ADMIN;
 import static io.github.marmer.protim.api.configuration.Role.USER;
-import static java.util.Arrays.asList;
+import static java.util.Collections.singletonList;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -67,8 +67,8 @@ public class UserControllerTest {
                         "  \"username\": \"Jim\",\n" +
                         "  \"password\": \"JTKirk\",\n" +
                         "  \"roles\": [\n" +
-                        "    \"" + ADMIN + "\",\n" +
-                        "    \"" + USER + "\"\n" +
+                        "    \"ADMIN\",\n" +
+                        "    \"USER\"\n" +
                         "  ],\n" +
                         "  \"enabled\": true\n" +
                         "}"))
@@ -80,7 +80,7 @@ public class UserControllerTest {
     }
 
     private User newUser() {
-        return new User("username", "password", new HashSet<>(asList(Role.USER)), true);
+        return new User("username", "password", new HashSet<>(singletonList(Role.USER)), true);
     }
 
 }

@@ -17,7 +17,7 @@ public class BookingDayConverterTest {
     @Rule
     public MockitoRule mockito = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
     @InjectMocks
-    private BookingDayConverter classUnderTest;
+    private BookingDayConverter underTest;
 
     @Test
     public void testConvert_BookingDayGiven_ShouldConvertAllRelevantProperties()
@@ -26,7 +26,7 @@ public class BookingDayConverterTest {
         final BookingDayDBO dbo = newBookingDayDBO();
 
         // Execution
-        final BookingDay result = classUnderTest.convert(dbo);
+        final BookingDay result = underTest.convert(dbo);
 
         // Assertion
         assertThat(result, isBookingDay()
@@ -41,7 +41,7 @@ public class BookingDayConverterTest {
         // Preparation
 
         // Execution
-        final BookingDay result = classUnderTest.convert(null);
+        final BookingDay result = underTest.convert(null);
 
         // Assertion
         assertThat(result, is(nullValue()));

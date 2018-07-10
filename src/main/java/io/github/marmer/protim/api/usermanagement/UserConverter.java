@@ -9,6 +9,13 @@ public class UserConverter implements Converter<UserDTO, User> {
 
     @Override
     public User convert(final UserDTO source) {
-        return null;
+        return source == null
+                ? null
+                : User.builder()
+                .username(source.getUsername())
+                .password(source.getPassword())
+                .roles(source.getRoles())
+                .enabled(source.isEnabled())
+                .build();
     }
 }

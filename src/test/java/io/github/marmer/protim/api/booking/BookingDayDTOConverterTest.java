@@ -17,7 +17,7 @@ public class BookingDayDTOConverterTest {
     @Rule
     public MockitoRule mockito = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
     @InjectMocks
-    private BookingDayDTOConverter classUnderTest;
+    private BookingDayDTOConverter underTest;
 
     @Test
     public void testConvert_BookingDayGiven_AllRelevantFieldsShouldGetFilled()
@@ -26,7 +26,7 @@ public class BookingDayDTOConverterTest {
         final BookingDay bookingDay = newInstanceOf(BookingDay.class);
 
         // Execution
-        final BookingDayDTO result = classUnderTest.convert(bookingDay);
+        final BookingDayDTO result = underTest.convert(bookingDay);
 
         // Assertion
         assertThat(result, isBookingDayDTO().withDay(equalTo(bookingDay.getDay())));

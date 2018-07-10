@@ -3,13 +3,8 @@ package io.github.marmer.protim.persistence.relational.usermanagement;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Set;
 
 @Data
@@ -34,13 +29,4 @@ public class UserDBO {
 
     @Version
     private Long version;
-
-    @CreatedBy
-    private String createdBy;
-    @CreatedDate
-    private LocalDateTime createdDate;
-    @LastModifiedBy
-    private String lastModifiedBy;
-    @LastModifiedDate
-    private LocalDateTime lastModifiedDate;
 }

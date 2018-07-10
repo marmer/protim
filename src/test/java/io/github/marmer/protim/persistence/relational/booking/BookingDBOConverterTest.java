@@ -18,7 +18,7 @@ public class BookingDBOConverterTest {
     @Rule
     public MockitoRule mockito = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
     @InjectMocks
-    private BookingDBOConverter classUnderTest;
+    private BookingDBOConverter underTest;
 
     @Test
     public void testConvert_BookingDBOGiven_ResultShouldContainAllRelevantValues()
@@ -27,7 +27,7 @@ public class BookingDBOConverterTest {
         final Booking booking = newBooking();
 
         // Execution
-        final BookingDBO result = classUnderTest.convert(booking);
+        final BookingDBO result = underTest.convert(booking);
 
         // Assertion
         assertThat(result, isBookingDBO()
@@ -44,7 +44,7 @@ public class BookingDBOConverterTest {
         // Preparation
 
         // Execution
-        final BookingDBO result = classUnderTest.convert(null);
+        final BookingDBO result = underTest.convert(null);
 
         // Assertion
         assertThat(result, is(nullValue()));

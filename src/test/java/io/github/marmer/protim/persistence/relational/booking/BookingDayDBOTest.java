@@ -18,31 +18,31 @@ public class BookingDayDBOTest {
     public void testAddBookings_ListContainsAllreadyElementsAndNewElementIsGiven_ShouldAddElementToList()
             throws Exception {
         // Preparation
-        final BookingDayDBO classUnderTest = new BookingDayDBO();
+        final BookingDayDBO underTest = new BookingDayDBO();
         final BookingDBO oldBooking = mock(BookingDBO.class, "oldBooking");
-        classUnderTest.setBookings(asList(oldBooking));
+        underTest.setBookings(asList(oldBooking));
         final BookingDBO newBooking = mock(BookingDBO.class, "newBooking");
 
         // Execution
-        classUnderTest.addBookings(newBooking);
+        underTest.addBookings(newBooking);
 
         // Assertion
-        assertThat(classUnderTest, isBookingDayDBO().withBookings(contains(oldBooking, newBooking)));
+        assertThat(underTest, isBookingDayDBO().withBookings(contains(oldBooking, newBooking)));
     }
 
     @Test
     public void testAddBookings_ListIsNullEndElementGiven_ListShouldGetInitializedWithGivenElement()
             throws Exception {
         // Preparation
-        final BookingDayDBO classUnderTest = new BookingDayDBO();
-        classUnderTest.setBookings(null);
+        final BookingDayDBO underTest = new BookingDayDBO();
+        underTest.setBookings(null);
         final BookingDBO booking = mock(BookingDBO.class, "oldBooking");
 
         // Execution
-        classUnderTest.addBookings(booking);
+        underTest.addBookings(booking);
 
         // Assertion
-        assertThat(classUnderTest, isBookingDayDBO().withBookings(contains(booking)));
+        assertThat(underTest, isBookingDayDBO().withBookings(contains(booking)));
     }
 
     private <T> List<T> asList(final T... elements) {

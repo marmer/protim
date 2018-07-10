@@ -1,5 +1,6 @@
 package io.github.marmer.protim.test.endtoend;
 
+import io.github.marmer.protim.api.configuration.Role;
 import io.github.marmer.protim.persistence.relational.usermanagement.UserDBO;
 import io.github.marmer.protim.test.DbCleanupService;
 import io.github.marmer.protim.test.TransactionlessTestEntityManager;
@@ -27,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-@WithMockUser(roles = "USER")
+@WithMockUser(roles = "ADMIN")
 public class UsermanagementEndToEndIT {
     @ClassRule
     public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
@@ -67,25 +68,21 @@ public class UsermanagementEndToEndIT {
                                 "  \"enabled\": true\n" +
                                 "}"))
                 .andExpect(status().isCreated())
-                .andExpect(header().string(HttpHeaders.LOCATION, "/api/user/{username}"));
+                .andExpect(header().string(HttpHeaders.LOCATION, "/api/usermanagement/user/Jim"));
 
         // Expectation
-        assertThat(entityManager.find(UserDBO.class, username), isUserDBO()
+        assertThat(entityManager.findAllOf(UserDBO.class), contains(isUserDBO()
                 .withId(is(notNullValue()))
                 .withUsername("Jim")
                 .withPassword(username)
                 .withRoles(contains(
                         isRoleDBO()
-                                .withName("ADMIN"),
+                                .withName(Role.ADMIN),
                         isRoleDBO()
-                                .withName("USER")))
+                                .withName(Role.USER)))
                 .withEnabled(true)
                 .withVersion(is(notNullValue()))
-                .withCreatedBy(is(notNullValue()))
-                .withCreatedDate(is(notNullValue()))
-                .withLastModifiedBy(is(notNullValue()))
-                .withLastModifiedDate(is(notNullValue()))
-        );
+        ));
 
     }
 

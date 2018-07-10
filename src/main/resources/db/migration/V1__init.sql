@@ -16,20 +16,16 @@ create table bookings (
 );
 
 create table users (
-  id                 bigserial primary key,
-  username           varchar unique,
-  password           varchar,
-  enabled            boolean,
-  version            bigint,
-  created_by         varchar,
-  created_date       timestamp,
-  last_modified_by   varchar,
-  last_modified_date timestamp
+  id       bigserial primary key,
+  username varchar unique,
+  password varchar,
+  enabled  boolean,
+  version  bigint
 );
 
 create table roles (
   id      bigserial primary key,
-  user    bigint references users (id),
+  "user"  bigint references users (id),
   name    varchar,
   version bigint
 );

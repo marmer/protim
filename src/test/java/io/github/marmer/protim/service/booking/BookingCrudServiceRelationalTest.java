@@ -36,7 +36,7 @@ import static org.mockito.Mockito.*;
 public class BookingCrudServiceRelationalTest {
     @Rule
     public MockitoRule mockito = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
-    private BookingCrudServiceRelational classUnderTest;
+    private BookingCrudServiceRelational underTest;
     @Mock
     private BookingDayRepository bookingDayRepository;
     @Mock
@@ -50,7 +50,7 @@ public class BookingCrudServiceRelationalTest {
 
     @Before
     public void setUp() throws Exception {
-        classUnderTest = new BookingCrudServiceRelational(bookingDayRepository, bookingDayConverter, bookingConverter, bookingDboConverter);
+        underTest = new BookingCrudServiceRelational(bookingDayRepository, bookingDayConverter, bookingConverter, bookingDboConverter);
     }
 
     @Test
@@ -64,7 +64,7 @@ public class BookingCrudServiceRelationalTest {
         when(bookingDayConverter.convert(dbo)).thenReturn(bookingDay);
 
         // Execution
-        final Optional<BookingDay> result = classUnderTest.getBookingDay(date);
+        final Optional<BookingDay> result = underTest.getBookingDay(date);
 
         // Assertion
         assertThat(result.get(), is(bookingDay));
@@ -78,7 +78,7 @@ public class BookingCrudServiceRelationalTest {
         when(bookingDayRepository.findFirstByDay(day)).thenReturn(Optional.empty());
 
         // Execution
-        final Optional<BookingDay> bookingDay = classUnderTest.getBookingDay(day);
+        final Optional<BookingDay> bookingDay = underTest.getBookingDay(day);
 
         // Assertion
         assertThat(bookingDay.get(), isBookingDay().withDay(day));
@@ -95,7 +95,7 @@ public class BookingCrudServiceRelationalTest {
                         LocalTime.of(3, 4)));
 
         // Execution
-        final List<LocalTime> results = classUnderTest.getBookingStartTimesForDay(day);
+        final List<LocalTime> results = underTest.getBookingStartTimesForDay(day);
 
         // Assertion
         assertThat(results, contains(
@@ -115,7 +115,7 @@ public class BookingCrudServiceRelationalTest {
         when(bookingConverter.convert(bookingDBO)).thenReturn(booking);
 
         // Execution
-        final Optional<Booking> result = classUnderTest.getBookingAtDayForTime(day, startTime);
+        final Optional<Booking> result = underTest.getBookingAtDayForTime(day, startTime);
 
         // Assertion
         assertThat(result.get(), is(booking));
@@ -135,7 +135,7 @@ public class BookingCrudServiceRelationalTest {
         when(bookingDayRepository.findFirstByDay(day)).thenReturn(Optional.of(bookingDayDbo));
 
         // Execution
-        classUnderTest.setBookingAtDay(newBookingChangeRequestWith().day(day).booking(booking).build());
+        underTest.setBookingAtDay(newBookingChangeRequestWith().day(day).booking(booking).build());
 
         // Assertion
         verify(bookingDayRepository).save(bookingDayDBOCaptor.capture());
@@ -166,7 +166,7 @@ public class BookingCrudServiceRelationalTest {
         when(bookingDayRepository.findFirstByDay(day)).thenReturn(Optional.of(bookingDayDbo));
 
         // Execution
-        classUnderTest.setBookingAtDay(newBookingChangeRequestWith().day(day).booking(booking).build());
+        underTest.setBookingAtDay(newBookingChangeRequestWith().day(day).booking(booking).build());
 
         // Assertion
         verify(bookingDayRepository).save(bookingDayDBOCaptor.capture());
@@ -193,7 +193,7 @@ public class BookingCrudServiceRelationalTest {
         bookingDayDbo.setBookings(asList(oldBookingDBO));
         when(bookingDayRepository.findFirstByDay(day)).thenReturn(Optional.of(bookingDayDbo));
         // Execution
-        classUnderTest.setBookingAtDay(newBookingChangeRequestWith().day(day).booking(booking).startTime(oldStartTime).build());
+        underTest.setBookingAtDay(newBookingChangeRequestWith().day(day).booking(booking).startTime(oldStartTime).build());
 
         // Assertion
         verify(bookingDayRepository).save(bookingDayDBOCaptor.capture());
@@ -215,7 +215,7 @@ public class BookingCrudServiceRelationalTest {
         when(bookingDayRepository.findFirstByDay(day)).thenReturn(Optional.empty());
 
         // Execution
-        classUnderTest.setBookingAtDay(newBookingChangeRequestWith().day(day).booking(booking).build());
+        underTest.setBookingAtDay(newBookingChangeRequestWith().day(day).booking(booking).build());
 
         // Assertion
         verify(bookingDayRepository).save(bookingDayDBOCaptor.capture());
@@ -246,7 +246,7 @@ public class BookingCrudServiceRelationalTest {
         when(bookingDayRepository.findFirstByDay(day)).thenReturn(Optional.of(bookingDay));
 
         // Execution
-        classUnderTest.delete(newBookingChangeRequestWith().day(day).startTime(startTime).build());
+        underTest.delete(newBookingChangeRequestWith().day(day).startTime(startTime).build());
 
         // Assertion
         verify(bookingDayRepository).save(bookingDay);
@@ -270,7 +270,7 @@ public class BookingCrudServiceRelationalTest {
         when(bookingDayRepository.findFirstByDay(day)).thenReturn(Optional.of(bookingDay));
 
         // Execution
-        classUnderTest.delete(newBookingChangeRequestWith().day(day).startTime(startTime).build());
+        underTest.delete(newBookingChangeRequestWith().day(day).startTime(startTime).build());
 
         // Assertion
         verify(bookingDayRepository).save(bookingDay);
@@ -288,7 +288,7 @@ public class BookingCrudServiceRelationalTest {
         when(bookingDayRepository.findFirstByDay(day)).thenReturn(Optional.empty());
 
         // Execution
-        classUnderTest.delete(newBookingChangeRequestWith().day(day).startTime(startTime).build());
+        underTest.delete(newBookingChangeRequestWith().day(day).startTime(startTime).build());
 
         // Assertion
         verifyNoMoreInteractions(bookingDayRepository);
@@ -308,7 +308,7 @@ public class BookingCrudServiceRelationalTest {
         when(bookingDayRepository.findFirstByDay(day)).thenReturn(Optional.of(bookingDay));
 
         // Execution
-        classUnderTest.delete(newBookingChangeRequestWith().day(day).startTime(startTime).build());
+        underTest.delete(newBookingChangeRequestWith().day(day).startTime(startTime).build());
 
         // Assertion
         verifyNoMoreInteractions(bookingDayRepository);

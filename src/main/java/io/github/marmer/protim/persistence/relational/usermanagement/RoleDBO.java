@@ -1,5 +1,6 @@
 package io.github.marmer.protim.persistence.relational.usermanagement;
 
+import io.github.marmer.protim.api.configuration.Role;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
@@ -17,7 +18,8 @@ public class RoleDBO {
     @Column
     private Long id;
     @Column
-    private String name;
+    @Enumerated(EnumType.STRING)
+    private Role name;
     @Version
     private Long version;
 }

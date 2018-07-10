@@ -29,7 +29,7 @@ public class BookingDayRepositoryIT {
     public final SpringMethodRule springMethodRule = new SpringMethodRule();
 
     @Autowired
-    private BookingDayRepository classUnderTest;
+    private BookingDayRepository underTest;
 
     @Autowired
     private TestEntityManager entityManager;
@@ -43,7 +43,7 @@ public class BookingDayRepositoryIT {
         final Long id = entityManager.persistAndGetId(new BookingDayDBO().setDay(day), Long.class);
 
         // Execution
-        final Optional<BookingDayDBO> bookingDay = classUnderTest.findFirstByDay(day);
+        final Optional<BookingDayDBO> bookingDay = underTest.findFirstByDay(day);
 
         // Assertion
         assertThat(bookingDay.get(), isBookingDayDBO().withId(id));
@@ -75,7 +75,7 @@ public class BookingDayRepositoryIT {
                                                 .setStartTime(LocalTime.of(7, 8)))));
 
         // Execution
-        final List<LocalTime> results = classUnderTest.findBookingStartTimesForDay(day);
+        final List<LocalTime> results = underTest.findBookingStartTimesForDay(day);
 
         // Assertion
         assertThat(results, contains(
@@ -110,7 +110,7 @@ public class BookingDayRepositoryIT {
                                                 .setStartTime(LocalTime.of(7, 8)))));
 
         // Execution
-        final Optional<BookingDBO> result = classUnderTest.findBookingByStartTimeForDay(day, LocalTime.of(5, 6));
+        final Optional<BookingDBO> result = underTest.findBookingByStartTimeForDay(day, LocalTime.of(5, 6));
 
         // Assertion
         assertThat(result.get(), is(bookingDay.getBookings().get(1)));
