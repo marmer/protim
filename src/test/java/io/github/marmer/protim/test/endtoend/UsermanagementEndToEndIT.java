@@ -23,8 +23,7 @@ import static io.github.marmer.protim.persistence.relational.usermanagement.User
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -108,7 +107,8 @@ public class UsermanagementEndToEndIT {
                                 "  ],\n" +
                                 "  \"enabled\": true\n" +
                                 "}"))
-                .andExpect(status().isConflict());
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.errorMsg", containsString(username)));
 
         // Expectation
         assertThat(entityManager.findAllOf(UserDBO.class),
@@ -116,10 +116,6 @@ public class UsermanagementEndToEndIT {
                         .withId(oldUserId)
                         .withUsername(username)
                         .withPassword(oldUserPassword)
-                        .withRoles(contains(
-                                isRoleDBO()
-                                        .withName(Role.USER)))
-                        .withEnabled(true)
                 ));
     }
 }

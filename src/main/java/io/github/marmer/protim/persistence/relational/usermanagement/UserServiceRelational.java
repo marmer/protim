@@ -14,7 +14,7 @@ public class UserServiceRelational implements UserService {
     private final UserRepository userDBORepository;
 
     @Override
-    public void addUser(final User user) {
+    public void addUser(final User user) throws RessourceConflictException {
         final UserDBO dbo = userDBOConverter.convert(user);
         if (userDBORepository.existsByUsername(user.getUsername())) {
             throw new RessourceConflictException("A user with username '" + user.getUsername() + "' exists allready.");

@@ -6,7 +6,11 @@ import io.github.marmer.protim.service.usermanagement.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -29,6 +33,7 @@ public class UserController {
     }
 
     private URI userUriFor(final User user) throws URISyntaxException {
-        return new URI(BASE_URL + "/" + user.getUsername());
+        final String userUri = BASE_URL + "/" + user.getUsername();
+        return new URI(userUri);
     }
 }
