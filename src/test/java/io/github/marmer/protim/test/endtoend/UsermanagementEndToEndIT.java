@@ -49,10 +49,10 @@ public class UsermanagementEndToEndIT {
     }
 
     @Test
-    public void testPudUser_UserDoesNotExistYet_UserShouldExistNow()
+    public void testPutUser_UserDoesNotExistYet_UserShouldExistNow()
             throws Exception {
         // Preparation
-        final String username = "JTKirk";
+        final String username = "Jim";
 
         // Execution
         mockMvc.perform(
@@ -73,9 +73,9 @@ public class UsermanagementEndToEndIT {
         // Expectation
         assertThat(entityManager.findAllOf(UserDBO.class), contains(isUserDBO()
                 .withId(is(notNullValue()))
-                .withUsername("Jim")
-                .withPassword(username)
-                .withRoles(contains(
+                .withUsername(username)
+                .withPassword("JTKirk")
+                .withRoles(containsInAnyOrder(
                         isRoleDBO()
                                 .withName(Role.ADMIN),
                         isRoleDBO()
@@ -86,5 +86,40 @@ public class UsermanagementEndToEndIT {
 
     }
 
+    @Test
+    public void testPutUser_UserDoesAllreadyExist_UserShouldExistNow()
+            throws Exception {
+        // Preparation
+        final String username = "Jim";
+        final String oldUserPassword = "oldUserPassword";
+        final Long oldUserId = entityManager.persistAndGetId(new UserDBO().setUsername(username).setPassword(oldUserPassword), Long.class);
 
+
+        // Execution
+        mockMvc.perform(
+                put("/api/usermanagement/user")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\n" +
+                                "  \"username\": \"Jim\",\n" +
+                                "  \"password\": \"JTKirk\",\n" +
+                                "  \"roles\": [\n" +
+                                "    \"ADMIN\",\n" +
+                                "    \"USER\"\n" +
+                                "  ],\n" +
+                                "  \"enabled\": true\n" +
+                                "}"))
+                .andExpect(status().isConflict());
+
+        // Expectation
+        assertThat(entityManager.findAllOf(UserDBO.class),
+                contains(isUserDBO()
+                        .withId(oldUserId)
+                        .withUsername(username)
+                        .withPassword(oldUserPassword)
+                        .withRoles(contains(
+                                isRoleDBO()
+                                        .withName(Role.USER)))
+                        .withEnabled(true)
+                ));
+    }
 }

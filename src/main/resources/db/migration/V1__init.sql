@@ -25,7 +25,7 @@ create table users (
 
 create table roles (
   id      bigserial primary key,
-  "user"  bigint references users (id),
+  user    bigint references users (id),
   name    varchar,
   version bigint
 );
