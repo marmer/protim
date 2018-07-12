@@ -1,6 +1,7 @@
 package io.github.marmer.protim.test.endtoend;
 
 import io.github.marmer.protim.api.configuration.Role;
+import io.github.marmer.protim.persistence.relational.usermanagement.RoleDBO;
 import io.github.marmer.protim.persistence.relational.usermanagement.UserDBO;
 import io.github.marmer.protim.test.DbCleanupService;
 import io.github.marmer.protim.test.TransactionlessTestEntityManager;
@@ -18,10 +19,15 @@ import org.springframework.test.context.junit4.rules.SpringClassRule;
 import org.springframework.test.context.junit4.rules.SpringMethodRule;
 import org.springframework.test.web.servlet.MockMvc;
 
+import java.util.Arrays;
+import java.util.Set;
+import java.util.stream.Collectors;
+
 import static io.github.marmer.protim.persistence.relational.usermanagement.RoleDBOMatcher.isRoleDBO;
 import static io.github.marmer.protim.persistence.relational.usermanagement.UserDBOMatcher.isUserDBO;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -117,5 +123,33 @@ public class UsermanagementEndToEndIT {
                         .withUsername(username)
                         .withPassword(oldUserPassword)
                 ));
+    }
+
+    @Test
+    public void testGetUser_UserExists_ShouldServeUser()
+            throws Exception {
+        // Preparation
+        entityManager.persist(new UserDBO()
+                .setUsername("Jack")
+                .setPassword("O'Neill")
+                .setRoles(asSet(Role.USER))
+                .setEnabled(true)
+        );
+
+        // Execution
+        mockMvc.perform(get("/api/usermanagement/user/Jack"))
+                .andExpect(status().isOk())
+                .andExpect(content().json("{\n" +
+                        "  \"username\": \"Jack\",\n" +
+                        "  \"password\": \"O'Neill\",\n" +
+                        "  \"roles\": [\n" +
+                        "    \"ADMIN\"\n" +
+                        "  ],\n" +
+                        "  \"enabled\": true\n" +
+                        "}"));
+    }
+
+    private Set<RoleDBO> asSet(final Role... roles) {
+        return Arrays.stream(roles).map(name -> new RoleDBO().setName(name)).collect(Collectors.toSet());
     }
 }

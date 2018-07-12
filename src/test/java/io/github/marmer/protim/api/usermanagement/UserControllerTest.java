@@ -10,6 +10,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -27,6 +28,7 @@ import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -45,6 +47,7 @@ public class UserControllerTest {
     private UserService userService;
     @MockBean
     private Converter<UserDTO, User> userConverter;
+    private JacksonTester<UserDTO> json;
 
     @Test
     public void testPutUser_UserGiven_ShouldSaveOrUpdateUser()
@@ -109,6 +112,31 @@ public class UserControllerTest {
                         "}"))
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.errorMsg", is(exception.getMessage())));
+    }
+
+    @Test
+    public void testGetUser_UserExists_ShouldReturnUser()
+            throws Exception {
+        // Preparation
+        final User user = newUser().withUsername("Jack");
+        final UserDTO userDto = newUserDto();
+        when(userService.getUser("Jack")).thenReturn(user);
+        when(userDtoConverter.convert(user)).thenReturn(userDto);
+
+        // Execution
+        mockMvc.perform(get("/api/usermanagement/user/Jack"))
+                .andExpect(status().isOk())
+                .andExpect(content().json(json.write(userDto).getJson()));
+        
+        // Assertion
+    }
+
+    private UserDTO newUserDto() {
+        return new UserDTO()
+                .setRoles(Role.USER, Role.ADMIN)
+                .setEnabled(true)
+                .setPassword("passW")
+                .setUsername("userN");
     }
 
     private User newUser() {
