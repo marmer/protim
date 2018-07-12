@@ -5,7 +5,6 @@ import io.github.marmer.protim.service.Converter;
 import io.github.marmer.protim.service.exception.RessourceConflictException;
 import io.github.marmer.protim.service.usermanagement.User;
 import io.github.marmer.protim.service.usermanagement.UserService;
-import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
@@ -24,12 +23,12 @@ import java.util.HashSet;
 import static io.github.marmer.protim.api.configuration.Role.ADMIN;
 import static io.github.marmer.protim.api.configuration.Role.USER;
 import static java.util.Collections.singletonList;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(UserController.class)
 @WithMockUser
@@ -108,11 +107,8 @@ public class UserControllerTest {
                         "  ],\n" +
                         "  \"enabled\": true\n" +
                         "}"))
-                .andExpect(status().isConflict());
-
-        Assert.fail("not fully implemented yet. Content check is missing");
-
-        // Assertion
+                .andExpect(status().isConflict())
+                .andExpect(jsonPath("$.errorMsg", is(exception.getMessage())));
     }
 
     private User newUser() {
