@@ -7,6 +7,8 @@ import io.github.marmer.protim.service.usermanagement.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class UserServiceRelational implements UserService {
@@ -14,7 +16,7 @@ public class UserServiceRelational implements UserService {
     private final UserRepository userDBORepository;
 
     @Override
-    public void addUser(final User user) throws RessourceConflictException {
+    public void addUser(final User user) {
         final UserDBO dbo = userDBOConverter.convert(user);
         if (userDBORepository.existsByUsername(user.getUsername())) {
             throw new RessourceConflictException("A user with username '" + user.getUsername() + "' exists allready.");
@@ -22,4 +24,13 @@ public class UserServiceRelational implements UserService {
             userDBORepository.save(dbo);
         }
     }
+
+    @Override
+    public Optional<User> getUser(final String username) {
+        // TODO: marmer implement me
+        return Optional.empty();
+
+    }
+
+
 }

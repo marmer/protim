@@ -61,7 +61,7 @@ public class UsermanagementEndToEndIT {
 
         // Execution
         mockMvc.perform(
-                put("/api/usermanagement/user")
+                put("/api/usermanagement/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\n" +
                                 "  \"username\": \"Jim\",\n" +
@@ -73,7 +73,7 @@ public class UsermanagementEndToEndIT {
                                 "  \"enabled\": true\n" +
                                 "}"))
                 .andExpect(status().isCreated())
-                .andExpect(header().string(HttpHeaders.LOCATION, "/api/usermanagement/user/Jim"));
+                .andExpect(header().string(HttpHeaders.LOCATION, "/api/usermanagement/users/Jim"));
 
         // Expectation
         assertThat(entityManager.findAllOf(UserDBO.class), contains(isUserDBO()
@@ -102,7 +102,7 @@ public class UsermanagementEndToEndIT {
 
         // Execution
         mockMvc.perform(
-                put("/api/usermanagement/user")
+                put("/api/usermanagement/users")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{\n" +
                                 "  \"username\": \"Jim\",\n" +
@@ -137,7 +137,7 @@ public class UsermanagementEndToEndIT {
         );
 
         // Execution
-        mockMvc.perform(get("/api/usermanagement/user/Jack"))
+        mockMvc.perform(get("/api/usermanagement/users/Jack"))
                 .andExpect(status().isOk())
                 .andExpect(content().json("{\n" +
                         "  \"username\": \"Jack\",\n" +

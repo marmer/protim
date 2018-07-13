@@ -9,6 +9,7 @@ import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.json.AutoConfigureJsonTesters;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.json.JacksonTester;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -20,6 +21,7 @@ import org.springframework.test.context.junit4.rules.SpringMethodRule;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.HashSet;
+import java.util.Optional;
 
 import static io.github.marmer.protim.api.configuration.Role.ADMIN;
 import static io.github.marmer.protim.api.configuration.Role.USER;
@@ -34,6 +36,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(UserController.class)
 @WithMockUser
+@AutoConfigureJsonTesters
 public class UserControllerTest {
     @ClassRule
     public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
@@ -47,7 +50,11 @@ public class UserControllerTest {
     private UserService userService;
     @MockBean
     private Converter<UserDTO, User> userConverter;
+
+    @Autowired
     private JacksonTester<UserDTO> json;
+    @MockBean
+    private Converter<User, UserDTO> userDtoConverter;
 
     @Test
     public void testPutUser_UserGiven_ShouldSaveOrUpdateUser()
@@ -63,7 +70,7 @@ public class UserControllerTest {
         when(userConverter.convert(eq(userDto))).thenReturn(user);
 
         // Execution
-        mockMvc.perform(put("/api/usermanagement/user")
+        mockMvc.perform(put("/api/usermanagement/users")
                 .with(csrf().asHeader())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\n" +
@@ -76,7 +83,7 @@ public class UserControllerTest {
                         "  \"enabled\": true\n" +
                         "}"))
                 .andExpect(status().isCreated())
-                .andExpect(header().string(HttpHeaders.LOCATION, "/api/usermanagement/user/Jim"));
+                .andExpect(header().string(HttpHeaders.LOCATION, "/api/usermanagement/users/Jim"));
 
         // Assertion
         verify(userService).addUser(user);
@@ -98,7 +105,7 @@ public class UserControllerTest {
         doThrow(exception).when(userService).addUser(user);
 
         // Execution
-        mockMvc.perform(put("/api/usermanagement/user")
+        mockMvc.perform(put("/api/usermanagement/users")
                 .with(csrf().asHeader())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{\n" +
@@ -110,6 +117,7 @@ public class UserControllerTest {
                         "  ],\n" +
                         "  \"enabled\": true\n" +
                         "}"))
+                //Assertion
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.errorMsg", is(exception.getMessage())));
     }
@@ -120,15 +128,27 @@ public class UserControllerTest {
         // Preparation
         final User user = newUser().withUsername("Jack");
         final UserDTO userDto = newUserDto();
-        when(userService.getUser("Jack")).thenReturn(user);
+        when(userService.getUser("Jack")).thenReturn(Optional.of(user));
         when(userDtoConverter.convert(user)).thenReturn(userDto);
 
         // Execution
-        mockMvc.perform(get("/api/usermanagement/user/Jack"))
+        mockMvc.perform(get("/api/usermanagement/users/Jack"))
+                // Assertion
                 .andExpect(status().isOk())
                 .andExpect(content().json(json.write(userDto).getJson()));
-        
-        // Assertion
+
+    }
+
+    @Test
+    public void testGetUser_UserDoesNotExist_ShouldReturnUser()
+            throws Exception {
+        // Preparation
+        when(userService.getUser("Jack")).thenReturn(Optional.empty());
+
+        // Execution
+        mockMvc.perform(get("/api/usermanagement/users/Jack"))
+                // Assertion
+                .andExpect(status().isNotFound());
     }
 
     private UserDTO newUserDto() {

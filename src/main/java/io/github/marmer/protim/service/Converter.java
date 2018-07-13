@@ -6,6 +6,7 @@ package io.github.marmer.protim.service;
  * @param <S> Source type
  * @param <D> Destination type
  */
+@FunctionalInterface
 public interface Converter<S, D> {
     /**
      * Converts the an object from the given type into another.
