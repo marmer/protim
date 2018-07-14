@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 public class RoleConverter implements Converter<RoleDBO, Role> {
     @Override
     public Role convert(final RoleDBO source) {
-        return source.getName();
+        return source == null
+                ? null
+                : source.getName();
     }
 }
