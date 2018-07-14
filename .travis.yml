@@ -10,6 +10,8 @@ addons:
     packages:
     - oracle-java8-installer
     - docker-ce
+    - postgresql-10
+    - postgresql-client-10
   sonarcloud:
     organization: "marmer-github"
     token:
