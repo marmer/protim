@@ -42,10 +42,7 @@ public interface Converter<S, D> {
      * @return a list of converted Objects.
      */
     default List<D> convert(final Collection<? extends S> sources) {
-        final Collector<D, ?, List<D>> collector = Collectors.toList();
-        return sources == null
-                ? null
-                : sources.stream().map(this::convert).collect(collector);
+        return convert(sources, Collectors.toList());
     }
 
     /**
@@ -55,7 +52,10 @@ public interface Converter<S, D> {
      * @return a set of converted Objects.
      */
     default Set<D> convert(final Set<? extends S> sources) {
-        final Collector<D, ?, Set<D>> collector = Collectors.toSet();
+        return convert(sources, Collectors.toSet());
+    }
+
+    default <T extends Collection<D>> T convert(final Collection<? extends S> sources, final Collector<D, ?, T> collector) {
         return sources == null
                 ? null
                 : sources.stream().map(this::convert).collect(collector);
