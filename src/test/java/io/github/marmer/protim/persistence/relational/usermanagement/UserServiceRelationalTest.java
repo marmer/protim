@@ -3,6 +3,10 @@ package io.github.marmer.protim.persistence.relational.usermanagement;
 import io.github.marmer.protim.service.Converter;
 import io.github.marmer.protim.service.exception.RessourceConflictException;
 import io.github.marmer.protim.service.usermanagement.User;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -12,7 +16,11 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
 
+import java.util.Optional;
+
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
 public class UserServiceRelationalTest {
@@ -26,6 +34,13 @@ public class UserServiceRelationalTest {
     private Converter<User, UserDBO> userDBOConverter;
     @Mock
     private UserRepository userDBORepository;
+    @Mock
+    private Converter<UserDBO, User> userConverter;
+
+    @Before
+    public void setUp() throws Exception {
+        underTest = new UserServiceRelational(userDBOConverter, userDBORepository, userConverter);
+    }
 
     @Test
     public void testAddUser_UserDoesNotYetExist_ShouldCreateUser()
@@ -76,6 +91,61 @@ public class UserServiceRelationalTest {
         exception.expectMessage(is("A user with username '" + user.getUsername() + "' exists allready."));
         // Execution
         underTest.addUser(user);
+    }
+
+
+    @Test
+    public void testGetUser_UserExists_ShouldReturnUser()
+            throws Exception {
+        // Preparation
+        final UserDBO userDBO = mock(UserDBO.class);
+        final String username = "me";
+        final User user = newUser().username(username).build();
+        when(userDBORepository.findByUsername(username)).thenReturn(Optional.of(userDBO));
+        when(userConverter.convert(userDBO)).thenReturn(user);
+
+        // Execution
+        final Optional<User> result = underTest.getUser(username);
+
+        // Assertion
+        assertThat(result.get(), is(user));
+    }
+
+    @Test
+    public void testGetUser_UserDoesNotExist_ShouldReturnNoUser()
+            throws Exception {
+        // Preparation
+        final String username = "me";
+        when(userDBORepository.findByUsername(username)).thenReturn(Optional.empty());
+
+        // Execution
+        final Optional<User> result = underTest.getUser(username);
+
+        // Assertion
+        assertThat(result, is(not(present())));
+    }
+
+    private <T> Matcher<Optional<T>> present() {
+        return new TypeSafeMatcher<Optional<T>>() {
+            @Override
+            protected boolean matchesSafely(final Optional<T> item) {
+                return item.isPresent();
+            }
+
+            @Override
+            public void describeTo(final Description description) {
+                description.appendText("value present");
+            }
+
+            @Override
+            protected void describeMismatchSafely(final Optional<T> item, final Description mismatchDescription) {
+                if (item == null) {
+                    mismatchDescription.appendText("null");
+                } else {
+                    mismatchDescription.appendText("no value present");
+                }
+            }
+        };
     }
 
     private User.UserBuilder newUser() {

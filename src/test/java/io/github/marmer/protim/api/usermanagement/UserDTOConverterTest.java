@@ -43,7 +43,7 @@ public class UserDTOConverterTest {
         // Preparation
 
         // Execution
-        final UserDTO result = underTest.convert(null);
+        final UserDTO result = underTest.convert((User) null);
 
         // Assertion
         assertThat(result, is(nullValue()));

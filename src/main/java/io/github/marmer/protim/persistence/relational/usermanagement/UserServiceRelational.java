@@ -14,6 +14,7 @@ import java.util.Optional;
 public class UserServiceRelational implements UserService {
     private final Converter<User, UserDBO> userDBOConverter;
     private final UserRepository userDBORepository;
+    private final Converter<UserDBO, User> userConverter;
 
     @Override
     public void addUser(final User user) {
@@ -27,9 +28,7 @@ public class UserServiceRelational implements UserService {
 
     @Override
     public Optional<User> getUser(final String username) {
-        // TODO: marmer implement me
-        return Optional.empty();
-
+        return userDBORepository.findByUsername(username).map(userConverter::convert);
     }
 
 

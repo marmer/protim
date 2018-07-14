@@ -44,7 +44,7 @@ public class BookingConverterTest {
         // Preparation
 
         // Execution
-        final Booking result = underTest.convert(null);
+        final Booking result = underTest.convert((BookingDTO) null);
 
         // Assertion
         assertThat(result, is(nullValue()));

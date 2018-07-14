@@ -143,13 +143,13 @@ public class UsermanagementEndToEndIT {
                         "  \"username\": \"Jack\",\n" +
                         "  \"password\": \"O'Neill\",\n" +
                         "  \"roles\": [\n" +
-                        "    \"ADMIN\"\n" +
+                        "    \"USER\"\n" +
                         "  ],\n" +
                         "  \"enabled\": true\n" +
                         "}"));
     }
 
-    private Set<RoleDBO> asSet(final Role... roles) {
+    private <T> Set<RoleDBO> asSet(final Role... roles) {
         return Arrays.stream(roles).map(name -> new RoleDBO().setName(name)).collect(Collectors.toSet());
     }
 }

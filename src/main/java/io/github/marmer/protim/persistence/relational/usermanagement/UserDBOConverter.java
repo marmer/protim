@@ -6,10 +6,7 @@ import io.github.marmer.protim.service.usermanagement.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.Set;
-import java.util.stream.Collectors;
-
-@Service("converterUserDBOToUser")
+@Service("converterUserToUserDBO")
 @RequiredArgsConstructor
 public class UserDBOConverter implements Converter<User, UserDBO> {
     private final Converter<Role, RoleDBO> roleDBOConverter;
@@ -19,17 +16,9 @@ public class UserDBOConverter implements Converter<User, UserDBO> {
         return source == null ? null : new UserDBO()
                 .setUsername(source.getUsername())
                 .setPassword(source.getPassword())
-                .setRoles(convert(source.getRoles()))
+                .setRoles(roleDBOConverter.convert(source.getRoles()))
                 .setEnabled(source.isEnabled());
     }
 
-    private Set<RoleDBO> convert(final Set<Role> roles) {
-        return roles == null
-                ? null
-                : roles
-                .stream()
-                .map(roleDBOConverter::convert)
-                .collect(Collectors.toSet());
-    }
 
 }

@@ -38,7 +38,7 @@ public class RoleDBOConverterTest {
         // Preparation
 
         // Execution
-        final RoleDBO result = underTest.convert(null);
+        final RoleDBO result = underTest.convert((Role) null);
 
         // Assertion
         assertThat(result, is(nullValue()));

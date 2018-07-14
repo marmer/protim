@@ -22,6 +22,9 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import static io.github.marmer.protim.api.configuration.Role.ADMIN;
 import static io.github.marmer.protim.api.configuration.Role.USER;
@@ -64,7 +67,7 @@ public class UserControllerTest {
         final UserDTO userDto = new UserDTO()
                 .setUsername("Jim")
                 .setPassword("JTKirk")
-                .setRoles(ADMIN, USER)
+                .setRoles(asSet(ADMIN, USER))
                 .setEnabled(true);
 
         when(userConverter.convert(eq(userDto))).thenReturn(user);
@@ -73,15 +76,7 @@ public class UserControllerTest {
         mockMvc.perform(put("/api/usermanagement/users")
                 .with(csrf().asHeader())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\n" +
-                        "  \"username\": \"Jim\",\n" +
-                        "  \"password\": \"JTKirk\",\n" +
-                        "  \"roles\": [\n" +
-                        "    \"ADMIN\",\n" +
-                        "    \"USER\"\n" +
-                        "  ],\n" +
-                        "  \"enabled\": true\n" +
-                        "}"))
+                .content(json.write(userDto).getJson()))
                 .andExpect(status().isCreated())
                 .andExpect(header().string(HttpHeaders.LOCATION, "/api/usermanagement/users/Jim"));
 
@@ -97,7 +92,7 @@ public class UserControllerTest {
         final UserDTO userDto = new UserDTO()
                 .setUsername("Jim")
                 .setPassword("JTKirk")
-                .setRoles(ADMIN, USER)
+                .setRoles(asSet(ADMIN, USER))
                 .setEnabled(true);
 
         when(userConverter.convert(eq(userDto))).thenReturn(user);
@@ -108,18 +103,14 @@ public class UserControllerTest {
         mockMvc.perform(put("/api/usermanagement/users")
                 .with(csrf().asHeader())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content("{\n" +
-                        "  \"username\": \"Jim\",\n" +
-                        "  \"password\": \"JTKirk\",\n" +
-                        "  \"roles\": [\n" +
-                        "    \"ADMIN\",\n" +
-                        "    \"USER\"\n" +
-                        "  ],\n" +
-                        "  \"enabled\": true\n" +
-                        "}"))
+                .content(json.write(userDto).getJson()))
                 //Assertion
                 .andExpect(status().isConflict())
                 .andExpect(jsonPath("$.errorMsg", is(exception.getMessage())));
+    }
+
+    private <T> Set<T> asSet(final T... values) {
+        return Stream.of(values).collect(Collectors.toSet());
     }
 
     @Test
@@ -153,7 +144,7 @@ public class UserControllerTest {
 
     private UserDTO newUserDto() {
         return new UserDTO()
-                .setRoles(Role.USER, Role.ADMIN)
+                .setRoles(asSet(Role.USER, Role.ADMIN))
                 .setEnabled(true)
                 .setPassword("passW")
                 .setUsername("userN");
