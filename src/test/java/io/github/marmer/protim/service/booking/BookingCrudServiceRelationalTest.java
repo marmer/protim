@@ -18,13 +18,12 @@ import org.mockito.quality.Strictness;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
 import static io.github.marmer.protim.persistence.relational.booking.BookingDBOTestdata.newBookingDBO;
 import static io.github.marmer.protim.persistence.relational.booking.BookingDayDBOMatcher.isBookingDayDBO;
+import static io.github.marmer.protim.service.Converter.asList;
 import static io.github.marmer.protim.service.booking.BookingDayMatcher.isBookingDay;
 import static io.github.marmer.protim.service.booking.BookingTestdata.newBooking;
 import static java.util.Collections.emptyList;
@@ -314,9 +313,6 @@ public class BookingCrudServiceRelationalTest {
         verifyNoMoreInteractions(bookingDayRepository);
     }
 
-    private <T> List<T> asList(final T... elements) {
-        return new ArrayList<>(Arrays.asList(elements));
-    }
 
     private BookingDay newBookingDay() {
         return BookingDay.builder()

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Converter class to convert objects from one type to another.
@@ -14,6 +15,18 @@ import java.util.stream.Collectors;
  */
 @FunctionalInterface
 public interface Converter<S, D> {
+    static <T> List<T> asList(final T... values) {
+        return values == null
+                ? null
+                : Stream.of(values).collect(Collectors.toList());
+    }
+
+    static <T> Set<T> asSet(final T... values) {
+        return values == null
+                ? null
+                : Stream.of(values).collect(Collectors.toSet());
+    }
+
     /**
      * Converts the an object from the given type into another.
      *

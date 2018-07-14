@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static io.github.marmer.protim.persistence.relational.booking.BookingDayDBOMatcher.isBookingDayDBO;
-import static java.util.Arrays.asList;
+import static io.github.marmer.protim.service.Converter.asList;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;

@@ -6,7 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static java.util.Arrays.asList;
+import static io.github.marmer.protim.service.Converter.asList;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 
@@ -68,5 +68,55 @@ public class ConverterTest {
 
         // Assertion
         assertThat(converted, is(nullValue()));
+    }
+
+    @Test
+    public void testAsList_ArrayGiven_ShouldReturnAModifiableList()
+            throws Exception {
+        // Preparation
+
+        // Execution
+        final List<Integer> result = Converter.asList(3, 4, 5);
+        result.add(6);
+
+        // Assertion
+        assertThat(result, contains(3, 4, 5, 6));
+    }
+
+    @Test
+    public void testAsList_NullGiven_ShouldReturnAModifiableList()
+            throws Exception {
+        // Preparation
+
+        // Execution
+        final List<Integer> result = Converter.asList(null);
+
+        // Assertion
+        assertThat(result, is(nullValue()));
+    }
+
+    @Test
+    public void testAsSet_ArrayGiven_ShouldReturnAModifiableSet()
+            throws Exception {
+        // Preparation
+
+        // Execution
+        final Set<Integer> result = Converter.asSet(3, 4, 5);
+        result.add(6);
+
+        // Assertion
+        assertThat(result, containsInAnyOrder(3, 4, 5, 6));
+    }
+
+    @Test
+    public void testAsSet_NullGiven_ShouldReturnAModifiableSet()
+            throws Exception {
+        // Preparation
+
+        // Execution
+        final Set<Integer> result = Converter.asSet(null);
+
+        // Assertion
+        assertThat(result, is(nullValue()));
     }
 }

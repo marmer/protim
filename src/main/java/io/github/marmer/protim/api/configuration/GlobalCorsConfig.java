@@ -5,7 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.util.List;
 
-import static java.util.Arrays.asList;
+import static io.github.marmer.protim.service.Converter.asList;
 
 @ConfigurationProperties("global.cors.config")
 @Data
