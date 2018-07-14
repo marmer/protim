@@ -17,7 +17,7 @@ public class UserDTOConverterTest {
     @Rule
     public MockitoRule mockito = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
     @InjectMocks
-    private UserDTOConverter underTest;
+    private UserDTOConverterX underTest;
 
     @Test
     public void testConvert_UserGiven_ShouldReturnConverted()
