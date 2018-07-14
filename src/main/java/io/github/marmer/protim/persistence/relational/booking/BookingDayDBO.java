@@ -4,7 +4,17 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Version;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +32,7 @@ public class BookingDayDBO {
     @Basic
     @Column(unique = true, nullable = false)
     private LocalDate day;
-    @JoinColumn(name = "day")
+    @JoinColumn(name = "fk_day")
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
     private List<BookingDBO> bookings = new ArrayList<>();
     @Version

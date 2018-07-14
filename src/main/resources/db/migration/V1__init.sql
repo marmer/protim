@@ -6,7 +6,7 @@ create table booking_days (
 
 create table bookings (
   id          bigserial primary key,
-  day         BIGINT references booking_days (id),
+  fk_day         BIGINT references booking_days (id),
   start_time  time,
   duration    time,
   description varchar,
@@ -25,7 +25,7 @@ create table users (
 
 create table roles (
   id      bigserial primary key,
-  user    bigint references users (id),
+  fk_user    bigint references users (id),
   name    varchar,
   version bigint
 );
