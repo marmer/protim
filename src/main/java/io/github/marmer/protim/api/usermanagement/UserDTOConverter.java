@@ -5,7 +5,7 @@ import io.github.marmer.protim.service.usermanagement.User;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserDTOConverterX implements Converter<User, UserDTO> {
+public class UserDTOConverter implements Converter<User, UserDTO> {
     @Override
     public UserDTO convert(final User source) {
         return source == null
