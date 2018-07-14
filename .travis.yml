@@ -5,6 +5,7 @@ services:
 - postgresql
 - docker
 addons:
+  postgresql: "10"
   apt:
     packages:
     - oracle-java8-installer
