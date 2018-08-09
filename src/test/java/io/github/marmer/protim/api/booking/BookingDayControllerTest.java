@@ -65,7 +65,7 @@ public class BookingDayControllerTest {
         when(bookingDayDTOConverter.convert(bookingDay)).thenReturn(new BookingDayDTO().setDay(LocalDate.of(2002, 3, 4)));
 
         // Execution
-        mockMvc.perform(get("/api/day/2012-12-21"))
+        mockMvc.perform(get("/api/v1/day/2012-12-21"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.day", equalTo("2002-03-04")));
     }
@@ -79,7 +79,7 @@ public class BookingDayControllerTest {
         when(bookingsCrudService.getBookingDay(date)).thenReturn(empty());
 
         // Execution
-        mockMvc.perform(get("/api/day/2012-12-21"))
+        mockMvc.perform(get("/api/v1/day/2012-12-21"))
                 .andExpect(status().isNotFound());
     }
 
@@ -87,7 +87,7 @@ public class BookingDayControllerTest {
     public void testGetDay_InvalidDateFormatChosen_ShouldServeStatusNotFound()
             throws Exception {
         // Execution
-        mockMvc.perform(get("/api/day/iReallyAmNoDate"))
+        mockMvc.perform(get("/api/v1/day/iReallyAmNoDate"))
                 .andExpect(status().isNotFound());
     }
 
@@ -101,7 +101,7 @@ public class BookingDayControllerTest {
                         LocalTime.of(15, 30)));
 
         // Execution
-        mockMvc.perform(get("/api/day/2012-12-21/bookings"))
+        mockMvc.perform(get("/api/v1/day/2012-12-21/bookings"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.startTimes", contains("10:15", "15:30")));
     }
@@ -119,7 +119,7 @@ public class BookingDayControllerTest {
         when(bookingDTOConverter.convert(booking)).thenReturn(bookingDTO);
 
         // Execution
-        mockMvc.perform(get("/api/day/2012-12-21/bookings/{startTime}", "07:13"))
+        mockMvc.perform(get("/api/v1/day/2012-12-21/bookings/{startTime}", "07:13"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.description", is("Whoop Whoop")));
     }
@@ -136,7 +136,7 @@ public class BookingDayControllerTest {
         final BookingDTO bookingDTO = new BookingDTO().setDescription("Whoop Whoop");
 
         // Execution
-        mockMvc.perform(get("/api/day/2012-12-21/bookings/{startTime}", "07:13"))
+        mockMvc.perform(get("/api/v1/day/2012-12-21/bookings/{startTime}", "07:13"))
                 .andExpect(status().isNotFound());
     }
 
@@ -152,7 +152,7 @@ public class BookingDayControllerTest {
 
         // Execution
         mockMvc.perform(
-                put("/api/day/{day}/bookings/", day)
+                put("/api/v1/day/{day}/bookings/", day)
                         .with(csrf().asHeader())
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content("{\n" +
@@ -184,7 +184,7 @@ public class BookingDayControllerTest {
 
         // Execution
         mockMvc.perform(
-                put("/api/day/{day}/bookings/{oldStartTime}", day, oldStartTime)
+                put("/api/v1/day/{day}/bookings/{oldStartTime}", day, oldStartTime)
                         .with(csrf().asHeader())
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content("{\n" +
@@ -210,7 +210,7 @@ public class BookingDayControllerTest {
 
         // Execution
         mockMvc.perform(
-                delete("/api/day/{day}/bookings/{startTime}", day, startTime)
+                delete("/api/v1/day/{day}/bookings/{startTime}", day, startTime)
                         .with(csrf().asHeader()))
                 .andExpect(status().isNoContent());
 

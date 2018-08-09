@@ -5,7 +5,12 @@ import io.github.marmer.protim.service.usermanagement.User;
 import io.github.marmer.protim.service.usermanagement.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -14,7 +19,7 @@ import java.net.URISyntaxException;
 @RequestMapping(UserController.BASE_URL)
 @RequiredArgsConstructor
 public class UserController {
-    static final String BASE_URL = "/api/usermanagement/users";
+    static final String BASE_URL = "/api/v1/usermanagement/users";
 
     private final Converter<UserDTO, User> userConverter;
     private final UserService userService;

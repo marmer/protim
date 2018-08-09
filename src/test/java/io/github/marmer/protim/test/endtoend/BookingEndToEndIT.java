@@ -64,7 +64,7 @@ public class BookingEndToEndIT {
                         .setDay(LocalDate.of(1985, Month.JANUARY, 3)));
 
         // Execution
-        mockMvc.perform(get("/api/day/1985-01-02"))
+        mockMvc.perform(get("/api/v1/day/1985-01-02"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.day", equalTo("1985-01-02")));
@@ -88,7 +88,7 @@ public class BookingEndToEndIT {
                                 .setDescription("theOtherBooking"))));
 
         // Execution
-        mockMvc.perform(get("/api/day/1985-01-02/bookings"))
+        mockMvc.perform(get("/api/v1/day/1985-01-02/bookings"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.startTimes", contains(
@@ -117,7 +117,7 @@ public class BookingEndToEndIT {
                         .setBookings(asList(booking1, booking2, booking3)));
 
         // Execution
-        mockMvc.perform(get("/api/day/1985-01-02/bookings/{startTime}", "18:45"))
+        mockMvc.perform(get("/api/v1/day/1985-01-02/bookings/{startTime}", "18:45"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.description", is("right")));
@@ -132,7 +132,7 @@ public class BookingEndToEndIT {
 
         // Execution
         mockMvc.perform(
-                put("/api/day/{day}/bookings/", day, startTime)
+                put("/api/v1/day/{day}/bookings/", day, startTime)
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content("{\n" +
                                 "    \"startTime\": \"16:00\",\n" +
@@ -169,7 +169,7 @@ public class BookingEndToEndIT {
 
         // Execution
         mockMvc.perform(
-                put("/api/day/{day}/bookings/", day, startTime)
+                put("/api/v1/day/{day}/bookings/", day, startTime)
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content("{\n" +
                                 "    \"startTime\": \"16:00\",\n" +
@@ -206,7 +206,7 @@ public class BookingEndToEndIT {
 
         // Execution
         mockMvc.perform(
-                put("/api/day/{day}/bookings/{startTime}", day, startTime)
+                put("/api/v1/day/{day}/bookings/{startTime}", day, startTime)
                         .contentType(MediaType.APPLICATION_JSON_UTF8)
                         .content("{\n" +
                                 "    \"startTime\": \"16:00\",\n" +
@@ -249,7 +249,7 @@ public class BookingEndToEndIT {
 
         // Execution
         mockMvc.perform(
-                delete("/api/day/{day}/bookings/{startTimeToRemove}", day, startTimeToRemove))
+                delete("/api/v1/day/{day}/bookings/{startTimeToRemove}", day, startTimeToRemove))
                 .andExpect(status().isNoContent());
 
         // Assertion

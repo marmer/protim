@@ -43,8 +43,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll().and()
                 .authorizeRequests()
                 .requestMatchers(toAnyEndpoint()).hasRole(Role.ADMIN.name())
-                .antMatchers("/api/usermanagement/**").hasRole(Role.ADMIN.name())
-                .antMatchers("/api/day/**").hasRole(Role.USER.name())
+                .antMatchers("/api/v*/usermanagement/**").hasRole(Role.ADMIN.name())
+                .antMatchers("/api/v*/day/**").hasRole(Role.USER.name())
                 .antMatchers("/*").permitAll()
                 .antMatchers("/**").denyAll().and()
                 .httpBasic().realmName("protim");

@@ -73,12 +73,12 @@ public class UserControllerTest {
         when(userConverter.convert(eq(userDto))).thenReturn(user);
 
         // Execution
-        mockMvc.perform(put("/api/usermanagement/users")
+        mockMvc.perform(put("/api/v1/usermanagement/users")
                 .with(csrf().asHeader())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json.write(userDto).getJson()))
                 .andExpect(status().isCreated())
-                .andExpect(header().string(HttpHeaders.LOCATION, "/api/usermanagement/users/Jim"));
+                .andExpect(header().string(HttpHeaders.LOCATION, "/api/v1/usermanagement/users/Jim"));
 
         // Assertion
         verify(userService).addUser(user);
@@ -100,7 +100,7 @@ public class UserControllerTest {
         doThrow(exception).when(userService).addUser(user);
 
         // Execution
-        mockMvc.perform(put("/api/usermanagement/users")
+        mockMvc.perform(put("/api/v1/usermanagement/users")
                 .with(csrf().asHeader())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(json.write(userDto).getJson()))
@@ -123,7 +123,7 @@ public class UserControllerTest {
         when(userDtoConverter.convert(user)).thenReturn(userDto);
 
         // Execution
-        mockMvc.perform(get("/api/usermanagement/users/Jack"))
+        mockMvc.perform(get("/api/v1/usermanagement/users/Jack"))
                 // Assertion
                 .andExpect(status().isOk())
                 .andExpect(content().json(json.write(userDto).getJson()));
@@ -137,7 +137,7 @@ public class UserControllerTest {
         when(userService.getUser("Jack")).thenReturn(Optional.empty());
 
         // Execution
-        mockMvc.perform(get("/api/usermanagement/users/Jack"))
+        mockMvc.perform(get("/api/v1/usermanagement/users/Jack"))
                 // Assertion
                 .andExpect(status().isNotFound());
     }
