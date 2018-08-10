@@ -82,7 +82,7 @@ public class UsermanagementEndToEndIT {
         assertThat(entityManager.findAllOf(UserDBO.class), contains(isUserDBO()
                 .withId(is(notNullValue()))
                 .withUsername("Jim")
-                .withPassword(matchesBCryptEncoded("JTKirk"))
+                .withPassword(matchesBCryptEncodedAndPraefixedPassword("JTKirk"))
                 .withRoles(containsInAnyOrder(
                         isRoleDBO()
                                 .withName(Role.ADMIN),
@@ -94,11 +94,19 @@ public class UsermanagementEndToEndIT {
 
     }
 
-    private Matcher<String> matchesBCryptEncoded(final String password) {
+    private Matcher<String> matchesBCryptEncodedAndPraefixedPassword(final String password) {
         return new TypeSafeMatcher<String>() {
             @Override
             protected boolean matchesSafely(final String encodedPassword) {
-                return new BCryptPasswordEncoder().matches(password, encodedPassword);
+                if (!isPrefixed(encodedPassword)) {
+                    return false;
+                } else {
+                    return new BCryptPasswordEncoder().matches(password, encodedPassword.replaceFirst("\\{bcrypt}", ""));
+                }
+            }
+
+            private boolean isPrefixed(final String encodedPassword) {
+                return encodedPassword.startsWith("{bcrypt}");
             }
 
             @Override

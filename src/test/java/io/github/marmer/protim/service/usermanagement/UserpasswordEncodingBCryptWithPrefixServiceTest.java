@@ -16,12 +16,12 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
-public class UserpasswordEncodingBCryptServiceTest {
+public class UserpasswordEncodingBCryptWithPrefixServiceTest {
     @Rule
     public MockitoRule mockito = MockitoJUnit.rule().strictness(Strictness.STRICT_STUBS);
 
     @InjectMocks
-    private UserpasswordEncodingBCryptService underTest;
+    private UserpasswordEncodingBCryptWithPrefixService underTest;
 
     @Test
     public void testGetWithEncodedPassword_UserWithCleartextPasswordGiven_ShouldEncodePassword()
@@ -34,7 +34,7 @@ public class UserpasswordEncodingBCryptServiceTest {
         final User result = underTest.getWithEncodedPassword(user);
 
         // Assertion
-        assertThat(result, isUser().withPassword(matchesBCryptEncoded(cleartextPassword)));
+        assertThat(result, isUser().withPassword(matchesBCryptEncodedAndPraefixedPassword(cleartextPassword)));
     }
 
     @Test
@@ -49,11 +49,19 @@ public class UserpasswordEncodingBCryptServiceTest {
         assertThat(result, is(nullValue()));
     }
 
-    private Matcher<String> matchesBCryptEncoded(final String password) {
+    private Matcher<String> matchesBCryptEncodedAndPraefixedPassword(final String password) {
         return new TypeSafeMatcher<String>() {
             @Override
             protected boolean matchesSafely(final String encodedPassword) {
-                return new BCryptPasswordEncoder().matches(password, encodedPassword);
+                if (!isPrefixed(encodedPassword)) {
+                    return false;
+                } else {
+                    return new BCryptPasswordEncoder().matches(password, encodedPassword.replaceFirst("\\{bcrypt}", ""));
+                }
+            }
+
+            private boolean isPrefixed(final String encodedPassword) {
+                return encodedPassword.startsWith("{bcrypt}");
             }
 
             @Override
