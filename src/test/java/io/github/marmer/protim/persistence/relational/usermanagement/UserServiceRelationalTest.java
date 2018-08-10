@@ -3,6 +3,7 @@ package io.github.marmer.protim.persistence.relational.usermanagement;
 import io.github.marmer.protim.service.Converter;
 import io.github.marmer.protim.service.exception.RessourceConflictException;
 import io.github.marmer.protim.service.usermanagement.User;
+import io.github.marmer.protim.service.usermanagement.UserpasswordEncodingService;
 import org.hamcrest.Description;
 import org.hamcrest.Matcher;
 import org.hamcrest.TypeSafeMatcher;
@@ -36,10 +37,11 @@ public class UserServiceRelationalTest {
     private UserRepository userDBORepository;
     @Mock
     private Converter<UserDBO, User> userConverter;
-
+    @Mock
+    private UserpasswordEncodingService userpasswordEncodingService;
     @Before
     public void setUp() throws Exception {
-        underTest = new UserServiceRelational(userDBOConverter, userDBORepository, userConverter);
+        underTest = new UserServiceRelational(userDBOConverter, userDBORepository, userConverter, userpasswordEncodingService);
     }
 
     @Test
@@ -47,8 +49,11 @@ public class UserServiceRelationalTest {
             throws Exception {
         // Preparation
         final User user = newUser().username("me").build();
+        final User userWithEncodedPassword = newUser().username("encodedMe").build();
+
         final UserDBO dbo = mock(UserDBO.class);
-        when(userDBOConverter.convert(user)).thenReturn(dbo);
+        when(userpasswordEncodingService.getWithEncodedPassword(user)).thenReturn(userWithEncodedPassword);
+        when(userDBOConverter.convert(userWithEncodedPassword)).thenReturn(dbo);
         when(userDBORepository.existsByUsername(user.getUsername())).thenReturn(false);
 
         // Execution
@@ -64,7 +69,6 @@ public class UserServiceRelationalTest {
         // Preparation
         final User user = newUser().username("me").build();
         final UserDBO dbo = mock(UserDBO.class);
-        when(userDBOConverter.convert(user)).thenReturn(dbo);
         when(userDBORepository.existsByUsername(user.getUsername())).thenReturn(true);
 
         // Execution

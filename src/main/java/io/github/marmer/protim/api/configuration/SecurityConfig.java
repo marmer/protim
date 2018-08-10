@@ -79,11 +79,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public UserDetailsService userDetailsService( /* TODO inject repo instead*/final PasswordEncoder pwEncoder) {
         return username -> {
             switch (username) {
-                case "USER":
+                case "user":
                     return new User(username,
                             pwEncoder.encode("user123"),
                             Collections.singleton(new SimpleGrantedAuthority("ROLE_" + Role.USER)));
-                case "ADMIN":
+                case "admin":
                     return new User(username,
                             pwEncoder.encode("admin123"),
                             Collections.singleton(new SimpleGrantedAuthority("ROLE_" + Role.ADMIN)));

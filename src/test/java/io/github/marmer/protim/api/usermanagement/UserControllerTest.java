@@ -131,7 +131,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testGetUser_UserDoesNotExist_ShouldReturnUser()
+    public void testGetUser_UserDoesNotExist_ShouldStatusForNotFound()
             throws Exception {
         // Preparation
         when(userService.getUser("Jack")).thenReturn(Optional.empty());

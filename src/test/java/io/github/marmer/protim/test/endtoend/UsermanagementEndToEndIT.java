@@ -5,6 +5,9 @@ import io.github.marmer.protim.persistence.relational.usermanagement.RoleDBO;
 import io.github.marmer.protim.persistence.relational.usermanagement.UserDBO;
 import io.github.marmer.protim.test.DbCleanupService;
 import io.github.marmer.protim.test.TransactionlessTestEntityManager;
+import org.hamcrest.Description;
+import org.hamcrest.Matcher;
+import org.hamcrest.TypeSafeMatcher;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -14,6 +17,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.rules.SpringClassRule;
 import org.springframework.test.context.junit4.rules.SpringMethodRule;
@@ -57,7 +61,6 @@ public class UsermanagementEndToEndIT {
     public void testPutUser_UserDoesNotExistYet_UserShouldExistNow()
             throws Exception {
         // Preparation
-        final String username = "Jim";
 
         // Execution
         mockMvc.perform(
@@ -78,8 +81,8 @@ public class UsermanagementEndToEndIT {
         // Expectation
         assertThat(entityManager.findAllOf(UserDBO.class), contains(isUserDBO()
                 .withId(is(notNullValue()))
-                .withUsername(username)
-                .withPassword("JTKirk")
+                .withUsername("Jim")
+                .withPassword(matchesBCryptEncoded("JTKirk"))
                 .withRoles(containsInAnyOrder(
                         isRoleDBO()
                                 .withName(Role.ADMIN),
@@ -89,6 +92,20 @@ public class UsermanagementEndToEndIT {
                 .withVersion(is(notNullValue()))
         ));
 
+    }
+
+    private Matcher<String> matchesBCryptEncoded(final String password) {
+        return new TypeSafeMatcher<String>() {
+            @Override
+            protected boolean matchesSafely(final String encodedPassword) {
+                return new BCryptPasswordEncoder().matches(password, encodedPassword);
+            }
+
+            @Override
+            public void describeTo(final Description description) {
+                description.appendText("A BCrypt encrypted Version of ").appendValue(password);
+            }
+        };
     }
 
     @Test
