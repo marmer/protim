@@ -13,4 +13,14 @@
     <module>protim-server</module>
     <!--<module>protim-webclient</module>-->
 </modules>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>0.7.9</version>
+            </plugin>
+        </plugins>
+    </build>
 </project>
