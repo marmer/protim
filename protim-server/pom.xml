@@ -8,7 +8,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>protim</name>
+    <name>protim-server</name>
     <description>A tool to manage your production time</description>
 
 
