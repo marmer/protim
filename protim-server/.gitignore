@@ -40,3 +40,9 @@ dist/
 nbdist/
 .nb-gradle/
 /.README.md.html
+
+node_modules/
+yarn.lock
+package-lock.json
+/src/main/resources/static/js/bundle.js
+/src/main/js/public/bundle.js
