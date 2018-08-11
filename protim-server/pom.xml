@@ -196,57 +196,6 @@
                     <reuseForks>true</reuseForks>
                 </configuration>
             </plugin>
-            <!--<plugin>-->
-                <!--<groupId>com.github.eirslett</groupId>-->
-                <!--<artifactId>frontend-maven-plugin</artifactId>-->
-                <!--<version>1.2</version>-->
-                <!--<configuration>-->
-                    <!--<installDirectory>${java.io.tmpdir}/nodebin</installDirectory>-->
-                    <!--<workingDirectory>${project.basedir}/src/main/js</workingDirectory>-->
-                    <!--<environmentVariables>-->
-                        <!--<NODE_ENV>development</NODE_ENV>-->
-                        <!--<BABEL_ENV>development</BABEL_ENV>-->
-                        <!--<CI>true</CI>-->
-                    <!--</environmentVariables>-->
-                <!--</configuration>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>install node and npm</id>-->
-                        <!--<goals>-->
-                            <!--<goal>install-node-and-npm</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<nodeVersion>v8.10.0</nodeVersion>-->
-                            <!--<npmVersion>5.6.0</npmVersion>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                    <!--<execution>-->
-                        <!--<id>npm install</id>-->
-                        <!--<goals>-->
-                            <!--<goal>npm</goal>-->
-                        <!--</goals>-->
-                        <!--<configuration>-->
-                            <!--<arguments>install</arguments>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                    <!--<execution>-->
-                        <!--<id>npm test</id>-->
-                        <!--<goals>-->
-                            <!--<goal>npm</goal>-->
-                        <!--</goals>-->
-                        <!--<phase>test</phase>-->
-                        <!--<configuration>-->
-                            <!--<arguments>test</arguments>-->
-                        <!--</configuration>-->
-                    <!--</execution>-->
-                    <!--<execution>-->
-                        <!--<id>webpack build</id>-->
-                        <!--<goals>-->
-                            <!--<goal>webpack</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
             <plugin>
                 <artifactId>maven-clean-plugin</artifactId>
                 <version>3.0.0</version>
@@ -270,33 +219,6 @@
                     </filesets>
                 </configuration>
             </plugin>
-            <!--<plugin>-->
-                <!--<groupId>com.spotify</groupId>-->
-                <!--<artifactId>docker-maven-plugin</artifactId>-->
-                <!--<version>1.1.1</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<id>build-image</id>-->
-                        <!--<phase>package</phase>-->
-                        <!--<goals>-->
-                            <!--<goal>build</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-                <!--<configuration>-->
-                    <!--<imageName>${project.name}</imageName>-->
-                    <!--<baseImage>openjdk:8-alpine</baseImage>-->
-                    <!--<workdir>/${project.name}</workdir>-->
-                    <!--<entryPoint>["java", "-jar", "${project.build.finalName}.jar"]</entryPoint>-->
-                    <!--<resources>-->
-                        <!--<resource>-->
-                            <!--<targetPath>/${project.name}</targetPath>-->
-                            <!--<directory>${project.build.directory}</directory>-->
-                            <!--<include>${project.build.finalName}.jar</include>-->
-                        <!--</resource>-->
-                    <!--</resources>-->
-                <!--</configuration>-->
-            <!--</plugin>-->
         </plugins>
     </build>
 

@@ -11,9 +11,8 @@
 
     <modules>
         <module>protim-server</module> <!--  -->
-        <!--<module>protim-client-web-react</module>-->
-        <!--<module>protim-client-web-plain-with-js</module>-->
-        <!--<module>protim-client-desktop-swing</module>-->
-        <!--<module>protim-client-mobile-android</module>-->
+        <module>protim-client-web</module>
+        <!--<module>protim-client-desktop</module>-->
+        <!--<module>protim-client-mobile</module>-->
     </modules>
 </project>
