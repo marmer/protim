@@ -1,14 +1,13 @@
-import * as React from 'react';
-import {BookingDayView} from './BookingDayView';
-import {SystemTimeService} from '../service/SystemTimeService';
-import {DateTimeService} from '../service/DateTimeService';
 import * as moment from 'moment';
+import * as React from 'react';
+import {DateTimeService} from '../service/DateTimeService';
+import {SystemTimeService} from '../service/SystemTimeService';
+import {BookingDayView} from './BookingDayView';
 
-export class TimeManagement {
-    public bookingDay: Date;
+export interface TimeManagement {
+    bookingDay: Date;
 
 }
-
 export interface TimeManagementViewProps {
 }
 

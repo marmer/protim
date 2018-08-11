@@ -1,67 +1,98 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://maven.apache.org/POM/4.0.0"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>io.github.marmer.protim</groupId>
     <artifactId>protim-client-web</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-<build>
-    <plugins>
+    <build>
+        <plugins>
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>${project.basedir}/src/main/js/public</directory>
+                            <includes>
+                                <include>bundle.js</include>
+                            </includes>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                        <fileset>
+                            <directory>${project.basedir}</directory>
+                            <includes>
+                                <include>package-lock.json</include>
+                                <include>yarn.lock</include>
+                                <include>yarn-error.log</include>
+                            </includes>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                        <fileset>
+                            <directory>${project.basedir}/build</directory>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.github.eirslett</groupId>
+                <artifactId>frontend-maven-plugin</artifactId>
+                <version>1.6</version>
+                <configuration>
+                    <installDirectory>${java.io.tmpdir}/nodebin</installDirectory>
+                    <workingDirectory>${project.basedir}/src</workingDirectory>
+                    <environmentVariables>
+                        <NODE_ENV>development</NODE_ENV>
+                        <BABEL_ENV>development</BABEL_ENV>
+                        <CI>true</CI>
+                    </environmentVariables>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>install node and npm</id>
+                        <goals>
+                            <goal>install-node-and-yarn</goal>
+                        </goals>
+                        <configuration>
+                            <nodeVersion>v8.10.0</nodeVersion>
+                            <yarnVersion>v1.9.4</yarnVersion>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>npm install</id>
+                        <goals>
+                            <goal>yarn</goal>
+                        </goals>
+                        <configuration>
+                            <arguments>install</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>npm test</id>
+                        <goals>
+                            <goal>yarn</goal>
+                        </goals>
+                        <phase>test</phase>
+                        <configuration>
+                            <arguments>test</arguments>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>yarn build</id>
+                        <goals>
+                            <goal>yarn</goal>
+                        </goals>
+                        <phase>install</phase>
+                        <configuration>
+                            <arguments>build</arguments>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
 
-        <!--<plugin>-->
-        <!--<groupId>com.github.eirslett</groupId>-->
-        <!--<artifactId>frontend-maven-plugin</artifactId>-->
-        <!--<version>1.2</version>-->
-        <!--<configuration>-->
-        <!--<installDirectory>${java.io.tmpdir}/nodebin</installDirectory>-->
-        <!--<workingDirectory>${project.basedir}/src/main/js</workingDirectory>-->
-        <!--<environmentVariables>-->
-        <!--<NODE_ENV>development</NODE_ENV>-->
-        <!--<BABEL_ENV>development</BABEL_ENV>-->
-        <!--<CI>true</CI>-->
-        <!--</environmentVariables>-->
-        <!--</configuration>-->
-        <!--<executions>-->
-        <!--<execution>-->
-        <!--<id>install node and npm</id>-->
-        <!--<goals>-->
-        <!--<goal>install-node-and-npm</goal>-->
-        <!--</goals>-->
-        <!--<configuration>-->
-        <!--<nodeVersion>v8.10.0</nodeVersion>-->
-        <!--<npmVersion>5.6.0</npmVersion>-->
-        <!--</configuration>-->
-        <!--</execution>-->
-        <!--<execution>-->
-        <!--<id>npm install</id>-->
-        <!--<goals>-->
-        <!--<goal>npm</goal>-->
-        <!--</goals>-->
-        <!--<configuration>-->
-        <!--<arguments>install</arguments>-->
-        <!--</configuration>-->
-        <!--</execution>-->
-        <!--<execution>-->
-        <!--<id>npm test</id>-->
-        <!--<goals>-->
-        <!--<goal>npm</goal>-->
-        <!--</goals>-->
-        <!--<phase>test</phase>-->
-        <!--<configuration>-->
-        <!--<arguments>test</arguments>-->
-        <!--</configuration>-->
-        <!--</execution>-->
-        <!--<execution>-->
-        <!--<id>webpack build</id>-->
-        <!--<goals>-->
-        <!--<goal>webpack</goal>-->
-        <!--</goals>-->
-        <!--</execution>-->
-        <!--</executions>-->
-        <!--</plugin>-->
-    </plugins>
-</build>
-    
 </project>

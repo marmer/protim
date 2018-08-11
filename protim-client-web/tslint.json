@@ -1,8 +1,21 @@
 {
   "extends": [
-    "tslint-react"
+    "tslint:recommended",
+    "tslint-react",
+    "tslint-config-prettier"
   ],
+  "linterOptions": {
+    "exclude": [
+      "config/**/*.js",
+      "node_modules/**/*.ts",
+      "coverage/lcov-report/*.js"
+    ]
+  },
   "rules": {
+    "member-access": [
+      false
+    ],
+    "no-empty-interface": false,
     "align": [
       true,
       "parameters",
@@ -83,7 +96,7 @@
     "radix": true,
     "semicolon": [
       true,
-      "always"
+      "never"
     ],
     "switch-default": true,
     "trailing-comma": [

@@ -196,29 +196,6 @@
                     <reuseForks>true</reuseForks>
                 </configuration>
             </plugin>
-            <plugin>
-                <artifactId>maven-clean-plugin</artifactId>
-                <version>3.0.0</version>
-                <configuration>
-                    <filesets>
-                        <fileset>
-                            <directory>${project.basedir}/src/main/js/public</directory>
-                            <includes>
-                                <include>bundle.js</include>
-                            </includes>
-                            <followSymlinks>false</followSymlinks>
-                        </fileset>
-                        <fileset>
-                            <directory>${project.basedir}/src/main/js</directory>
-                            <includes>
-                                <include>package-lock.json</include>
-                                <include>yarn.lock</include>
-                            </includes>
-                            <followSymlinks>false</followSymlinks>
-                        </fileset>
-                    </filesets>
-                </configuration>
-            </plugin>
         </plugins>
     </build>
 
