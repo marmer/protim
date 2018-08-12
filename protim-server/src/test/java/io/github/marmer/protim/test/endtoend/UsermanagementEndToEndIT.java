@@ -18,6 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.rules.SpringClassRule;
 import org.springframework.test.context.junit4.rules.SpringMethodRule;
@@ -172,6 +173,42 @@ public class UsermanagementEndToEndIT {
                         "  ],\n" +
                         "  \"enabled\": true\n" +
                         "}"));
+    }
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    public void testTryingToGetAccess_CurrentUserIsAdmin_AccessShuoldBeGranted()
+            throws Exception {
+        // Preparation
+
+        // Execution
+        mockMvc.perform(get("/api/v1/usermanagement/"))
+                .andExpect(status().isNotFound());
+
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    public void testTryingToGetAccess_CurrentUserIsNotAdmin_AccessShuoldBeDeniedAsForbidden()
+            throws Exception {
+        // Preparation
+
+        // Execution
+        mockMvc.perform(get("/api/v1/usermanagement/"))
+                .andExpect(status().isForbidden());
+
+    }
+
+    @Test
+    @WithAnonymousUser
+    public void testTryingToGetAccess_CurrentUserIsAnonymous_AccessShuoldBeDeniedAsUnauthorized()
+            throws Exception {
+        // Preparation
+
+        // Execution
+        mockMvc.perform(get("/api/v1/usermanagement/"))
+                .andExpect(status().isUnauthorized());
+
     }
 
     private <T> Set<RoleDBO> asSet(final Role... roles) {
