@@ -184,7 +184,6 @@ public class UsermanagementEndToEndIT {
         // Execution
         mockMvc.perform(get("/api/v1/usermanagement/"))
                 .andExpect(status().isNotFound());
-
     }
 
     @Test
@@ -196,7 +195,6 @@ public class UsermanagementEndToEndIT {
         // Execution
         mockMvc.perform(get("/api/v1/usermanagement/"))
                 .andExpect(status().isForbidden());
-
     }
 
     @Test
@@ -208,7 +206,6 @@ public class UsermanagementEndToEndIT {
         // Execution
         mockMvc.perform(get("/api/v1/usermanagement/"))
                 .andExpect(status().isUnauthorized());
-
     }
 
     private <T> Set<RoleDBO> asSet(final Role... roles) {

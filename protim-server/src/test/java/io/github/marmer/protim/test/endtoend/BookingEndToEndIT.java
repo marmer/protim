@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.rules.SpringClassRule;
 import org.springframework.test.context.junit4.rules.SpringMethodRule;
@@ -261,5 +262,38 @@ public class BookingEndToEndIT {
                                 .withDescription("watching football")))));
     }
 
+
+    @Test
+    @WithMockUser(roles = "ADMIN")
+    public void testTryingToGetAccess_CurrentUserIsAdmin_AccessShuoldBeDenied()
+            throws Exception {
+        // Preparation
+
+        // Execution
+        mockMvc.perform(get("/api/v1/day/"))
+                .andExpect(status().isForbidden());
+    }
+
+    @Test
+    @WithMockUser(roles = "USER")
+    public void testTryingToGetAccess_CurrentUserIsNotAdmin_AccessShuoldBeGranted()
+            throws Exception {
+        // Preparation
+
+        // Execution
+        mockMvc.perform(get("/api/v1/day/"))
+                .andExpect(status().isNotFound());
+    }
+
+    @Test
+    @WithAnonymousUser
+    public void testTryingToGetAccess_CurrentUserIsAnonymous_AccessShuoldBeDeniedAsUnauthorized()
+            throws Exception {
+        // Preparation
+
+        // Execution
+        mockMvc.perform(get("/api/v1/day/"))
+                .andExpect(status().isUnauthorized());
+    }
 
 }
