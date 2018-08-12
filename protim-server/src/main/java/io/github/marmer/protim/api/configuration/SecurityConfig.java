@@ -7,10 +7,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.DelegatingPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -22,7 +18,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -73,24 +68,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean
     protected GlobalCorsConfig corsConfig() {
         return new GlobalCorsConfig();
-    }
-
-    @Bean
-    public UserDetailsService userDetailsService( /* TODO inject repo instead*/final PasswordEncoder pwEncoder) {
-        return username -> {
-            switch (username) {
-                case "user":
-                    return new User(username,
-                            pwEncoder.encode("user123"),
-                            Collections.singleton(new SimpleGrantedAuthority("ROLE_" + Role.USER)));
-                case "admin":
-                    return new User(username,
-                            pwEncoder.encode("admin123"),
-                            Collections.singleton(new SimpleGrantedAuthority("ROLE_" + Role.ADMIN)));
-                default:
-                    throw new UsernameNotFoundException(username);
-            }
-        };
     }
 
     @Bean
