@@ -4,7 +4,6 @@ import io.github.marmer.protim.api.configuration.Role;
 import io.github.marmer.protim.service.usermanagement.User;
 import io.github.marmer.protim.service.usermanagement.UserService;
 import io.github.marmer.protim.test.DbCleanupService;
-import io.github.marmer.protim.test.TransactionlessTestEntityManager;
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
@@ -35,8 +34,6 @@ public class AuthorizationEndToEndIT {
     private MockMvc mockMvc;
     @Autowired
     private DbCleanupService dbCleanupService;
-    @Autowired
-    private TransactionlessTestEntityManager entityManager;
 
     @Autowired
     private UserService userService;
