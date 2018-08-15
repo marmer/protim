@@ -29,3 +29,6 @@ create table roles (
   name    varchar,
   version bigint
 );
+
+insert into users (username, password, enabled, version)
+values ('admin','jdbc:h2:file:~/protim_db',true,0);
