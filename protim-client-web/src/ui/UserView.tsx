@@ -18,15 +18,6 @@ export class UserView extends React.Component<UsermanagementViewProps, Usermanag
         };
         RestClient.getJson("https://localhost/api/v1/usermanagement/users/admin")
             .then(value => this.setState({user: value}));
-
-        this.sleep(1500).then(() => {
-            // TODO: marmer 15.08.2018 load user from props
-            const u = new User();
-            u.username = "hundekuchen";
-            this.setState({
-                user: u
-            });
-        });
     }
 
     sleep(time: number) {
