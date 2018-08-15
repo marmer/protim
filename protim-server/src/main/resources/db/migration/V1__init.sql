@@ -30,5 +30,8 @@ create table roles (
   version  bigint
 );
 
-insert into users (username, password, enabled, version)
-values ('admin','jdbc:h2:file:~/protim_db',true,0);
+insert into users (id,username, password, enabled, version)
+values (-1,'admin','{noop}admin123',true,0);
+
+insert into roles (fk_user, name, version)
+values (-1,'ADMIN',0)

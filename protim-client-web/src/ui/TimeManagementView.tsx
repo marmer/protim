@@ -4,14 +4,14 @@ import {DateTimeService} from '../service/DateTimeService';
 import {SystemTimeService} from '../service/SystemTimeService';
 import {BookingDayView} from './BookingDayView';
 
-export interface TimeManagement {
+export interface TimeManagementViewState {
     bookingDay: Date;
 
 }
 export interface TimeManagementViewProps {
 }
 
-export class TimeManagementView extends React.Component<TimeManagementViewProps, TimeManagement> {
+export class TimeManagementView extends React.Component<TimeManagementViewProps, TimeManagementViewState> {
     constructor(props: TimeManagementViewProps) {
         super(props);
         this.state = {
