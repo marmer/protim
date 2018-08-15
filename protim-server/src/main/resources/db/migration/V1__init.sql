@@ -24,10 +24,10 @@ create table users (
 );
 
 create table roles (
-  id      bigserial primary key,
-  fk_user    bigint references users (id),
-  name    varchar,
-  version bigint
+  id       bigserial primary key,
+  fk_user  bigint references users (id),
+  name     varchar,
+  version  bigint
 );
 
 insert into users (username, password, enabled, version)
