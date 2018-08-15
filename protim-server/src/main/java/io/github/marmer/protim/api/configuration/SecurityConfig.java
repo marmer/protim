@@ -30,8 +30,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity http) throws Exception {
         http
-                .csrf().disable() // we are stateles (no session or cookies) so it should be fine
                 .cors().and()
+                .csrf().disable() // we are stateles (no session or cookies) so it should be fine
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
                 .logout().deleteCookies("*").invalidateHttpSession(false).clearAuthentication(true)
                 .logoutSuccessHandler(logoutSuccessHandler())
@@ -46,7 +46,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
 
-    protected LogoutSuccessHandler logoutSuccessHandler() {
+    private LogoutSuccessHandler logoutSuccessHandler() {
         return (request, response, authentication) -> response.setStatus(HttpStatus.UNAUTHORIZED.value());
     }
 

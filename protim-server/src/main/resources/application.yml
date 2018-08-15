@@ -38,5 +38,9 @@ global:
     config:
       allowed-origins:
       - https://marmer.online
+      - http://marmer.online
       - https://marmer.github.io
+      - http://marmer.github.io
       - https://localhost
+      - http://localhost
+      - http://localhost:3000

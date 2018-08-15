@@ -1,5 +1,6 @@
 import * as React from 'react';
 import {User} from "../model/usermanagement/User";
+import {RestClient} from "../service/rest/RestClient";
 
 export interface UsermanagementViewState {
     user: User;
@@ -15,6 +16,9 @@ export class UserView extends React.Component<UsermanagementViewProps, Usermanag
         this.state = {
             user: new User()
         };
+        RestClient.getJson("https://localhost/api/v1/usermanagement/users/admin")
+            .then(value => this.setState({user: value}));
+
         this.sleep(1500).then(() => {
             // TODO: marmer 15.08.2018 load user from props
             const u = new User();
@@ -26,6 +30,7 @@ export class UserView extends React.Component<UsermanagementViewProps, Usermanag
     }
 
     sleep(time: number) {
+        // TODO: marmer 15.08.2018 remove me
         return new Promise((resolve) => setTimeout(resolve, time));
     }
 
