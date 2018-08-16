@@ -26,6 +26,24 @@ export class UserView extends React.Component<UsermanagementViewProps, Usermanag
     }
 
     render() {
-        return <div>{this.state.user.username}</div>
+        return <div>
+            <div>
+                <div>
+                    <label title="Username">
+                        <div>{this.state.user.username}</div>
+                    </label>
+                </div>
+                <div>
+                    <label title="Roles">
+                        <div>{this.state.user.roles}</div>
+                    </label>
+                </div>
+                <div>
+                    <label title="Enabled">
+                        <div>{this.state.user.enabled}</div>
+                    </label>
+                </div>
+            </div>
+        </div>
     }
 }
