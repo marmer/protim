@@ -31,7 +31,6 @@ cache:
 before_cache:
 - rm -rfv $HOME/.m2/repository/io/github/marmer/protim
 before_install:
-- . ./install-jdk.sh -F 10 -L BCL
 #  the folowing line is a temporary solution until travis supports the JDK10 and can removed after
 - wget https://github.com/sormuras/bach/raw/master/install-jdk.sh
 - export M2_HOME=$HOME/apache-maven-${MAVEN_VERSION}
@@ -43,6 +42,7 @@ before_script:
   - psql -c "CREATE DATABASE protim_ci_db;" -U postgres
   - psql -c "CREATE USER protim_ci_user WITH PASSWORD 'protim_ci_pw';" -U postgres
 install:
+- . ./install-jdk.sh -F 10 -L BCL
 - mvn clean install -DskipTests=true -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -B -V -U
 script:
 - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -V -U
