@@ -1,5 +1,5 @@
 language: java
-jdk: oraclejdk8
+jdk: oraclejdk10
 sudo: required
 services:
 - postgresql
@@ -8,7 +8,7 @@ addons:
   postgresql: "9.6"
   apt:
     packages:
-    - oracle-java8-installer
+    - oracle-java10-installer
 #    - docker-ce
   sonarcloud:
     organization: "marmer-github"
