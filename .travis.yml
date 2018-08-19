@@ -19,22 +19,12 @@ addons:
 env:
   global:
   - SPRING_DATASOURCE_USERNAME=protim_ci_user SPRING_DATASOURCE_PASSWORD=protim_ci_pw
+  - JDK='Oracle JDK 10'
+  install:
+  - install: . ./install-jdk.sh -F 10 -L BCL
   matrix:
   - SPRING_DATASOURCE_URL=jdbc:h2:file:~/protim_ci_db
   - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/protim_ci_db
-matrix:
-  include:
-  # Java 10 "Oracle JDK"
-  - name: Oracle JDK with h2
-    env:
-    - JDK='Oracle JDK 10'
-    - SPRING_DATASOURCE_URL=jdbc:h2:file:~/protim_ci_db
-      install: . ./install-jdk.sh -F 10 -L BCL
-  - name: Oracle JDK with Postgres
-    env:
-    - JDK='Oracle JDK 10'
-    - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/protim_ci_db
-      install: . ./install-jdk.sh -F 10 -L BCL
 cache:
   directories:
   - "$HOME/.m2/repository"
