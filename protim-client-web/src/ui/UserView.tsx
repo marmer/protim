@@ -26,24 +26,38 @@ export class UserView extends React.Component<UsermanagementViewProps, Usermanag
     }
 
     render() {
-        return <div>
-            <div>
-                <div>
-                    <label title="Username">
-                        <div>{this.state.user.username}</div>
-                    </label>
-                </div>
-                <div>
-                    <label title="Roles">
-                        <div>{this.state.user.roles}</div>
-                    </label>
-                </div>
-                <div>
-                    <label title="Enabled">
-                        <div>{this.state.user.enabled}</div>
-                    </label>
+        return <div className="card">
+            <div className="card-body">
+                <h5 className="card-title">
+                    <span className="text-muted">User</span>
+                </h5>
+                <ul className="list-group">
+                    <li className="list-group-item">
+                        <label title="Username">
+                            <h6 className="my-0">{this.state.user.username}</h6>
+                            <small className="text-muted">Username</small>
+                        </label>
+                    </li>
+                    <li className="list-group-item">
+                        <label title="Roles">
+                            <h6 className="my-0">{this.getCommaSeparatedRoles(this.state.user.roles)}</h6>
+                            <small className="text-muted">Roles</small>
+                        </label>
+                    </li>
+                    <li className="list-group-item">
+                        <label title="Enabled">
+                            <h6 className="my-0">{"" + this.state.user.enabled}</h6>
+                            <small className="text-muted">Enabled</small>
+                        </label>
+                    </li>
+                </ul>
                 </div>
             </div>
-        </div>
+    }
+
+    private getCommaSeparatedRoles(list?: string[]): string | null {
+        return !list
+            ? null
+            : list.join(", ");
     }
 }
