@@ -20,8 +20,6 @@ env:
   global:
   - SPRING_DATASOURCE_USERNAME=protim_ci_user SPRING_DATASOURCE_PASSWORD=protim_ci_pw
   - JDK='Oracle JDK 10'
-  install:
-  - install: . ./install-jdk.sh -F 10 -L BCL
   matrix:
   - SPRING_DATASOURCE_URL=jdbc:h2:file:~/protim_ci_db
   - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/protim_ci_db
@@ -33,6 +31,7 @@ cache:
 before_cache:
 - rm -rfv $HOME/.m2/repository/io/github/marmer/protim
 before_install:
+- . ./install-jdk.sh -F 10 -L BCL
 #  the folowing line is a temporary solution until travis supports the JDK10 and can removed after
 - wget https://github.com/sormuras/bach/raw/master/install-jdk.sh
 - export M2_HOME=$HOME/apache-maven-${MAVEN_VERSION}
