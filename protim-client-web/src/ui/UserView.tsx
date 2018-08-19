@@ -32,27 +32,21 @@ export class UserView extends React.Component<UsermanagementViewProps, Usermanag
                     <span className="text-muted">User</span>
                 </h5>
                 <ul className="list-group">
-                    <li className="list-group-item">
-                        <label title="Username">
-                            <h6 className="my-0">{this.state.user.username}</h6>
-                            <small className="text-muted">Username</small>
-                        </label>
-                    </li>
-                    <li className="list-group-item">
-                        <label title="Roles">
-                            <h6 className="my-0">{this.getCommaSeparatedRoles(this.state.user.roles)}</h6>
-                            <small className="text-muted">Roles</small>
-                        </label>
-                    </li>
-                    <li className="list-group-item">
-                        <label title="Enabled">
-                            <h6 className="my-0">{"" + this.state.user.enabled}</h6>
-                            <small className="text-muted">Enabled</small>
-                        </label>
-                    </li>
+                    {this.listElement("Username", this.state.user.username)}
+                    {this.listElement("Username", this.getCommaSeparatedRoles(this.state.user.roles))}
+                    {this.listElement("Enabled", "" + this.state.user.enabled)}
                 </ul>
-                </div>
             </div>
+        </div>
+    }
+
+    private listElement(label: string = "Username", value?: string | null) {
+        return <li className="list-group-item">
+            <label title={"Username"}>
+                <small className="text-muted">{label}</small>
+                <h6 className="my-0">{value}</h6>
+            </label>
+        </li>;
     }
 
     private getCommaSeparatedRoles(list?: string[]): string | null {
