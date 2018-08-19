@@ -29,7 +29,7 @@ export class UserView extends React.Component<UsermanagementViewProps, Usermanag
                 </h5>
                 <ul className="list-group">
                     {this.listElement("Username", this.state.user.username)}
-                    {this.listElement("Username", StringUtils.getCommaSeparatedRoles(this.state.user.roles))}
+                    {this.listElement("Username", StringUtils.getCommaAndSpaceSeparated(this.state.user.roles))}
                     {this.listElement("Enabled", "" + this.state.user.enabled)}
                 </ul>
             </div>
