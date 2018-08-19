@@ -1,6 +1,7 @@
 import * as React from 'react';
 import {User} from "../model/usermanagement/User";
 import {RestClient} from "../service/rest/RestClient";
+import {StringUtils} from "../service/StringUtils";
 
 export interface UsermanagementViewState {
     user: User;
@@ -19,7 +20,7 @@ export class UserView extends React.Component<UsermanagementViewProps, Usermanag
         RestClient.getJson("https://localhost/api/v1/usermanagement/users/admin")
             .then(value => this.setState({user: value}));
     }
-    
+
     render() {
         return <div className="card">
             <div className="card-body">
@@ -28,7 +29,7 @@ export class UserView extends React.Component<UsermanagementViewProps, Usermanag
                 </h5>
                 <ul className="list-group">
                     {this.listElement("Username", this.state.user.username)}
-                    {this.listElement("Username", this.getCommaSeparatedRoles(this.state.user.roles))}
+                    {this.listElement("Username", StringUtils.getCommaSeparatedRoles(this.state.user.roles))}
                     {this.listElement("Enabled", "" + this.state.user.enabled)}
                 </ul>
             </div>
@@ -42,11 +43,5 @@ export class UserView extends React.Component<UsermanagementViewProps, Usermanag
                 <h6 className="my-0">{value}</h6>
             </label>
         </li>;
-    }
-
-    private getCommaSeparatedRoles(list?: string[]): string | null {
-        return !list
-            ? null
-            : list.join(", ");
     }
 }
