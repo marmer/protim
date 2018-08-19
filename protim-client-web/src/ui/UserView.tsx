@@ -19,12 +19,7 @@ export class UserView extends React.Component<UsermanagementViewProps, Usermanag
         RestClient.getJson("https://localhost/api/v1/usermanagement/users/admin")
             .then(value => this.setState({user: value}));
     }
-
-    sleep(time: number) {
-        // TODO: marmer 15.08.2018 remove me
-        return new Promise((resolve) => setTimeout(resolve, time));
-    }
-
+    
     render() {
         return <div className="card">
             <div className="card-body">
