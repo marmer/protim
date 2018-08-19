@@ -22,13 +22,14 @@ env:
   matrix:
   - SPRING_DATASOURCE_URL=jdbc:h2:file:~/protim_ci_db
   - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/protim_ci_db
-    include:
-    # Java 10 "Oracle JDK"
-    - env: JDK='Oracle JDK 10'
-      install: . ./install-jdk.sh -F 10 -L BCL
-    # Java 10 "OpenJDK"
-    - env: JDK='OpenJDK 10'
-      install: . ./install-jdk.sh -F 10 -L GPL
+matrix:
+  include:
+  # Java 10 "Oracle JDK"
+  - env: JDK='Oracle JDK 10'
+    install: . ./install-jdk.sh -F 10 -L BCL
+  # Java 10 "OpenJDK"
+  - env: JDK='OpenJDK 10'
+    install: . ./install-jdk.sh -F 10 -L GPL
 cache:
   directories:
   - "$HOME/.m2/repository"
