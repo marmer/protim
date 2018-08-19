@@ -1,5 +1,6 @@
 language: java
-jdk: oraclejdk10
+#  the folowing line is a temporary solution until travis supports the JDK10 and can be inlined after
+#jdk: oraclejdk10
 sudo: required
 services:
 - postgresql
@@ -8,7 +9,8 @@ addons:
   postgresql: "9.6"
   apt:
     packages:
-    - oracle-java10-installer
+#  the folowing line is a temporary solution until travis supports the JDK10 and can be inlined after
+#    - oracle-java10-installer
 #    - docker-ce
   sonarcloud:
     organization: "marmer-github"
@@ -28,6 +30,8 @@ cache:
 before_cache:
 - rm -rfv $HOME/.m2/repository/io/github/marmer/protim
 before_install:
+#  the folowing line is a temporary solution until travis supports the JDK10 and can removed after
+- wget https://github.com/sormuras/bach/raw/master/install-jdk.sh
 - export M2_HOME=$HOME/apache-maven-${MAVEN_VERSION}
 - if [ ! -d $M2_HOME/bin ]; then curl https://archive.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz
   | tar zxf - -C $HOME; fi
