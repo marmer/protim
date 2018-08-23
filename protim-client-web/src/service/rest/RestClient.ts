@@ -15,7 +15,7 @@ export class RestClient {
                 }
             };
             xhr.open("GET", url, true);
-            xhr.withCredentials = true; // TODO: marmer 16.08.2018 remove credentials again from here!
+            xhr.withCredentials = true;
             xhr.setRequestHeader('Accept', 'application/JSON');
             xhr.send(/*body*/);
         });
