@@ -29,7 +29,6 @@ cache:
   directories:
   - "$HOME/.m2/repository"
   - "$HOME/apache-maven-${MAVEN_VERSION}"
-  - /var/lib/docker
   - /tmp/nodebin
   #  the folowing line is a temporary solution until travis supports the JDK10 and can be removed after
 #  - /home/travis/jdk-10.0.2
