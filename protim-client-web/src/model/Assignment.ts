@@ -6,4 +6,9 @@ import {System} from "./System";
 export class Assignment {
     systemId: string;
     system: System;
+
+    constructor(systemId: string, system: System) {
+        this.systemId = systemId;
+        this.system = system;
+    }
 }
