@@ -52,5 +52,6 @@ install:
 - docker exec -it mvn-protim cp /tmp/nodebin/node/node /bin/
 script:
 - docker exec -it mvn-protim mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -V -Dsonar.login=$SONAR_CLOUD_TOKEN -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=marmer-github
+after_script:
 - docker kill mvn-protim
 - docker rm mvn-protim
