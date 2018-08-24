@@ -22,11 +22,8 @@ env:
   #  the folowing line is a temporary solution until travis supports the JDK10 and can be removed after
   - JDK='Oracle JDK 10'
   matrix:
-  - BUILDPATH=protim-server
-    SPRING_DATASOURCE_URL=jdbc:h2:file:~/protim_ci_db
-  - BUILDPATH=protim-server
-    SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/protim_ci_db
-  - BUILDPATH=protim-client-web
+  - SPRING_DATASOURCE_URL=jdbc:h2:file:~/protim_ci_db
+  - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/protim_ci_db
 cache:
   directories:
   - "$HOME/.m2/repository"
@@ -49,9 +46,9 @@ before_script:
   - psql -c "CREATE USER protim_ci_user WITH PASSWORD 'protim_ci_pw';" -U postgres
 install:
 - . ./install-jdk.sh -F 10 -L BCL
-- mvn clean install -DskipTests=true -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -B -V -U -f $BUILDPATH
+- mvn clean install -DskipTests=true -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -B -V -U
 script:
-- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -V -U -f $BUILDPATH
+- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -V -U
 #TODO Sona erklären, dass typescript bla coverage gedöns ...
 # ... alles nur geklaut
 #  <profile>
