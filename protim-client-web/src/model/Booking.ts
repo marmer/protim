@@ -8,4 +8,13 @@ export class Booking {
     comments: string;
     assignment: Assignment;
     booked: boolean;
+
+    constructor(id: number, time: BookingTime, description: string, comments: string, assignment: Assignment, booked: boolean) {
+        this.id = id;
+        this.time = time;
+        this.description = description;
+        this.comments = comments;
+        this.assignment = assignment;
+        this.booked = booked;
+    }
 }

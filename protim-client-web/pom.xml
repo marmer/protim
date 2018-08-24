@@ -77,7 +77,7 @@
                         </goals>
                         <phase>test</phase>
                         <configuration>
-                            <arguments>test</arguments>
+                            <arguments>test-ci</arguments>
                         </configuration>
                     </execution>
                     <execution>

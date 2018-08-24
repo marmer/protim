@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {Component} from 'react';
 import {BookingDay} from '../model/BookingDay';
 import {BookingEntryView} from './BookingEntryView';
 
@@ -10,7 +10,7 @@ export interface BookingDayViewProps {
     day: Date;
 }
 
-export class BookingDayView extends React.Component<BookingDayViewProps, BookingDayViewState> {
+export class BookingDayView extends Component<BookingDayViewProps, BookingDayViewState> {
     constructor(props: BookingDayViewProps) {
         super(props);
     }
