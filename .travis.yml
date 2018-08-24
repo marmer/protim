@@ -29,7 +29,7 @@ cache:
   directories:
   - "$HOME/.m2/repository"
   - "$HOME/apache-maven-${MAVEN_VERSION}"
-  - docker
+  - /var/lib/docker
   - /tmp/nodebin
   #  the folowing line is a temporary solution until travis supports the JDK10 and can be removed after
 #  - /home/travis/jdk-10.0.2
@@ -50,4 +50,4 @@ install:
 #- . ./install-jdk.sh -F 10 -L BCL
 - docker run -it --rm --name mvn-protim --network host -e SPRING_DATASOURCE_URL=$SPRING_DATASOURCE_URL -v /tmp/nodebin:/tmp/nodebin -v "$PWD":/usr/src/protim -v "$HOME/.m2":/root/.m2 -w /usr/src/protim maven:${MAVEN_VERSION}-jdk-10-slim mvn clean install -DskipTests=true -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -B -V -U -T 2.0C
 script:
-- docker run -it --rm --name mvn-protim --network host -e SPRING_DATASOURCE_URL=$SPRING_DATASOURCE_URL -v /tmp/nodebin:/tmp/nodebin -v "$PWD":/usr/src/protim -v "$HOME/.m2":/root/.m2 -w /usr/src/protim maven:${MAVEN_VERSION}-jdk-10-slim  mvn com.github.eirslett:frontend-maven-plugin:install-node-and-yarn -DnodeVersion=v8.11.4 -DyarnVersion=v1.9.4; cp node/node node ; mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -V -Dsonar.login=$SONAR_CLOUD_TOKEN -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=marmer-github
+- docker run -it --rm --name mvn-protim --network host -e SPRING_DATASOURCE_URL=$SPRING_DATASOURCE_URL -v /tmp/nodebin:/tmp/nodebin -v "$PWD":/usr/src/protim -v "$HOME/.m2":/root/.m2 -w /usr/src/protim maven:${MAVEN_VERSION}-jdk-10-slim  mvn com.github.eirslett:frontend-maven-plugin:install-node-and-yarn -DnodeVersion=v8.11.4 -DyarnVersion=v1.9.4; ls -la; ls -la node; cp node/node node ; mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -V -Dsonar.login=$SONAR_CLOUD_TOKEN -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=marmer-github
