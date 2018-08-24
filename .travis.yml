@@ -4,11 +4,11 @@ language: java
 sudo: required
 services:
 - postgresql
-#- docker
+- docker
 addons:
   postgresql: "9.6"
-  apt:
-    packages:
+#  apt:
+#    packages:
 #  the folowing line is a temporary solution until travis supports the JDK10 and can be inlined after
 #    - oracle-java10-installer
 #    - docker-ce
@@ -20,7 +20,7 @@ env:
   global:
   - SPRING_DATASOURCE_USERNAME=protim_ci_user SPRING_DATASOURCE_PASSWORD=protim_ci_pw
   #  the folowing line is a temporary solution until travis supports the JDK10 and can be removed after
-  - JDK='Oracle JDK 10'
+#  - JDK='Oracle JDK 10'
   matrix:
   - SPRING_DATASOURCE_URL=jdbc:h2:file:~/protim_ci_db
   - SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/protim_ci_db
@@ -30,12 +30,12 @@ cache:
   - "$HOME/apache-maven-${MAVEN_VERSION}"
   - /tmp/nodebin
   #  the folowing line is a temporary solution until travis supports the JDK10 and can be removed after
-  - /home/travis/jdk-10.0.2
+#  - /home/travis/jdk-10.0.2
 before_cache:
 - rm -rfv $HOME/.m2/repository/io/github/marmer/protim
 before_install:
 #  the folowing line is a temporary solution until travis supports the JDK10 and can removed after
-- wget https://github.com/sormuras/bach/raw/master/install-jdk.sh
+#- wget https://github.com/sormuras/bach/raw/master/install-jdk.sh
 - export M2_HOME=$HOME/apache-maven-${MAVEN_VERSION}
 - if [ ! -d $M2_HOME/bin ]; then curl https://archive.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz
   | tar zxf - -C $HOME; fi
@@ -45,7 +45,7 @@ before_script:
   - psql -c "CREATE DATABASE protim_ci_db;" -U postgres
   - psql -c "CREATE USER protim_ci_user WITH PASSWORD 'protim_ci_pw';" -U postgres
 install:
-- . ./install-jdk.sh -F 10 -L BCL
-- mvn clean install -DskipTests=true -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -B -V -U -T 2.0C
+#- . ./install-jdk.sh -F 10 -L BCL
+- docker run -it --rm --name mvn-protim --network host -e SPRING_DATASOURCE_URL=$SPRING_DATASOURCE_URL -v /tmp/nodebin:/tmp/nodebin -v "$PWD":/usr/src/protim -v "$HOME/.m2":/root/.m2 -w /usr/src/protim maven:${MAVEN_VERSION}-jdk-10-slim mvn clean install -DskipTests=true -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -B -V -U -T 2.0C
 script:
-- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -V
+- docker run -it --rm --name mvn-protim --network host -e SPRING_DATASOURCE_URL=$SPRING_DATASOURCE_URL -v /tmp/nodebin:/tmp/nodebin -v "$PWD":/usr/src/protim -v "$HOME/.m2":/root/.m2 -w /usr/src/protim maven:${MAVEN_VERSION}-jdk-10-slim mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent package org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -V
