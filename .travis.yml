@@ -42,9 +42,9 @@ before_cache:
 #  | tar zxf - -C $HOME; fi
 #- export PATH=$M2_HOME/bin:$PATH
 
-before_script:  
-  - psql -c "CREATE DATABASE protim_ci_db;" -U postgres
-  - psql -c "CREATE USER protim_ci_user WITH PASSWORD 'protim_ci_pw';" -U postgres
+before_script:
+#  - psql -c "CREATE DATABASE protim_ci_db;" -U postgres
+#  - psql -c "CREATE USER protim_ci_user WITH PASSWORD 'protim_ci_pw';" -U postgres
 install:
   echo "part of the script"
 #- . ./install-jdk.sh -F 10 -L BCL
