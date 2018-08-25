@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -e
+
 echo
 echo --- Building ---
 echo

@@ -20,9 +20,9 @@ services:
   db:
     image: postgres:11-alpine
     environment:
-      POSTGRES_USER: protim
-      POSTGRES_PASSWORD: example
-      POSTGRES_DB: protim
+      POSTGRES_USER: protim_ci_user
+      POSTGRES_PASSWORD: protim_ci_pw
+      POSTGRES_DB: protim_ci_db
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
     - data-volume:/var/lib/postgresql/data/pgdata

@@ -46,6 +46,7 @@ before_script:
   - psql -c "CREATE DATABASE protim_ci_db;" -U postgres
   - psql -c "CREATE USER protim_ci_user WITH PASSWORD 'protim_ci_pw';" -U postgres
 install:
+  echo "part of the script"
 #- . ./install-jdk.sh -F 10 -L BCL
 #- docker run -it --name mvn-protim --network host -e SPRING_DATASOURCE_URL=$SPRING_DATASOURCE_URL -v /tmp/nodebin:/tmp/nodebin -v "$PWD":/usr/src/protim -v "$HOME/.m2":/root/.m2 -w /usr/src/protim maven:${MAVEN_VERSION}-jdk-10-slim mvn clean install -DskipTests=true -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -B -V -U -T 2.0C
 #- docker start mvn-protim
