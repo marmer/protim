@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.3'
 
 services:
   maven:
@@ -8,29 +8,31 @@ services:
     - "./:/usr/src/protim"
     - "$HOME/.m2:/root/.m2"
     environment:
-    - SPRING_DATASOURCE_USERNAME=protim_ci_user
-    - SPRING_DATASOURCE_PASSWORD=protim_ci_pw
+    - SPRING_DATASOURCE_USERNAME=protim_user
+    - SPRING_DATASOURCE_PASSWORD=protim_pw
     - SPRING_DATASOURCE_URL
     - SONAR_CLOUD_TOKEN
     command: ./ci.sh
     working_dir: /usr/src/protim
     networks:
-    - overlay
+    - pgconnection
 
   db:
     image: postgres:11-alpine
     networks:
-    - overlay
+    - pgconnection
     environment:
-      POSTGRES_USER: protim_ci_user
-      POSTGRES_PASSWORD: protim_ci_pw
-      POSTGRES_DB: protim_ci_db
+      POSTGRES_USER: protim_user
+      POSTGRES_PASSWORD: protim_pw
+      POSTGRES_DB: protim_db
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
-    - data-volume:/var/lib/postgresql/data/pgdata
+    - protim-volume:/var/lib/postgresql/data/pgdata
+    expose:
+    - 5432
 
 volumes:
-  data-volume:
+  protim-volume:
 
 networks:
-  overlay:
+  pgconnection:
