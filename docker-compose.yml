@@ -11,6 +11,7 @@ services:
     - SPRING_DATASOURCE_USERNAME=protim_ci_user
     - SPRING_DATASOURCE_PASSWORD=protim_ci_pw
     - SPRING_DATASOURCE_URL
+    - SONAR_CLOUD_TOKEN
     command: ./ci.sh
     working_dir: /usr/src/protim
     networks:
