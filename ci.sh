@@ -2,6 +2,14 @@
 
 set -e
 
+
+echo
+echo --- Versions ---
+echo
+docker-compose -version
+java -version
+mvn -version
+
 echo
 echo --- Building ---
 echo
@@ -10,10 +18,10 @@ mvn clean install -DskipTests -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembl
 echo
 echo --- Testing ---
 echo
-mvn org.jacoco:jacoco-maven-plugin:prepare-agent verify
+mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent verify
 
 echo
 echo --- Reporting ---
 echo
 cp /tmp/nodebin/node/node /bin/
-mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -V -Dsonar.login=$SONAR_CLOUD_TOKEN -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=marmer-github
+mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -V -Dsonar.login=$SONAR_CLOUD_TOKEN -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=marmer-git
