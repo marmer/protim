@@ -2,14 +2,6 @@
 
 set -e
 
-
-echo
-echo --- Versions ---
-echo
-docker-compose -version
-java -version
-mvn -version
-
 echo
 echo --- Building ---
 echo
