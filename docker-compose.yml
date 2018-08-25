@@ -1,0 +1,33 @@
+version: '3.7'
+
+services:
+  maven:
+    image: maven:3.5.4-jdk-10-slim
+    container_name: mvn-protim
+    volumes:
+    - "$TEMP/nodebin:/tmp/nodebin"
+    - "./:/usr/src/protim"
+    - "$HOME/.m2:/root/.m2"
+    environment:
+    - SPRING_DATASOURCE_USERNAME=protim_ci_user
+    - SPRING_DATASOURCE_PASSWORD=protim_ci_pw
+    - SPRING_DATASOURCE_URL
+    #    command: echo "Hundekuchen bla blub"
+    command: ./ci.sh
+    links:
+    - db
+    working_dir: /usr/src/protim
+  db:
+    image: postgres:11-alpine
+    environment:
+      POSTGRES_USER: protim
+      POSTGRES_PASSWORD: example
+      POSTGRES_DB: protim
+      PGDATA: /var/lib/postgresql/data/pgdata
+    volumes:
+    - data-volume:/var/lib/postgresql/data/pgdata
+    #ports:
+    #- 5432:5432
+
+volumes:
+  data-volume:

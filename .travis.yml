@@ -3,10 +3,10 @@ language: java
 #jdk: oraclejdk10
 sudo: required
 services:
-- postgresql
+#- postgresql
 - docker
-addons:
-  postgresql: "9.6"
+#addons:
+#  postgresql: "9.6"
 #  apt:
 #    packages:
 #  the folowing line is a temporary solution until travis supports the JDK10 and can be inlined after
@@ -34,27 +34,28 @@ cache:
 #  - /home/travis/jdk-10.0.2
 before_cache:
 - rm -rfv $HOME/.m2/repository/io/github/marmer/protim
-before_install:
+#before_install:
 #  the folowing line is a temporary solution until travis supports the JDK10 and can removed after
 #- wget https://github.com/sormuras/bach/raw/master/install-jdk.sh
-- export M2_HOME=$HOME/apache-maven-${MAVEN_VERSION}
-- if [ ! -d $M2_HOME/bin ]; then curl https://archive.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz
-  | tar zxf - -C $HOME; fi
-- export PATH=$M2_HOME/bin:$PATH
+#- export M2_HOME=$HOME/apache-maven-${MAVEN_VERSION}
+#- if [ ! -d $M2_HOME/bin ]; then curl https://archive.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-${MAVEN_VERSION}-bin.tar.gz
+#  | tar zxf - -C $HOME; fi
+#- export PATH=$M2_HOME/bin:$PATH
 
 before_script:  
   - psql -c "CREATE DATABASE protim_ci_db;" -U postgres
   - psql -c "CREATE USER protim_ci_user WITH PASSWORD 'protim_ci_pw';" -U postgres
 install:
 #- . ./install-jdk.sh -F 10 -L BCL
-- docker run -it --name mvn-protim --network host -e SPRING_DATASOURCE_URL=$SPRING_DATASOURCE_URL -v /tmp/nodebin:/tmp/nodebin -v "$PWD":/usr/src/protim -v "$HOME/.m2":/root/.m2 -w /usr/src/protim maven:${MAVEN_VERSION}-jdk-10-slim mvn clean install -DskipTests=true -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -B -V -U -T 2.0C
-- docker start mvn-protim
-- docker exec -it mvn-protim cp /tmp/nodebin/node/node /bin/
-- docker exec -it mvn-protim mvn clean
-- docker exec -it mvn-protim mvn org.jacoco:jacoco-maven-plugin:prepare-agent
+#- docker run -it --name mvn-protim --network host -e SPRING_DATASOURCE_URL=$SPRING_DATASOURCE_URL -v /tmp/nodebin:/tmp/nodebin -v "$PWD":/usr/src/protim -v "$HOME/.m2":/root/.m2 -w /usr/src/protim maven:${MAVEN_VERSION}-jdk-10-slim mvn clean install -DskipTests=true -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -B -V -U -T 2.0C
+#- docker start mvn-protim
+#- docker exec -it mvn-protim cp /tmp/nodebin/node/node /bin/
+#- docker exec -it mvn-protim mvn clean
+#- docker exec -it mvn-protim mvn org.jacoco:jacoco-maven-plugin:prepare-agent
 script:
-- docker exec -it mvn-protim mvn verify -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly
+  #- docker exec -it mvn-protim mvn verify -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly
+  docker-compose.exe up --exit-code-from maven
 after_script:
-- docker exec -it mvn-protim mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -V -Dsonar.login=$SONAR_CLOUD_TOKEN -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=marmer-github
-- docker kill mvn-protim
-- docker rm mvn-protim
+#- docker exec -it mvn-protim mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -V -Dsonar.login=$SONAR_CLOUD_TOKEN -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=marmer-github
+#- docker kill mvn-protim
+#- docker rm mvn-protim
