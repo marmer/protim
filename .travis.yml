@@ -11,7 +11,6 @@ addons:
 #    token:
 #      secure: "qFEpZVd5B+DC3TC5Dox1SAF6zrhuMYyDRHyyqXOQqW46knpYwzsz5Qikd0QoKy0Mue65lhScYR3ManM9fF7W+8dgGDUbRgt+uxUsPwFN6hawESikYpjvGasCDwXqNQlJqE8ZrtHFnx/VrNqBaIojkuwLfHwGrwz4qa0rQc/NPhwm/JXZl1i6DqHx+hesE2NcuMycHK9fhEwRZz0HVgWPSzcxZ133Nyrj94ful12MckKL4xlJCQJQ5cKo3No6f+9gp77Vgu7Q04Eaq5rqVr9OZVcyGF1GnH3vCVFFlb8s0RXCHdeu/F9u2yC+U6viNLTfzyas/74sc4Cu29cRyFb7T78kVlK8ZQ28x76lGulin14xv5LM/Is2D25OXbvh5psbdcO64Cl512rLFALYqzpxP4qoRDrd3I3mTS2efasawPVwOIIM2baKYHxaU/f4u2XtQJOHud4CL4U2Xr/HjzQvgvzC5Ud7JbV7cJucct67laV+tBM+Re8SYIh6dH8o8Th8LNiUNGO9s8AYjcucsRXQiKUZJ12scl+nN6CchJoKP7O7i/8GW9cEXrqheW7C6+QSIPKeXy7j+55LcjEFOEZvptBXmgBMIgrfn0ZMS2mhC+CNZ6aQOiVotNOoux87M4xAmCT7pReI6KYLKqOjGlXXH1kosuZqP0sRTXZXnZleLlo="
 env:
-  global:
   - DOCKER_COMPOSE_VERSION=1.4.2
   matrix:
   - SPRING_DATASOURCE_URL=jdbc:h2:file:~/protim_ci_db
@@ -21,6 +20,11 @@ cache:
   - "$HOME/.m2/repository"
   - "$HOME/apache-maven-${MAVEN_VERSION}"
   - /tmp/nodebin
+before_install:
+- sudo rm /usr/local/bin/docker-compose
+- curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+- chmod +x docker-compose
+- sudo mv docker-compose /usr/local/bin
 before_cache:
 - rm -rfv $HOME/.m2/repository/io/github/marmer/protim
 install:
