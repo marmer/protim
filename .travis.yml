@@ -8,7 +8,7 @@ addons:
     - docker-ce
 env:
   global:
-  - DOCKER_COMPOSE_VERSION=1.4.2
+  - DOCKER_COMPOSE_VERSION=1.22.0
   matrix:
   - SPRING_DATASOURCE_URL=jdbc:h2:file:~/protim_db
   - SPRING_DATASOURCE_URL=jdbc:postgresql://db:5432/protim_db
@@ -27,7 +27,7 @@ before_cache:
 install:
 - docker-compose -version
 script:
-- docker-compose up --exit-code-from maven --force-recreate
+- docker-compose up --exit-code-from maven
 after_script:
 - docker-compose down
 - docker volume prune -f
