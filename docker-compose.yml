@@ -3,7 +3,6 @@ version: '3.7'
 services:
   maven:
     image: maven:3.5.4-jdk-10-slim
-    container_name: mvn-protim
     volumes:
     - "$TEMP/nodebin:/tmp/nodebin"
     - "./:/usr/src/protim"
@@ -13,12 +12,14 @@ services:
     - SPRING_DATASOURCE_PASSWORD=protim_ci_pw
     - SPRING_DATASOURCE_URL
     command: ./ci.sh
-    links:
-    - db
     working_dir: /usr/src/protim
+    networks:
+    - overlay
 
   db:
     image: postgres:11-alpine
+    networks:
+    - overlay
     environment:
       POSTGRES_USER: protim_ci_user
       POSTGRES_PASSWORD: protim_ci_pw
@@ -29,3 +30,6 @@ services:
 
 volumes:
   data-volume:
+
+networks:
+  overlay:
