@@ -34,3 +34,4 @@ script:
   docker-compose up --exit-code-from maven
 after_script:
   docker-compose down
+  docker volume prune -f
