@@ -5,12 +5,12 @@ set -e
 echo
 echo --- Building ---
 echo
-mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install -DskipTests -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -B -V -U -T 2.0C
+mvn clean  org.jacoco:jacoco-maven-plugin:prepare-agent install -DskipTests -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -B -V -U -T 2.0C
 
 echo
 echo --- Testing ---
 echo
-mvn verify -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -V -T 2.0C
+mvn verify -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -V -U -T 2.0C
 
 echo
 echo --- Reporting ---
