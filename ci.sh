@@ -16,4 +16,4 @@ echo
 echo --- Reporting ---
 echo
 cp /tmp/nodebin/node/node /bin/
-mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -V -Dsonar.login=$SONAR_CLOUD_TOKEN -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=marmer-git -V -U -T 2.0C
+mvn org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dmaven.javadoc.skip -Dmaven.source.skip -Dassembly.skipAssembly -V -Dsonar.login=$SONAR_CLOUD_TOKEN -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=marmer-github -V -U -T 2.0C
