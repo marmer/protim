@@ -31,7 +31,7 @@ before_cache:
 install:
 - docker-compose -version
 script:
-  docker-compose up --exit-code-from maven
+- docker-compose up --exit-code-from maven
 after_script:
-  docker-compose down
-  docker volume prune -f
+- docker-compose down
+- docker volume prune -f
