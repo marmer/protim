@@ -12,11 +12,11 @@ services:
     - SPRING_DATASOURCE_USERNAME=protim_ci_user
     - SPRING_DATASOURCE_PASSWORD=protim_ci_pw
     - SPRING_DATASOURCE_URL
-    #    command: echo "Hundekuchen bla blub"
     command: ./ci.sh
     links:
     - db
     working_dir: /usr/src/protim
+
   db:
     image: postgres:11-alpine
     environment:
@@ -26,8 +26,6 @@ services:
       PGDATA: /var/lib/postgresql/data/pgdata
     volumes:
     - data-volume:/var/lib/postgresql/data/pgdata
-    #ports:
-    #- 5432:5432
 
 volumes:
   data-volume:
