@@ -31,4 +31,3 @@ install:
 - docker-compose -version
 script:
   docker-compose.exe up #--exit-code-from maven
-#- docker-compose.exe up --exit-code-from maven
