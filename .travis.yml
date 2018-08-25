@@ -32,3 +32,5 @@ install:
 - docker-compose -version
 script:
   docker-compose up --exit-code-from maven --force-recreate
+after_script:
+  docker-compose down
