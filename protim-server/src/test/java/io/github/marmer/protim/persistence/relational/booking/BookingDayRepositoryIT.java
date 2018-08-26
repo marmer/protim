@@ -1,11 +1,14 @@
 package io.github.marmer.protim.persistence.relational.booking;
 
+import io.github.marmer.protim.test.DbCleanupService;
+import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Rule;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
+import org.springframework.context.annotation.Import;
 import org.springframework.test.context.junit4.rules.SpringClassRule;
 import org.springframework.test.context.junit4.rules.SpringMethodRule;
 
@@ -22,6 +25,7 @@ import static org.junit.Assert.assertThat;
 
 
 @DataJpaTest
+@Import(DbCleanupService.class)
 public class BookingDayRepositoryIT {
     @ClassRule
     public static final SpringClassRule SPRING_CLASS_RULE = new SpringClassRule();
@@ -33,6 +37,14 @@ public class BookingDayRepositoryIT {
 
     @Autowired
     private TestEntityManager entityManager;
+
+    @Autowired
+    private DbCleanupService dbCleanupService;
+
+    @Before
+    public void setUp() throws Exception {
+        dbCleanupService.clearAll();
+    }
 
     @Test
     public void testFindByDay_SomeBookingDaysExist_ShouldFindOnlyTheBookingDayForTheRelatedDay()

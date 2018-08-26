@@ -21,6 +21,7 @@ public class DbCleanupService {
         removeAllFrom(BookingDayDBO.class);
         removeAllFrom(RoleDBO.class);
         removeAllFrom(UserDBO.class);
+        entityManager.flush();
     }
 
     private <T> void removeAllFrom(final Class<T> entityType) {

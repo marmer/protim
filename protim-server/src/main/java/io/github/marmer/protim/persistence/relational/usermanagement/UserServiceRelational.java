@@ -8,6 +8,7 @@ import io.github.marmer.protim.service.usermanagement.UserpasswordEncodingServic
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -32,6 +33,11 @@ public class UserServiceRelational implements UserService {
     @Override
     public Optional<User> getUser(final String username) {
         return userDBORepository.findByUsername(username).map(userConverter::convert);
+    }
+
+    @Override
+    public List<String> getUsernames() {
+        return userDBORepository.findAllUsernames();
     }
 
 

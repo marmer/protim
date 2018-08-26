@@ -60,7 +60,7 @@ public class UsermanagementEndToEndIT {
     }
 
     @Test
-    public void test_LotsOfUsersExist_ShouldServeListOfUserEntries()
+    public void testGetUsers_LotsOfUsersExist_ShouldServeListOfUserEntries()
             throws Exception {
         // Preparation
         entityManager.persistAndFlush(newUserDBO().setUsername("Max"));

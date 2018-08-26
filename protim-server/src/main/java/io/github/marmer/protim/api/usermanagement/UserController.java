@@ -1,19 +1,16 @@
 package io.github.marmer.protim.api.usermanagement;
 
+import io.github.marmer.protim.api.ListDTO;
 import io.github.marmer.protim.service.Converter;
 import io.github.marmer.protim.service.usermanagement.User;
 import io.github.marmer.protim.service.usermanagement.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(UserController.BASE_URL)
@@ -30,6 +27,17 @@ public class UserController {
         final User user = userConverter.convert(userDto);
         userService.addUser(user);
         return ResponseEntity.created(userUriFor(user)).build();
+    }
+
+    @GetMapping
+    public ResponseEntity putUser() {
+        return ResponseEntity.ok(
+                new ListDTO()
+                        .setEntries(
+                                userService.getUsernames()
+                                        .stream().
+                                        map(new UserListEntryDTO()::setUsername)
+                                        .collect(Collectors.toList())));
     }
 
     @GetMapping("/{username}")

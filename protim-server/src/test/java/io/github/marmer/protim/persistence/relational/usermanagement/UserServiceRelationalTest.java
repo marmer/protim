@@ -17,10 +17,10 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 import org.mockito.quality.Strictness;
 
+import java.util.List;
 import java.util.Optional;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 
@@ -42,6 +42,20 @@ public class UserServiceRelationalTest {
     @Before
     public void setUp() throws Exception {
         underTest = new UserServiceRelational(userDBOConverter, userDBORepository, userConverter, userpasswordEncodingService);
+    }
+
+    @Test
+    public void testGetUsernames_UsersExist_ShouldReturnUsernames()
+            throws Exception {
+        // Preparation
+        final List<String> usernames = List.of("Big123", "Small321");
+        when(userDBORepository.findAllUsernames()).thenReturn(usernames);
+
+        // Execution
+        final List<String> result = underTest.getUsernames();
+
+        // Assertion
+        assertThat(result, containsInAnyOrder("Big123", "Small321"));
     }
 
     @Test

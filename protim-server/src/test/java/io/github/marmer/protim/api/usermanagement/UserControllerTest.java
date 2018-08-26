@@ -21,6 +21,7 @@ import org.springframework.test.context.junit4.rules.SpringMethodRule;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -58,6 +59,25 @@ public class UserControllerTest {
     private JacksonTester<UserDTO> json;
     @MockBean
     private Converter<User, UserDTO> userDtoConverter;
+
+    @Test
+    public void testGetUsers_UsersExist_ShouldReturnUsers()
+            throws Exception {
+        // Preparation
+        when(userService.getUsernames()).thenReturn(List.<String>of("Apu", "Crusty"));
+
+        // Execution
+        mockMvc.perform(
+                get("/api/v1/usermanagement/users")
+                        .with(csrf().asHeader()))
+                .andExpect(status().isOk())
+                .andExpect(content().json("{\n" +
+                        "  \"entries\":[\n" +
+                        "    {\"username\":\"Apu\"},\n" +
+                        "    {\"username\":\"Crusty\"}\n" +
+                        "  ]\n" +
+                        "}"));
+    }
 
     @Test
     public void testPutUser_UserGiven_ShouldSaveOrUpdateUser()
