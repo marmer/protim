@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.test.context.support.WithAnonymousUser;
 import org.springframework.security.test.context.support.WithMockUser;
@@ -30,8 +29,10 @@ import java.util.stream.Collectors;
 
 import static io.github.marmer.protim.persistence.relational.usermanagement.RoleDBOMatcher.isRoleDBO;
 import static io.github.marmer.protim.persistence.relational.usermanagement.UserDBOMatcher.isUserDBO;
+import static io.github.marmer.protim.persistence.relational.usermanagement.UserDBOTestdata.newUserDBO;
 import static org.hamcrest.Matchers.*;
 import static org.junit.Assert.assertThat;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
@@ -59,6 +60,29 @@ public class UsermanagementEndToEndIT {
     }
 
     @Test
+    public void test_LotsOfUsersExist_ShouldServeListOfUserEntries()
+            throws Exception {
+        // Preparation
+        entityManager.persistAndFlush(newUserDBO().setUsername("Max"));
+        entityManager.persistAndFlush(newUserDBO().setUsername("Moritz"));
+        entityManager.persistAndFlush(newUserDBO().setUsername("Hännschen"));
+
+        // Execution
+        mockMvc.perform(
+                get("/api/v1/usermanagement/users")
+                        .accept(APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(APPLICATION_JSON))
+                .andExpect(content().json("{\n" +
+                        "  \"entries\":[\n" +
+                        "    {\"username\":\"Max\"},\n" +
+                        "    {\"username\":\"Moritz\"},\n" +
+                        "    {\"username\":\"Hännschen\"}\n" +
+                        "  ]\n" +
+                        "}"));
+    }
+
+    @Test
     public void testPutUser_UserDoesNotExistYet_UserShouldExistNow()
             throws Exception {
         // Preparation
@@ -66,7 +90,7 @@ public class UsermanagementEndToEndIT {
         // Execution
         mockMvc.perform(
                 put("/api/v1/usermanagement/users")
-                        .contentType(MediaType.APPLICATION_JSON)
+                        .contentType(APPLICATION_JSON)
                         .content("{\n" +
                                 "  \"username\": \"Jim\",\n" +
                                 "  \"password\": \"JTKirk\",\n" +
@@ -96,7 +120,7 @@ public class UsermanagementEndToEndIT {
     }
 
     private Matcher<String> matchesBCryptEncodedAndPraefixedPassword(final String password) {
-        return new TypeSafeMatcher<String>() {
+        return new TypeSafeMatcher<>() {
             @Override
             protected boolean matchesSafely(final String encodedPassword) {
                 if (!isPrefixed(encodedPassword)) {
@@ -129,7 +153,7 @@ public class UsermanagementEndToEndIT {
         // Execution
         mockMvc.perform(
                 put("/api/v1/usermanagement/users")
-                        .contentType(MediaType.APPLICATION_JSON)
+                        .contentType(APPLICATION_JSON)
                         .content("{\n" +
                                 "  \"username\": \"Jim\",\n" +
                                 "  \"password\": \"JTKirk\",\n" +
