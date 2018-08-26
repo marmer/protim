@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {TimeManagementView} from './ui/TimeManagementView';
-import {UserView} from "./ui/UserView";
+import {UsermanagementView} from "./ui/UsermanagementView";
 
 class App extends React.Component {
     render() {
@@ -9,7 +9,7 @@ class App extends React.Component {
                 <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                     <a className="navbar-brand" href="#">Protim</a>
                 </nav>
-                <UserView username="admin"/>
+                <UsermanagementView/>
                 <TimeManagementView/>
             </div>
         );
