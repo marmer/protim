@@ -32,7 +32,7 @@ public class UserController {
     @GetMapping
     public ResponseEntity putUser() {
         return ResponseEntity.ok(
-                new ListDTO()
+                new ListDTO<>()
                         .setEntries(
                                 userService.getUsernames()
                                         .stream().
