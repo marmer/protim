@@ -9,7 +9,7 @@ export interface UsermanagementViewProps {
 
 export interface UsermanagementViewState {
     userlist: List<UserListEntry>
-    currentUser?: string;
+    selectedUser?: string;
 }
 
 export class UsermanagementView extends React.Component<UsermanagementViewProps, UsermanagementViewState> {
@@ -31,9 +31,14 @@ export class UsermanagementView extends React.Component<UsermanagementViewProps,
                 <div className="list-group">
                     {this.usernames()}
                 </div>
-                <UserView username="admin"/>
+                {this.userView()}
             </div>
         );
+    }
+
+    private userView() {
+        const selectedUsername = this.state.selectedUser;
+        return selectedUsername == null ? null : <UserView username={selectedUsername}/>;
     }
 
     private usernames() {
@@ -51,7 +56,7 @@ export class UsermanagementView extends React.Component<UsermanagementViewProps,
 
     private setUserDetails(username: string) {
         return this.setState({
-            currentUser: username
+            selectedUser: username
         });
     }
 }
