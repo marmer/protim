@@ -28,6 +28,9 @@ export class UserView extends React.Component<UsermanagementViewProps, Usermanag
                     <span className="text-muted">User</span>
                 </h5>
                 <ul className="list-group">
+                    <li className="list-group-item">
+                        {this.username()}
+                    </li>
                     {this.listElement("Username", this.state.user.username)}
                     {this.listElement("Username", StringUtils.getCommaAndSpaceSeparated(this.state.user.roles))}
                     {this.listElement("Enabled", "" + this.state.user.enabled)}
@@ -36,12 +39,35 @@ export class UserView extends React.Component<UsermanagementViewProps, Usermanag
         </div>
     }
 
-    private listElement(label: string = "Username", value?: string | null) {
+    private listElement(label: string, value?: string | null) {
         return <li className="list-group-item">
             <label title={"Username"}>
                 <small className="text-muted">{label}</small>
-                <h6 className="my-0">{value}</h6>
+                {/*<h6 className="my-0">{value}</h6>*/}
+                <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Input group example"
+                    aria-label="Input group example"
+                    aria-describedby="btnGroupAddon"
+                    value={value == null ? "" : value}
+                />
             </label>
         </li>;
+    }
+
+    private username() {
+        return <div className="input-group">
+            <div className="input-group-prepend">
+                <div className="input-group-text" id="btnGroupAddon">Username:</div>
+            </div>
+            <input
+                type="text"
+                className="form-control"
+                placeholder="Input group example"
+                aria-label="Input group example"
+                aria-describedby="btnGroupAddon"
+            />
+        </div>
     }
 }
