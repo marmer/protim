@@ -1,7 +1,6 @@
 import React from 'react';
 import {List} from "../model/UserList";
 import {UserListEntry} from "../model/UserListEntry";
-import {User} from "../model/usermanagement/User";
 import {RestClient} from "../service/rest/RestClient";
 import {UserView} from "./UserView";
 
@@ -10,7 +9,7 @@ export interface UsermanagementViewProps {
 
 export interface UsermanagementViewState {
     userlist: List<UserListEntry>
-    currentUser?: User;
+    currentUser?: string;
 }
 
 export class UsermanagementView extends React.Component<UsermanagementViewProps, UsermanagementViewState> {
@@ -43,9 +42,16 @@ export class UsermanagementView extends React.Component<UsermanagementViewProps,
                 type="button"
                 className="list-group-item list-group-item-action"
                 key={value.username}
+                onClick={() => this.setUserDetails(value.username)}
             >
                 {value.username}
             </button>
         })
+    }
+
+    private setUserDetails(username: string) {
+        return this.setState({
+            currentUser: username
+        });
     }
 }
