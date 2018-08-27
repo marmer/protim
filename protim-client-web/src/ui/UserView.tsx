@@ -22,16 +22,20 @@ export class UserView extends React.Component<UsermanagementViewProps, Usermanag
 
     render() {
         return <div className="card">
-            <div className="card-body">
-                <h5 className="card-title">
-                    <span className="text-muted">User</span>
-                </h5>
-                <ul className="list-group">
-                    {this.listElement("Username", this.state.user.username)}
-                    {this.listElement("Username", StringUtils.getCommaAndSpaceSeparated(this.state.user.roles))}
-                    {this.listElement("Enabled", "" + this.state.user.enabled)}
-                </ul>
-            </div>
+            {
+                this.props.username == null
+                    ? <div/>
+                    : <div className="card-body">
+                        <h5 className="card-title">
+                            <span className="text-muted">User</span>
+                        </h5>
+                        <ul className="list-group">
+                            {this.listElement("Username", this.state.user.username)}
+                            {this.listElement("Username", StringUtils.getCommaAndSpaceSeparated(this.state.user.roles))}
+                            {this.listElement("Enabled", "" + this.state.user.enabled)}
+                        </ul>
+                    </div>
+            }
         </div>
     }
 
