@@ -19,7 +19,7 @@ export class UsermanagementView extends React.Component<UsermanagementViewProps,
         this.state = {
             userlist: new List([])
         };
-        RestClient.getJson("https://localhost/api/v1/usermanagement")
+        RestClient.getJson("https://localhost/api/v1/usermanagement/users")
             .then(value => this.setState({
                 userlist: value
             }));
@@ -44,7 +44,7 @@ export class UsermanagementView extends React.Component<UsermanagementViewProps,
                 className="list-group-item list-group-item-action"
                 key={value.username}
             >
-                value.username
+                {value.username}
             </button>
         })
     }
