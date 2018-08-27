@@ -17,7 +17,7 @@ export class UserView extends React.Component<UsermanagementViewProps, Usermanag
         this.state = {
             user: new User()
         };
-        RestClient.getJson("https://localhost/api/v1/usermanagement/users/admin")
+        RestClient.getJson("https://localhost/api/v1/usermanagement/users/" + props.username)
             .then(value => this.setState({user: value}));
     }
 

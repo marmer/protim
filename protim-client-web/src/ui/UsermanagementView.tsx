@@ -27,7 +27,10 @@ export class UsermanagementView extends React.Component<UsermanagementViewProps,
     render(): React.ReactNode {
         return (
             <div>
-                <h1>Users</h1>
+                <h1>Users <button type="button" className="btn btn-primary" title="add User">
+                    {/*// TODO: marmer 27.08.2018 add some behavior to add a user*/}
+                    <i className="fas fa-plus"/>
+                </button></h1>
                 <div className="list-group">
                     {this.usernames()}
                 </div>
