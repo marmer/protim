@@ -64,7 +64,7 @@ public class UserControllerTest {
     public void testGetUsers_UsersExist_ShouldReturnUsers()
             throws Exception {
         // Preparation
-        when(userService.getUsernames()).thenReturn(List.<String>of("Apu"));
+        when(userService.getUsernames()).thenReturn(List.<String>of("Apu", "Crusty"));
 
         // Execution
         mockMvc.perform(
@@ -73,7 +73,8 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().json("{\n" +
                         "  \"entries\":[\n" +
-                        "    {\"username\":\"Apu\"}\n" +
+                        "    {\"username\":\"Apu\"},\n" +
+                        "    {\"username\":\"Crusty\"}\n" +
                         "  ]\n" +
                         "}"));
     }

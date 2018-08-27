@@ -36,7 +36,7 @@ public class UserController {
                         .setEntries(
                                 userService.getUsernames()
                                         .stream().
-                                        map(new UserListEntryDTO()::setUsername)
+                                        map(username -> new UserListEntryDTO().setUsername(username))
                                         .collect(Collectors.toList())));
     }
 

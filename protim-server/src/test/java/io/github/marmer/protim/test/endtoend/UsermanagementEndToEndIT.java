@@ -72,12 +72,12 @@ public class UsermanagementEndToEndIT {
                 get("/api/v1/usermanagement/users")
                         .accept(APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(content().contentType(APPLICATION_JSON))
+                .andExpect(content().contentTypeCompatibleWith(APPLICATION_JSON))
                 .andExpect(content().json("{\n" +
-                        "  \"entries\":[\n" +
-                        "    {\"username\":\"Max\"},\n" +
-                        "    {\"username\":\"Moritz\"},\n" +
-                        "    {\"username\":\"Hännschen\"}\n" +
+                        "  \"entries\": [\n" +
+                        "    { \"username\": \"Hännschen\" },\n" +
+                        "    { \"username\": \"Max\" },\n" +
+                        "    { \"username\": \"Moritz\" }\n" +
                         "  ]\n" +
                         "}"));
     }
