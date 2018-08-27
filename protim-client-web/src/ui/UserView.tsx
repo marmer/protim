@@ -8,7 +8,7 @@ export interface UsermanagementViewState {
 }
 
 export interface UsermanagementViewProps {
-    username: string
+    username?: string
 }
 
 export class UserView extends React.Component<UsermanagementViewProps, UsermanagementViewState> {
@@ -17,8 +17,7 @@ export class UserView extends React.Component<UsermanagementViewProps, Usermanag
         this.state = {
             user: new User()
         };
-        RestClient.getJson("https://localhost/api/v1/usermanagement/users/" + props.username)
-            .then(value => this.setState({user: value}));
+        this.loadUserDetails();
     }
 
     render() {
@@ -28,15 +27,25 @@ export class UserView extends React.Component<UsermanagementViewProps, Usermanag
                     <span className="text-muted">User</span>
                 </h5>
                 <ul className="list-group">
-                    <li className="list-group-item">
-                        {this.username()}
-                    </li>
                     {this.listElement("Username", this.state.user.username)}
                     {this.listElement("Username", StringUtils.getCommaAndSpaceSeparated(this.state.user.roles))}
                     {this.listElement("Enabled", "" + this.state.user.enabled)}
                 </ul>
             </div>
         </div>
+    }
+
+    componentDidUpdate(prevProps: Readonly<UsermanagementViewProps>, prevState: Readonly<UsermanagementViewState>, snapshot?: any): void {
+        if (prevProps.username !== this.props.username) {
+            this.loadUserDetails()
+        }
+    }
+
+    private loadUserDetails() {
+        if (this.props.username != null) {
+            RestClient.getJson("https://localhost/api/v1/usermanagement/users/" + this.props.username)
+                .then(value => this.setState({user: value}));
+        }
     }
 
     private listElement(label: string, value?: string | null) {
@@ -47,27 +56,12 @@ export class UserView extends React.Component<UsermanagementViewProps, Usermanag
                 <input
                     type="text"
                     className="form-control"
-                    placeholder="Input group example"
-                    aria-label="Input group example"
+                    placeholder="label"
+                    aria-label="label"
                     aria-describedby="btnGroupAddon"
                     value={value == null ? "" : value}
                 />
             </label>
         </li>;
-    }
-
-    private username() {
-        return <div className="input-group">
-            <div className="input-group-prepend">
-                <div className="input-group-text" id="btnGroupAddon">Username:</div>
-            </div>
-            <input
-                type="text"
-                className="form-control"
-                placeholder="Input group example"
-                aria-label="Input group example"
-                aria-describedby="btnGroupAddon"
-            />
-        </div>
     }
 }

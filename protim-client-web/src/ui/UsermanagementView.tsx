@@ -34,16 +34,11 @@ export class UsermanagementView extends React.Component<UsermanagementViewProps,
                 <div className="list-group">
                     {this.usernames()}
                 </div>
-                {this.userView()}
+                <UserView username={this.state.selectedUser}/>
             </div>
         );
     }
-
-    private userView() {
-        const selectedUsername = this.state.selectedUser;
-        return selectedUsername == null ? null : <UserView username={selectedUsername}/>;
-    }
-
+    
     private usernames() {
         return this.state.userlist.entries.map(value => {
             return <button
@@ -58,7 +53,7 @@ export class UsermanagementView extends React.Component<UsermanagementViewProps,
     }
 
     private setUserDetails(username: string) {
-        return this.setState({
+        this.setState({
             selectedUser: username
         });
     }
