@@ -1,9 +1,8 @@
 import {User} from "./User";
 
-
 describe("Tests for: User", () => {
     let user: User;
-    beforeEach(cb => {
+    beforeEach(() => {
         user = new User("un", "pw", true, ["r1", "r2"]);
     });
     describe("clone", () => {
@@ -31,7 +30,6 @@ describe("Tests for: User", () => {
                 expect(user.isUser()).toBe(true)
             });
         });
-
     });
     describe("isAdmin", () => {
         describe("user with admin role", () => {
