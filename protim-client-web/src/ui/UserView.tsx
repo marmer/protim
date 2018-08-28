@@ -14,10 +14,22 @@ export interface UsermanagementViewProps {
 export class UserView extends React.Component<UsermanagementViewProps, UsermanagementViewState> {
     constructor(props: UsermanagementViewProps) {
         super(props);
+
         this.state = {
             user: new User()
         };
-        this.loadUserDetails();
+
+        this.handleTextInput = this.handleTextInput.bind(this);
+    }
+
+    componentWillMount() {
+        this.loadUserDetails(this.props.username)
+    }
+
+    componentWillUpdate(nextProps: Readonly<UsermanagementViewProps>) {
+        if (nextProps.username !== this.props.username) {
+            this.loadUserDetails(nextProps.username)
+        }
     }
 
     render() {
@@ -29,8 +41,8 @@ export class UserView extends React.Component<UsermanagementViewProps, Usermanag
                         <span className="text-muted">User</span>
                     </h5>
                     <ul className="list-group">
-                        {this.listElement("Username", this.state.user.username)}
-                        {this.listElement("Username", StringUtils.getCommaAndSpaceSeparated(this.state.user.roles))}
+                        {this.listElement("Username", this.state.user.username!, "username")}
+                        {this.listElement("Username", StringUtils.getCommaAndSpaceSeparated(this.state.user.roles), "roles")}
                         {<li className="list-group-item">
                             <label title={"Username"}>
                                 <small className="text-muted">{"Enabled"}</small>
@@ -42,7 +54,7 @@ export class UserView extends React.Component<UsermanagementViewProps, Usermanag
                                     aria-label="label"
                                     aria-describedby="btnGroupAddon"
                                     checked={this.state.user.enabled}
-                                    onClick={this.switchEnabled}
+                                    onClick={() => this.switchEnabled()}
                                 />
                             </label>
                         </li>}
@@ -51,26 +63,41 @@ export class UserView extends React.Component<UsermanagementViewProps, Usermanag
             </div>
     }
 
-    componentDidUpdate(prevProps: Readonly<UsermanagementViewProps>, prevState: Readonly<UsermanagementViewState>, snapshot?: any): void {
-        if (prevProps.username !== this.props.username) {
-            this.loadUserDetails()
-        }
+    private handleTextInput(key: string, event: React.ChangeEvent<HTMLInputElement>) {
+        console.debug(event, key);
+
+        this.state.user[key] = event.target.value;
+
+        this.setState(this.state)
     }
 
     private switchEnabled() {
-
         // TODO: marmer 28.08.2018 Not done here
-        this.setState({user: this.state.user.withEnabled(!this.state.user.enabled)});
+        const {username, enabled, password, roles} = this.state.user;
+
+        /*const {hallo, value: {nested}, ...rest} = {
+            hallo: "du",
+            welt: "keine",
+            ahnung: "ende ",
+            value: {nested: "value"}
+        }
+        nested === 1
+
+        Object.assign({}, {})
+        const newobejct = {...this.state.user}*/
+
+        const newUser = new User(username, password, !enabled, roles);
+        this.setState({user: newUser})
     }
 
-    private loadUserDetails() {
-        if (this.props.username != null) {
-            RestClient.getJson("https://localhost/api/v1/usermanagement/users/" + this.props.username)
+    private loadUserDetails(name: string | undefined) {
+        if (name) { // udnefined | "" | null | 0 | false
+            RestClient.getJson("https://localhost/api/v1/usermanagement/users/" + name)
                 .then(value => this.setState({user: value}));
         }
     }
 
-    private listElement(label: string, value?: string | null) {
+    private listElement(label: string, value: string | null, modelKey: string) {
         return <li className="list-group-item">
             <label title={"Username"}>
                 <small className="text-muted">{label}</small>
@@ -82,6 +109,7 @@ export class UserView extends React.Component<UsermanagementViewProps, Usermanag
                     aria-label="label"
                     aria-describedby="btnGroupAddon"
                     value={value == null ? "" : value}
+                    onChange={(e) => this.handleTextInput(modelKey, e)}
                 />
             </label>
         </li>;

@@ -11,8 +11,8 @@ export class User {
         this.roles = roles;
     }
 
-    withEnabled(enabled: boolean) {
-        // TODO: marmer 28.08.2018 Not done here. The coles should be cloned as well.
-        return new User(this.username, this.password, enabled, this.roles);
+    clone(): User {
+        // TODO: marmer 28.08.2018 don't forget to clone the array
+        return new User(this.username, this.password, this.enabled, this.roles);
     }
 }
