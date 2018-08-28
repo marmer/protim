@@ -30,14 +30,18 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity putUser() {
+    public ResponseEntity getUser() {
         return ResponseEntity.ok(
                 new ListDTO<>()
                         .setEntries(
                                 userService.getUsernames()
                                         .stream().
-                                        map(username -> new UserListEntryDTO().setUsername(username))
+                                        map(this::newUserWithUsername)
                                         .collect(Collectors.toList())));
+    }
+
+    private UserListEntryDTO newUserWithUsername(final String username) {
+        return new UserListEntryDTO().setUsername(username);
     }
 
     @GetMapping("/{username}")
