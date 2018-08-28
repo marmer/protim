@@ -36,7 +36,9 @@ export class UserView extends React.Component<UsermanagementViewProps, Usermanag
                     </h5>
                     <ul className="list-group">
                         {this.listElement("Username", this.state.user.username!)}
+
                         {this.listElement("Username", StringUtils.getCommaAndSpaceSeparated(this.state.user.roles))}
+
                         {<li className="list-group-item">
                             <label title={"Username"}>
                                 <small className="text-muted">{"Enabled"}</small>

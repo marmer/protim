@@ -15,4 +15,16 @@ export class User {
         // TODO: marmer 28.08.2018 don't forget to clone the array
         return new User(this.username, this.password, this.enabled, this.roles);
     }
+
+    isAdmin(): boolean {
+        return this.hasRole("ADMIN");
+    }
+
+    isUser(): boolean {
+        return this.hasRole("USER");
+    }
+
+    private hasRole(roleName: string) {
+        return !(!this.roles || this.roles.findIndex(value => value === roleName) !== -1);
+    }
 }
