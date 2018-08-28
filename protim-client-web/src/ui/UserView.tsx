@@ -31,7 +31,21 @@ export class UserView extends React.Component<UsermanagementViewProps, Usermanag
                     <ul className="list-group">
                         {this.listElement("Username", this.state.user.username)}
                         {this.listElement("Username", StringUtils.getCommaAndSpaceSeparated(this.state.user.roles))}
-                        {this.listElement("Enabled", "" + this.state.user.enabled)}
+                        {<li className="list-group-item">
+                            <label title={"Username"}>
+                                <small className="text-muted">{"Enabled"}</small>
+                                {/*<h6 className="my-0">{value}</h6>*/}
+                                <input
+                                    type="checkbox"
+                                    className="form-control"
+                                    placeholder="label"
+                                    aria-label="label"
+                                    aria-describedby="btnGroupAddon"
+                                    checked={this.state.user.enabled}
+                                    onClick={this.switchEnabled}
+                                />
+                            </label>
+                        </li>}
                     </ul>
                 </div>
             </div>
@@ -41,6 +55,12 @@ export class UserView extends React.Component<UsermanagementViewProps, Usermanag
         if (prevProps.username !== this.props.username) {
             this.loadUserDetails()
         }
+    }
+
+    private switchEnabled() {
+
+        // TODO: marmer 28.08.2018 Not done here
+        this.setState({user: this.state.user.withEnabled(!this.state.user.enabled)});
     }
 
     private loadUserDetails() {
