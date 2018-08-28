@@ -7,7 +7,7 @@ describe("Tests for: User", () => {
     });
     describe("clone", () => {
         it("should return clone", () => {
-            expect(user.clone()).toStrictEqual(new User("un", "pw", true, ["r1", "r2"]));
+            expect(user.clone()).toEqual(new User("un", "pw", true, ["r1", "r2"]))
         });
     });
     describe("isUser", () => {

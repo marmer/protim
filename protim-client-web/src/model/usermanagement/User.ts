@@ -25,6 +25,6 @@ export class User {
     }
 
     private hasRole(roleName: string) {
-        return !(!this.roles || this.roles.findIndex(value => value === roleName) !== -1);
+        return (!this.roles || this.roles.findIndex(value => value === roleName) !== -1);
     }
 }
