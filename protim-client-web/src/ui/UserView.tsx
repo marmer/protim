@@ -18,12 +18,6 @@ export class UserView extends React.Component<UsermanagementViewProps, Usermanag
         this.state = {
             user: new User()
         };
-
-        this.handleTextInput = this.handleTextInput.bind(this);
-    }
-
-    componentWillMount() {
-        this.loadUserDetails(this.props.username)
     }
 
     componentWillUpdate(nextProps: Readonly<UsermanagementViewProps>) {
@@ -41,8 +35,8 @@ export class UserView extends React.Component<UsermanagementViewProps, Usermanag
                         <span className="text-muted">User</span>
                     </h5>
                     <ul className="list-group">
-                        {this.listElement("Username", this.state.user.username!, "username")}
-                        {this.listElement("Username", StringUtils.getCommaAndSpaceSeparated(this.state.user.roles), "roles")}
+                        {this.listElement("Username", this.state.user.username!)}
+                        {this.listElement("Username", StringUtils.getCommaAndSpaceSeparated(this.state.user.roles))}
                         {<li className="list-group-item">
                             <label title={"Username"}>
                                 <small className="text-muted">{"Enabled"}</small>
@@ -63,28 +57,8 @@ export class UserView extends React.Component<UsermanagementViewProps, Usermanag
             </div>
     }
 
-    private handleTextInput(key: string, event: React.ChangeEvent<HTMLInputElement>) {
-        console.debug(event, key);
-
-        this.state.user[key] = event.target.value;
-
-        this.setState(this.state)
-    }
-
     private switchEnabled() {
-        // TODO: marmer 28.08.2018 Not done here
         const {username, enabled, password, roles} = this.state.user;
-
-        /*const {hallo, value: {nested}, ...rest} = {
-            hallo: "du",
-            welt: "keine",
-            ahnung: "ende ",
-            value: {nested: "value"}
-        }
-        nested === 1
-
-        Object.assign({}, {})
-        const newobejct = {...this.state.user}*/
 
         const newUser = new User(username, password, !enabled, roles);
         this.setState({user: newUser})
@@ -97,7 +71,7 @@ export class UserView extends React.Component<UsermanagementViewProps, Usermanag
         }
     }
 
-    private listElement(label: string, value: string | null, modelKey: string) {
+    private listElement(label: string, value: string | null) {
         return <li className="list-group-item">
             <label title={"Username"}>
                 <small className="text-muted">{label}</small>
@@ -109,7 +83,6 @@ export class UserView extends React.Component<UsermanagementViewProps, Usermanag
                     aria-label="label"
                     aria-describedby="btnGroupAddon"
                     value={value == null ? "" : value}
-                    onChange={(e) => this.handleTextInput(modelKey, e)}
                 />
             </label>
         </li>;
