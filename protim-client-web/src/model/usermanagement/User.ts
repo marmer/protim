@@ -12,8 +12,7 @@ export class User {
     }
 
     clone(): User {
-        // TODO: marmer 28.08.2018 don't forget to clone the array
-        return new User(this.username, this.password, this.enabled, this.roles);
+        return new User(this.username, this.password, this.enabled, Object.assign([], this.roles));
     }
 
     isAdmin(): boolean {
