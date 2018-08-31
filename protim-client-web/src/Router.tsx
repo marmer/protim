@@ -11,6 +11,18 @@ class Router extends React.Component {
                 <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
                     {/*todo User React Link for navigation*/}
                     <a className="navbar-brand" href="#">Protim</a>
+                    {/*todo Make Toggler somehow*/}
+                    <button
+                        className="navbar-toggler"
+                        type="button"
+                        data-toggle="collapse"
+                        data-target="#navbarText"
+                        aria-controls="navbarText"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation"
+                    >
+                        <span className="navbar-toggler-icon"/>
+                    </button>
                     <div className="collapse navbar-collapse">
                         <ul className="navbar-nav">
                             <li className="nav-item">
@@ -26,6 +38,9 @@ class Router extends React.Component {
                                 <a className="nav-link" href="#">Usermanagement</a>
                             </li>
                         </ul>
+                        <span className="navbar-text">
+      Navbar text with an inline element
+                        </span>
                     </div>
                 </nav>
                 <BrowserRouter>
