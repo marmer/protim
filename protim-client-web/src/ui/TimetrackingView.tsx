@@ -8,10 +8,11 @@ export interface TimeManagementViewState {
     bookingDay: Date;
 
 }
+
 export interface TimeManagementViewProps {
 }
 
-export class TimeManagementView extends React.Component<TimeManagementViewProps, TimeManagementViewState> {
+export class TimetrackingView extends React.Component<TimeManagementViewProps, TimeManagementViewState> {
     constructor(props: TimeManagementViewProps) {
         super(props);
         this.state = {
