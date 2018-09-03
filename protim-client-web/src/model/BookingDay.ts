@@ -1,6 +1,6 @@
-import {Booking} from "./Booking";
+import Booking from "./Booking";
 
-export class BookingDay {
+export default class BookingDay {
     day: string;
     bookings: Booking[];
 

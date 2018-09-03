@@ -1,8 +1,8 @@
 import React from 'react';
 import {List} from "../model/UserList";
-import {UserListEntry} from "../model/UserListEntry";
-import {RestClient} from "../service/rest/RestClient";
-import {UserView} from "./UserView";
+import UserListEntry from "../model/UserListEntry";
+import RestClient from "../service/rest/RestClient";
+import UserView from "./UserView";
 
 export interface UsermanagementViewProps {
 }
@@ -12,7 +12,7 @@ export interface UsermanagementViewState {
     selectedUser?: string;
 }
 
-export class UsermanagementView extends React.Component<UsermanagementViewProps, UsermanagementViewState> {
+export default class UsermanagementView extends React.Component<UsermanagementViewProps, UsermanagementViewState> {
     constructor(props: UsermanagementViewProps) {
         super(props);
         this.state = {
@@ -38,7 +38,7 @@ export class UsermanagementView extends React.Component<UsermanagementViewProps,
             </div>
         );
     }
-    
+
     private usernames() {
         return this.state.userlist.entries.map(value => {
             return <button

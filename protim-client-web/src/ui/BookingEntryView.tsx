@@ -6,7 +6,7 @@ export interface BookingEntryViewState {
 export interface BookingEntryViewProps {
 }
 
-export class BookingEntryView extends React.Component<BookingEntryViewProps, BookingEntryViewState> {
+export default class BookingEntryView extends React.Component<BookingEntryViewProps, BookingEntryViewState> {
     constructor(props: BookingEntryViewProps) {
         super(props);
     }

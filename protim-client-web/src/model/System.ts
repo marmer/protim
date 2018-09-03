@@ -1,4 +1,4 @@
-export class System {
+export default class System {
     id: string;
     name: string;
 

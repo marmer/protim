@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {BookingDay} from '../model/BookingDay';
-import {BookingEntryView} from './BookingEntryView';
+import BookingDay from '../model/BookingDay';
+import BookingEntryView from './BookingEntryView';
 
 export interface BookingDayViewState {
     bookingDay: BookingDay;
@@ -10,7 +10,7 @@ export interface BookingDayViewProps {
     day: Date;
 }
 
-export class BookingDayView extends Component<BookingDayViewProps, BookingDayViewState> {
+export default class BookingDayView extends Component<BookingDayViewProps, BookingDayViewState> {
     constructor(props: BookingDayViewProps) {
         super(props);
     }
@@ -35,7 +35,7 @@ export class BookingDayView extends Component<BookingDayViewProps, BookingDayVie
                         <BookingEntryView/>
                         </tbody>
                     </table>
-                    </div>
+                </div>
             </div>
         );
     }

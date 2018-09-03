@@ -1,4 +1,4 @@
-export class UserListEntry {
+export default class UserListEntry {
     username: string;
 
     constructor(username: string) {

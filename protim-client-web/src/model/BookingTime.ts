@@ -1,4 +1,4 @@
-export class BookingTime {
+export default class BookingTime {
     startTime: Date;
     lengthInMs: number;
 

@@ -1,7 +1,7 @@
-import {Assignment} from "./Assignment";
-import {BookingTime} from "./BookingTime";
+import Assignment from "./Assignment";
+import BookingTime from "./BookingTime";
 
-export class Booking {
+export default class Booking {
     id: number;
     time: BookingTime;
     description: string;

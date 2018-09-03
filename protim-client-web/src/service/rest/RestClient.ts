@@ -1,7 +1,7 @@
 import {HttpStatus} from "./HttpStatus";
 import {XhrReadyState} from "./XhrReadyState";
 
-export class RestClient {
+export default class RestClient {
     public static getJson(url: string): Promise<any> {
         return new Promise<string>((resolve, reject) => {
             const xhr = new XMLHttpRequest();

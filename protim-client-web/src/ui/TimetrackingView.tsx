@@ -12,7 +12,7 @@ export interface TimeManagementViewState {
 export interface TimeManagementViewProps {
 }
 
-export class TimetrackingView extends React.Component<TimeManagementViewProps, TimeManagementViewState> {
+export default class TimetrackingView extends React.Component<TimeManagementViewProps, TimeManagementViewState> {
     constructor(props: TimeManagementViewProps) {
         super(props);
         this.state = {

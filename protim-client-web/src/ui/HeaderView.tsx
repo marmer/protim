@@ -6,7 +6,7 @@ export interface HeaderViewProps {
 export interface HeaderViewState {
 }
 
-export class HeaderView extends React.Component<HeaderViewProps, HeaderViewState> {
+export default class HeaderView extends React.Component<HeaderViewProps, HeaderViewState> {
     constructor(props: HeaderViewProps) {
         super(props);
     }

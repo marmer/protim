@@ -1,9 +1,9 @@
-import {System} from "./System";
+import System from "./System";
 
 /**
  * Maybe some kind of Ticket system.
  */
-export class Assignment {
+export default class Assignment {
     systemId: string;
     system: System;
 
