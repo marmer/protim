@@ -1,7 +1,7 @@
 import moment from 'moment';
 import React from 'react';
 import DateTimeService from '../service/DateTimeService';
-import SystemTimeService from '../service/SystemTimeService';
+import {SystemTimeService} from '../service/SystemTimeService';
 import BookingDayView from './BookingDayView';
 
 export interface TimeManagementViewState {
