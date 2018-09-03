@@ -2,7 +2,7 @@
  * Service handle dates easily.
  *
  */
-export class DateTimeService {
+export default class DateTimeService {
     public static dayAfter(date: Date): Date {
         const newDate: Date = new Date(date);
         newDate.setDate(date.getDate() + 1);

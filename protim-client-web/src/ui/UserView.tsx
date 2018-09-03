@@ -1,7 +1,7 @@
 import * as React from 'react';
-import {User} from "../model/usermanagement/User";
-import {RestClient} from "../service/rest/RestClient";
-import {StringUtils} from "../service/StringUtils";
+import User from "../model/usermanagement/User";
+import RestClient from "../service/rest/RestClient";
+import StringUtils from "../service/StringUtils";
 
 export interface UsermanagementViewState {
     user: User;

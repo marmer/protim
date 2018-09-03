@@ -1,4 +1,4 @@
-export class User {
+export default class User {
     username: string;
     password: string;
     enabled: boolean;
