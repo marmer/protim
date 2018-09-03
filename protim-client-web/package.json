@@ -1,5 +1,6 @@
 {
   "name": "protim-client-web",
+  "homepage": "https://marmer.github.io/protim",
   "version": "0.1.0",
   "main": "index.tsx",
   "repository": "https://github.com/marmer/protim.git",
@@ -42,7 +43,7 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js --env=jsdom",
-    "test-ci": "node scripts/test.js --env=jsdom --verbose=true --coverage --silent --ci --reporters=jest-junit"
+    "test-ci": "node scripts/test.js --env=jsdom --verbose=true --coverage --ci --reporters=jest-junit"
   },
   "devDependencies": {
     "@types/enzyme": "^3.1.13",
@@ -113,7 +114,8 @@
       "ts-jest": {
         "tsConfigFile": "tsconfig.test.json"
       }
-    }
+    },
+    "setupTestFrameworkScriptFile": "./config/jest/setupTests.ts"
   },
   "babel": {
     "presets": [

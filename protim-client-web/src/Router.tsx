@@ -8,15 +8,15 @@ import UsermanagementView from "./ui/UsermanagementView";
 class Router extends React.Component {
     render() {
         return (
-            <div className="App">
-                <HeaderView/>
-                <BrowserRouter>
+            <BrowserRouter basename="/protim">
+                <div className="App">
+                    <HeaderView/>
                     <Switch>
                         <Route path="/user(/:user)?" component={UsermanagementView}/>
                         <Route path="/timetracking(/:day)?" component={TimetrackingView}/>
                     </Switch>
-                </BrowserRouter>
-            </div>
+                </div>
+            </BrowserRouter>
         );
     }
 }
