@@ -11,7 +11,7 @@ export interface UsermanagementViewProps {
     username?: string
 }
 
-export class UserView extends React.Component<UsermanagementViewProps, UsermanagementViewState> {
+export default class UserView extends React.Component<UsermanagementViewProps, UsermanagementViewState> {
     constructor(props: UsermanagementViewProps) {
         super(props);
 
