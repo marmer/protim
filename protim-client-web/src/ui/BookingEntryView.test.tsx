@@ -4,8 +4,8 @@ import BookingEntryView from "./BookingEntryView";
 
 describe("Tests for:  BookingEntryView", () => {
     it('renders without crashing', () => {
-        const div = document.createElement('div');
-        ReactDOM.render(<BookingEntryView/>, div);
-        ReactDOM.unmountComponentAtNode(div);
+        const tbody = document.createElement('tbody');
+        ReactDOM.render(<BookingEntryView/>, tbody);
+        ReactDOM.unmountComponentAtNode(tbody);
     });
 });
