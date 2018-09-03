@@ -1,4 +1,4 @@
-import {DateTimeService} from "./DateTimeService";
+import DateTimeService from "./DateTimeService";
 
 describe('Tests for: DateTimeService', () => {
     describe("day before is requested", () => {
