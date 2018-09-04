@@ -2,6 +2,8 @@ import {mount} from "enzyme";
 import React from 'react';
 import {MemoryRouter} from "react-router";
 import ProtimApp from './ProtimApp';
+import PermissionService from "./service/Permissions/PermissionService";
+import ServiceFactory from "./service/ServiceFactory";
 
 // The prefix "mock" as well as storing the mock within a variable is important. Without jest won't mock anything
 const mockTimeTrackingView = <div id="TimetrackingView"/>;
@@ -14,8 +16,6 @@ jest.mock("./ui/UsermanagementView", () => () => mockUsermanagementView);
 // The prefix "mock" as well as storing the mock within a variable is important. Without jest won't mock anything
 const mockHeaderView = <div id="HeaderView"/>;
 jest.mock("./ui/HeaderView", () => () => mockHeaderView);
-
-// TODO: marmer 04.09.2018 add tests for paths with parameters (like usernames or days)
 
 describe("ProtimApp", () => {
     describe("path for timetracking called", () => {
@@ -67,14 +67,36 @@ describe("ProtimApp", () => {
             expect(wrapper.find("#HeaderView").exists()).toBe(true)
         });
 
-        it('should render the usermanavement view', () => {
-            const wrapper = mount(
-                <MemoryRouter initialEntries={[path]}>
-                    <ProtimApp/>
-                </MemoryRouter>);
+        describe("Current user has admin rights", () => {
+            const mockPermissionService: PermissionService = {
+                isAdmin: () => true
+            };
 
-            expect(wrapper.find("#UsermanagementView").exists()).toBe(true)
-        })
+            // TODO: marmer 05.09.2018 ### go on with this crap here
+
+            // const mockPermissionService: PermissionService = new RestClientPermissionService();
+            ServiceFactory.getPermissionService = jest.fn(() => mockPermissionService);
+
+            it('should render the usermanavement view', () => {
+                const wrapper = mount(
+                    <MemoryRouter initialEntries={[path]}>
+                        <ProtimApp/>
+                    </MemoryRouter>);
+
+                expect(wrapper.find("#UsermanagementView").exists()).toBe(true)
+            })
+        });
+        describe("Current user no admin rights", () => {
+
+            it('should render the usermanavement view', () => {
+                const wrapper = mount(
+                    <MemoryRouter initialEntries={[path]}>
+                        <ProtimApp/>
+                    </MemoryRouter>);
+
+                expect(wrapper.find("#UsermanagementView").exists()).toBe(false)
+            })
+        });
     });
     describe("basepath called", () => {
         const path = '/';
