@@ -76,4 +76,34 @@ describe("ProtimApp", () => {
             expect(wrapper.find("#UsermanagementView").exists()).toBe(true)
         })
     });
+    describe("basepath called", () => {
+        const path = '/';
+        it('should not render the timetracking view', () => {
+            const wrapper = mount(
+                <MemoryRouter initialEntries={[path]}>
+                    <ProtimApp/>
+                </MemoryRouter>);
+
+            expect(wrapper.find("#TimetrackingView").exists()).toBe(false)
+        });
+
+        it('should render the header view', () => {
+            const wrapper = mount(
+                <MemoryRouter initialEntries={[path]}>
+                    <ProtimApp/>
+                </MemoryRouter>);
+
+            expect(wrapper.find("#HeaderView").exists()).toBe(true)
+        });
+
+        it('should render the usermanavement view', () => {
+            const wrapper = mount(
+                <MemoryRouter initialEntries={[path]}>
+                    <ProtimApp/>
+                </MemoryRouter>);
+
+            expect(wrapper.find("#UsermanagementView").exists()).toBe(true)
+        })
+    });
+
 });

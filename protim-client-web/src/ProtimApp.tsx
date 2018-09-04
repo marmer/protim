@@ -10,9 +10,10 @@ class ProtimApp extends React.Component {
             <div className="App">
                 <HeaderView/>
                 <Switch>
-                    <Route path="/user(/:user)?" component={UsermanagementView}/>
                     <Route path="/timetracking(/:day)?" component={TimetrackingView}/>
-                    // TODO: marmer 04.09.2018 Errorhandling and default path
+                    <Route path="/user(/:user)?" component={UsermanagementView}/>
+                    <Route path="/" component={UsermanagementView}/>
+                    // TODO: marmer 04.09.2018 Errorhandling
                 </Switch>
             </div>
         );
