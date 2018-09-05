@@ -100,8 +100,6 @@ describe("ProtimApp", () => {
                         <ProtimApp/>
                     </MemoryRouter>);
 
-                console.log(wrapper.debug());
-
                 expect(wrapper.find("#UsermanagementView").exists()).toBe(false)
             })
         });
