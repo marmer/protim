@@ -18,6 +18,15 @@ const mockHeaderView = <div id="HeaderView"/>;
 jest.mock("./ui/HeaderView", () => () => mockHeaderView);
 
 describe("ProtimApp", () => {
+    let mockPermissionService: Pick<PermissionService, 'isAdmin'>;
+
+    beforeEach(() => {
+        mockPermissionService = {
+            isAdmin: () => true
+        };
+        ServiceFactory.getPermissionService = jest.fn(() => mockPermissionService);
+    });
+
     describe("path for timetracking called", () => {
         const path = '/timetracking';
         it('should render the timetracking view', () => {
@@ -48,6 +57,7 @@ describe("ProtimApp", () => {
     });
 
     describe("path for user called", () => {
+
         const path = '/user';
         it('should not render the timetracking view', () => {
             const wrapper = mount(
@@ -68,16 +78,9 @@ describe("ProtimApp", () => {
         });
 
         describe("Current user has admin rights", () => {
-            const mockPermissionService: PermissionService = {
-                isAdmin: () => true
-            };
-
-            // TODO: marmer 05.09.2018 ### go on with this crap here
-
-            // const mockPermissionService: PermissionService = new RestClientPermissionService();
-            ServiceFactory.getPermissionService = jest.fn(() => mockPermissionService);
-
             it('should render the usermanavement view', () => {
+                mockPermissionService.isAdmin = jest.fn(() => () => true);
+
                 const wrapper = mount(
                     <MemoryRouter initialEntries={[path]}>
                         <ProtimApp/>
@@ -87,6 +90,8 @@ describe("ProtimApp", () => {
             })
         });
         describe("Current user no admin rights", () => {
+            mockPermissionService.isAdmin = jest.fn(() => () => false);
+            ServiceFactory.getPermissionService = jest.fn(() => mockPermissionService);
 
             it('should render the usermanavement view', () => {
                 const wrapper = mount(
