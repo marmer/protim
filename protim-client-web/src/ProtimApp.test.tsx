@@ -18,15 +18,6 @@ const mockHeaderView = <div id="HeaderView"/>;
 jest.mock("./ui/HeaderView", () => () => mockHeaderView);
 
 describe("ProtimApp", () => {
-    let mockPermissionService: Pick<PermissionService, 'isAdmin'>;
-
-    beforeEach(() => {
-        mockPermissionService = {
-            isAdmin: () => true
-        };
-        ServiceFactory.getPermissionService = jest.fn(() => mockPermissionService);
-    });
-
     describe("path for timetracking called", () => {
         const path = '/timetracking';
         it('should render the timetracking view', () => {
@@ -57,7 +48,14 @@ describe("ProtimApp", () => {
     });
 
     describe("path for user called", () => {
+        let mockPermissionService: Pick<PermissionService, 'isAdmin'>;
 
+        beforeEach(() => {
+            mockPermissionService = {
+                isAdmin: () => true
+            };
+            ServiceFactory.getPermissionService = jest.fn(() => mockPermissionService);
+        });
         const path = '/user';
         it('should not render the timetracking view', () => {
             const wrapper = mount(
@@ -78,9 +76,11 @@ describe("ProtimApp", () => {
         });
 
         describe("Current user has admin rights", () => {
-            it('should render the usermanavement view', () => {
-                mockPermissionService.isAdmin = jest.fn(() => () => true);
+            beforeEach(() => {
+                mockPermissionService.isAdmin = jest.fn(() => true);
+            });
 
+            it('should render the usermanavement view', () => {
                 const wrapper = mount(
                     <MemoryRouter initialEntries={[path]}>
                         <ProtimApp/>
@@ -90,8 +90,9 @@ describe("ProtimApp", () => {
             })
         });
         describe("Current user no admin rights", () => {
-            mockPermissionService.isAdmin = jest.fn(() => () => false);
-            ServiceFactory.getPermissionService = jest.fn(() => mockPermissionService);
+            beforeEach(() => {
+                mockPermissionService.isAdmin = jest.fn(() => false);
+            });
 
             it('should render the usermanavement view', () => {
                 const wrapper = mount(
@@ -99,19 +100,21 @@ describe("ProtimApp", () => {
                         <ProtimApp/>
                     </MemoryRouter>);
 
+                console.log(wrapper.debug());
+
                 expect(wrapper.find("#UsermanagementView").exists()).toBe(false)
             })
         });
     });
     describe("basepath called", () => {
         const path = '/';
-        it('should not render the timetracking view', () => {
+        it('should render the timetracking view', () => {
             const wrapper = mount(
                 <MemoryRouter initialEntries={[path]}>
                     <ProtimApp/>
                 </MemoryRouter>);
 
-            expect(wrapper.find("#TimetrackingView").exists()).toBe(false)
+            expect(wrapper.find("#TimetrackingView").exists()).toBe(true)
         });
 
         it('should render the header view', () => {
@@ -123,13 +126,13 @@ describe("ProtimApp", () => {
             expect(wrapper.find("#HeaderView").exists()).toBe(true)
         });
 
-        it('should render the usermanavement view', () => {
+        it('should not render the usermanavement view', () => {
             const wrapper = mount(
                 <MemoryRouter initialEntries={[path]}>
                     <ProtimApp/>
                 </MemoryRouter>);
 
-            expect(wrapper.find("#UsermanagementView").exists()).toBe(true)
+            expect(wrapper.find("#UsermanagementView").exists()).toBe(false)
         })
     });
 
