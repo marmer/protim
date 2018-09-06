@@ -21,7 +21,7 @@ export default class ProtimApp extends React.Component {
                 <HeaderView/>
                 <Switch>
                     <Route path="/timetracking(/:day)?" component={TimetrackingView}/>
-                    <Route path="/user(/:user)?" component={this.showIfAdmin(UsermanagementView)}/>
+                    <Route path="/user(/:user)?" component={this.onlyIfAdmin(UsermanagementView)}/>
                     <Route path="/" component={TimetrackingView}/>
                     // TODO: marmer 04.09.2018 Errorhandling
                 </Switch>
@@ -29,7 +29,7 @@ export default class ProtimApp extends React.Component {
         );
     }
 
-    private showIfAdmin(component: any) {
+    private onlyIfAdmin(component: any) {
         return this.permissionService.isAdmin() ? component : TimetrackingView;
     }
 }

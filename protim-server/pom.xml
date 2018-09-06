@@ -26,6 +26,7 @@
         <version.hamcrest-matcher-generator>1.2.2</version.hamcrest-matcher-generator>
         <snippetsDirectory>${project.build.directory}/generated-snippets</snippetsDirectory>
         <lombok.version>1.18.2</lombok.version>
+        <active.test.profile>test</active.test.profile>
     </properties>
 
     <dependencies>
@@ -157,7 +158,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <configuration>
                     <environmentVariables>
-                        <spring.profiles.active>test</spring.profiles.active>
+                        <spring.profiles.active>${active.test.profile}</spring.profiles.active>
                     </environmentVariables>
                 </configuration>
             </plugin>
@@ -210,7 +211,7 @@
                     <forkCount>1</forkCount>
                     <reuseForks>true</reuseForks>
                     <environmentVariables>
-                        <spring.profiles.active>test</spring.profiles.active>
+                        <spring.profiles.active>${active.test.profile}</spring.profiles.active>
                     </environmentVariables>
                 </configuration>
             </plugin>
