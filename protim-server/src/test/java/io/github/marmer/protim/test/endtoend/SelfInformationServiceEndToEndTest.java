@@ -40,10 +40,11 @@ public class SelfInformationServiceEndToEndTest {
     public void testMe_CurrentlyAUserIsLoggedIn_ShouldReturnUserDetails()
             throws Exception {
         // Preparation
-        final UserDBO user = transactionlessTestEntityManager.persist(newUserDBO().
-                setEnabled(true).
-                setRoles(Set.of(newRoleDBO().
-                        setName(Role.USER))));
+        final UserDBO user = transactionlessTestEntityManager.persist(newUserDBO()
+                .setUsername("someone")
+                .setEnabled(true)
+                .setRoles(Set.of(newRoleDBO()
+                        .setName(Role.USER))));
 
         // Execution
         mockMvc.perform(get("/api/v1/me"))
